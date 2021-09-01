@@ -1,0 +1,64 @@
+{% extends 'v2/base.html.twig' %}
+{% block title %} {{ page.metaTitle ? page.metaTitle : (page.h1~' метро Отрадное – Детейлинг студия Styled') }} {% endblock %}
+{% block description %}{{ page.metaDescription ? page.metaDescription : ('⭐⭐⭐⭐⭐ '~ page.h1~'. Цены и сколько стоит – на сайте и по телефону. Расположены у метро Отрадное, СВАО! Детейлинг студия Styled') }}{% endblock %}
+
+ {% block breadcrumbs %}
+     {{ breadcrumbs(page ?? null) }}
+ {% endblock %}
+
+{% block body %}
+    <div class="h1__inner-page" {% if page.pageIcon is not null %} style="background-image: url('/images/page-icons/{{ page.pageIcon}}')" {% endif %}>
+        <div class="uk-section uk-container">
+            <h1>{{ page.h1 }}</h1>
+        </div>
+    </div>
+    {% if page.text is not null and page.text is not empty %}
+    <div class="seo-box__wrapper">
+        {{ include('elements/_block_content_top.html.twig', {'text': page.text, 'textImg':page.textImg}) }}
+    </div>
+    {% endif %}
+    {% embed 'v2/embed/black-services-block.html.twig' %}
+        {% block content %}
+            {% if page.name == 'Детейлинг' %}
+                {{ price_list_full() }}
+            {% else %}
+                {{ price_list(page) }}
+            {% endif %}
+
+            {#Марки модели#}
+            {#<h2 class="brands-list__header">{{ page.h1 }} марки</h2>
+            {{ brands_service_block() }}#}
+
+            {{ special_offers(page.brandAndModelName) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block extraModules %}
+    {{ service_text_down(page.textDown, page.textDown2, page.textDown3, page.textDown4, page.textDownImg, page.textDownImg2, page.textDownImg3, page.textDownImg4, page.textDownBg) }}
+    {% embed 'v2/embed/black-services-block.html.twig' %}
+        {% block content %}
+
+            {{ include('v2/blocks/section/advantages-inner.html.twig') }}
+
+            {{ include('v2/blocks/section/instagram-block.html.twig') }}
+        {% endblock %}
+    {% endembed %}
+    <div class="uk-background-secondary">
+        {{ include('elements/instagram_widget.html.twig') }}
+        {{ our_works_slider(page) }}
+        {# Блок мастеров #}
+        {# {{ include('v2/blocks/section/team.html.twig') }}#}
+        {{ inner_menu() }}
+    </div>
+
+       {#<div class="brands-service-block__wrapper">
+            <div class="container container2">
+                    <div class="row">
+                            <div class="col-sm-12 col-lg-12">
+                                    {{ brands_service_block(page.path) }}
+                            </div>
+                    </div>
+            </div>
+    </div>#}
+{% endblock %}
