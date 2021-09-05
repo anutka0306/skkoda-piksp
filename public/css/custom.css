@@ -714,6 +714,7 @@ label {
     font-size: 30px;
     font-weight: 700;
     line-height: 1;
+    margin-top: 0;
 }
 .akcii_services-heading .link_heading span{
     color: #fff !important;
@@ -814,4 +815,83 @@ label {
     .hidden-md {
         display: none;
     }
+}
+
+/* Quote Section */
+.quote-section {
+    padding: 160px 0 140px;
+    background: linear-gradient(
+            90deg
+            , #f8f9fd 65%, #2a2e47 35%);
+}
+.quote__heading {
+    font-size: 30px;
+    margin-bottom: 40px;
+    font-weight: 800;
+    line-height: 1.1;
+    font-family: 'Museo Sans Cyrl', sans-serif;
+}
+.quote__text {
+    line-height: 30px;
+    font-size: 21px;
+    font-family: 'Museo Sans Cyrl', sans-serif;
+}
+.quote__author {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    justify-content: space-between;
+}
+.quote__who, .quote__author-name {
+    line-height: 30px;
+}
+.quote-photo {
+    display: flex;
+    align-items: center;
+}
+.quote__author-photo {
+    width: 380px;
+}
+/* Team block */
+.team-section {
+    padding: 140px 0;
+}
+.team__photo {
+    width: 185px;
+    margin: 0 auto;
+}
+.team__name {
+    margin-top: 25px;
+    font-weight: 900;
+    font-size: 22px;
+    font-family: 'Museo Sans Cyrl', sans-serif;
+    text-align: center;
+}
+.team__post {
+    color: #f73d31;
+    margin: 16px 0;
+    text-transform: uppercase;
+    font-family: 'Museo Sans Cyrl', sans-serif;
+    text-align: center;
+    font-weight: 600;
+}
+.team__text {
+    line-height: 24px;
+    font-size: 16px;
+    font-family: 'Museo Sans Cyrl', sans-serif;
+    text-align: center;
+}
+.container_subscribe {
+    margin-top: 140px;
+}
+
+.message__heading, .message__text {
+    max-width: 300px;
+}
+.message__text {
+    font-size: 22px;
+    margin-top: 15px;
+    line-height: 34px;
+    font-weight: 300;
+    color: #fff;
 }
