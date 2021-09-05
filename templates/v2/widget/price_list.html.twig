@@ -1,30 +1,27 @@
-<div class="services-prices">
-    <h3>{{ price_list_title }} цена:</h3>
-    <ul data-uk-accordion="collapsible: false">
-        {% for section in sections %}
-            {% if section.priceServices is not empty %}
-            <li><a class="uk-accordion-title" href="#">{{ section.name }}</a>
-                <div class="uk-accordion-content">
-                    <ul class="price-list">
-                        {% for service in section.priceServices|filter(service => service.published ) %}
-                            <li>
-                                <span>
-                                    {#{{ dump(service) }}#}
-                                    {% if service.path  and service.published %}
-                                        <a href="{{ service.path }}">{{ service.nameInPriceList ?? service.name }}</a>
-                                    {% else %}
-                                        {{ service.name }} {{ page.brandAndModelName }}
-                                    {% endif %}
-                                        {#<b>от {{ service.price|number_format(0, '', ' ') }}&nbsp;р.</b>#}
-                                </span>
-                                <span class="border"></span>
-                                <span><a class="callback js-popup-trigger" data-toggle="modal" data-target="#callback_popup" href="#">Уточнить стоимость</a></span>
-                            </li>
-                        {% endfor %}
-                    </ul>
+<section class="section b5" id="diagnos">
+    <div class="container _mPS2id-t" id="raboti">
+        <div class="section__title"><h2>Сервис Вольво (услуги):</h2></div>
+        <div class="section__text">Мы оказываем полный спектр услуг по обслуживанию, ремонту, тюнингу автомобилей Вольво.</div>
+        <div class="row">
+            {% for section in sections %}
+                <div class="col-xs-6 col-md-2 center pad5 imgmodel" itemscope="" itemtype="http://schema.org/Product">
+                <div class="caption thumbnail">
+                    <a itemprop="url" href="{{ section.slug }}">
+                        <img itemprop="image" style="width: 60px; height: auto;" data-src="/images/category_images/{{ section.image }}" src="/images/category_images/{{ section.image }}" alt="{{ section.name }}" class=" lazyloaded">
+                        <div itemprop="name" title="{{ section.name }}" style="margin-top: 5px; font-size: 16px; text-align: center;" class="h3"><span class="link">{{ section.name }}</span></div>
+                    </a>
                 </div>
-            </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-</div>
+                <meta itemprop="description" content="{{ section.name }}">
+                <div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer" style="display:none">
+                    <meta itemprop="priceCurrency" content="RUB">
+
+                    <span itemprop="price">100</span>
+                </div>
+
+            </div>
+            {% endfor %}
+
+    </div>
+    <a href="#signup" class="btn btn_big popup-link _mPS2id-h mPS2id-highlight mPS2id-highlight-last"><span>Узнать цену</span></a>
+    </div>
+</section>

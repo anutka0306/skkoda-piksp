@@ -1,12 +1,21 @@
 {% extends 'v2/base.html.twig' %}
 
 
-{% block videofon %}
+{% block header_banner %}
     {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1 }) }}
 {% endblock %}
 
 {% block breadcrumbs %}{% endblock %}
 
+{% block body %}
+    {{ include('elements/_content.html.twig') }}
+    {{ brands_service_block() }}
+    {{ price_list(page) }}
+    {{ include('elements/_advantages.html.twig') }}
+    {{ include('elements/_advantages2.html.twig') }}
+{% endblock %}
+
+{#
 {% block body %}
 
     {{ include('elements/_block_content_top_home.html.twig', {'text': page.text, 'textImg':page.textImg}) }}
@@ -20,13 +29,21 @@
         {% block content %}
             {{ price_list(page) }}
 
-            {#Марки модели#}
-            {#{{ brands_service_block() }}#}
+            #}
+{#Марки модели#}{#
+
+            #}
+{#{{ brands_service_block() }}#}{#
+
 
             {{ special_offers(page.brandAndModelName) }}
             {{ include('v2/blocks/section/advantages-home.html.twig') }}
-            {# работает просто пока закомментировала #}
-            {#{{ before_after(page ?? null) }}#}
+            #}
+{# работает просто пока закомментировала #}{#
+
+            #}
+{#{{ before_after(page ?? null) }}#}{#
+
             {{ include('v2/blocks/section/instagram-block.html.twig') }}
         {% endblock %}
     {% endembed %}
@@ -35,9 +52,16 @@
 
     {{ our_works_slider(page) }}
 
-    {# Блок мастеров #}
-    {#{{ include('v2/blocks/section/team.html.twig') }}#}
+    #}
+{# Блок мастеров #}{#
+
+    #}
+{#{{ include('v2/blocks/section/team.html.twig') }}#}{#
 
 
-    {#{{ include('v2/blocks/section/reviews.html.twig') }}#}
+
+    #}
+{#{{ include('v2/blocks/section/reviews.html.twig') }}#}{#
+
 {% endblock %}
+#}

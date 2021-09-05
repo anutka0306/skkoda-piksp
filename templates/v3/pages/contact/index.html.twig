@@ -1,0 +1,57 @@
+{% extends 'v2/base.html.twig' %}
+
+{% block title %} {{ page.metaTitle }} {% endblock %}
+{% block seoDescription %} {{ page.metaDescription}} {% endblock %}
+
+{% block body %}
+    <div class="container contact-icons">
+        <div class="row">
+            <div class="col-md-12 d-flex justify-content-center">
+                <div class="contact-icon__item">
+                    <a href="https://api.whatsapp.com/send?phone=74956400010" target="_blank">
+                        <img src="{{ asset('images/contact-icons/whatsapp.jpg') }}" alt="whatsapp">
+                    </a>
+                </div>
+                <div class="contact-icon__item">
+                    <a href="https://www.instagram.com/styled.cc/" target="_blank">
+                        <img src="{{ asset('images/contact-icons/insta.png') }}" alt="instagram">
+                    </a>
+                </div>
+                <div class="contact-icon__item">
+                    <a href="https://t.me/StudioStyleD" target="_blank">
+                        <img src="{{ asset('images/contact-icons/telegram.jpg') }}" alt="telegram">
+                    </a>
+                </div>
+                <div class="contact-icon__item">
+                    <a href="https://vk.com/styledstudio" target="_blank">
+                        <img src="{{ asset('images/contact-icons/vk.png') }}" alt="vk">
+                    </a>
+                </div>
+                <div class="contact-icon__item">
+                    <a href="https://youtu.be/r_5uAoJD-wY" target="_blank">
+                        <img src="{{ asset('images/contact-icons/youtube.png') }}" alt="youtube">
+                    </a>
+                </div>
+                <div class="contact-icon__item">
+                    <a href="mailto: info@styled.cc">
+                        <img src="{{ asset('images/contact-icons/email.png') }}" alt="email">
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block extraModules %}
+    {% embed 'v2/embed/black-services-block.html.twig' %}
+        {% block content %}
+
+            {{ include('v2/blocks/section/instagram-block.html.twig') }}
+        {% endblock %}
+    {% endembed %}
+
+
+{% endblock %}

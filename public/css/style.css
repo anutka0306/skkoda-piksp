@@ -724,7 +724,7 @@ button {
     color: var(--color-red);
 }
 .price_list_orders-line-url::after {
-    background: url(../img/arrow-right-red.svg) center no-repeat;
+    background: url(../img_old/arrow-right-red.svg) center no-repeat;
     content: "";
     position: absolute;
     width: 20px;
@@ -740,7 +740,7 @@ button {
 
 /* Начало наши преимущества */
 .block_advantages {
-    background: url(../img/advantages.jpeg) center no-repeat fixed;
+    background: url(../img_old/advantages.jpeg) center no-repeat fixed;
     background-size: cover;
 }
 .block_advantages h2{
@@ -814,7 +814,7 @@ button {
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    background: url(../img/map.svg) center no-repeat;
+    background: url(../img_old/map.svg) center no-repeat;
     background-size: contain;
 }
 .cartablock-card-tel {
@@ -839,7 +839,7 @@ button {
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    background: url(../img/phone-blue.svg) center no-repeat;
+    background: url(../img_old/phone-blue.svg) center no-repeat;
     background-size: contain;
 }
 .cartablock-card-vrrab {
@@ -858,7 +858,7 @@ button {
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    background: url(../img/time.svg) center no-repeat;
+    background: url(../img_old/time.svg) center no-repeat;
     background-size: contain;
 }
 .cartablock-card-zopen {
@@ -881,7 +881,7 @@ button {
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    background: url(../img/pen2.svg) center no-repeat;
+    background: url(../img_old/pen2.svg) center no-repeat;
     background-size: contain;
 }
 .cartablock-card-btnwrap {
@@ -915,7 +915,7 @@ button {
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    background: url(../img/arrow-right-white.svg) center no-repeat;
+    background: url(../img_old/arrow-right-white.svg) center no-repeat;
     background-size: contain;
 }
 .cartablock-card-btnwrap-abs {
@@ -942,7 +942,7 @@ button {
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    background: url(../img/right-arrow-red.svg) center no-repeat;
+    background: url(../img_old/right-arrow-red.svg) center no-repeat;
     background-size: contain;
 }
 .cartablock-card-btnwrap-btn-url {
@@ -975,7 +975,7 @@ button {
     margin: 0;
     overflow: hidden;
     cursor: pointer;
-    background: url(../img/yandex-before-load.jpeg) #fff no-repeat;
+    background: url(../img_old/yandex-before-load.jpeg) #fff no-repeat;
     background-position: center center;
     background-size: cover;
     -webkit-box-shadow: 0 0 2em 0 rgb(0 0 0 / 20%);

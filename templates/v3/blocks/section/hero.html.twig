@@ -1,0 +1,50 @@
+
+<div class="fullscreen-bg">
+    <div class="overlay">
+        <div class="fullscreen-bg__content d-flex flex-column align-items-center">
+            <div class="short-logo">
+                <img src="{{ asset('img/short_logo.png') }}" alt="Styled.cc автосервис"/>
+            </div>
+            <div class="header-slogan">
+                <h1>Компания Styled делает ваши автомобили интереснее и лучше с 2010 года. Сделаем кузов блестящим, защитим и придадим стиля.</h1>
+            </div>
+            {# Menu #}
+            <div class="fullscreen-bg__content_menu d-flex justify-content-between">
+                <div class="fullscreen-bg__content_menu-item d-flex flex-column align-items-center justify-content-center">
+                    <a class="hvr-bounce-in" href="/Vinil">
+                    <img class="hvr-bounce-in" src="{{ asset('img/header-menu-icon1.png') }}" alt=""/>
+                    </a>
+                    <a class="hvr-bounce-in" href="/Vinil">Винил и винилография</a>
+                </div>
+                <div class="fullscreen-bg__content_menu-item d-flex flex-column align-items-center justify-content-center">
+                    <a class="hvr-rotate" href="/okleyka">
+                    <img class="hvr-rotate" src="{{ asset('img/header-menu-icon2.png') }}" alt=""/>
+                    </a>
+                    <a class="hvr-rotate" href="/okleyka">Оклейка полеуретаном</a>
+                </div>
+                <div class="fullscreen-bg__content_menu-item d-flex flex-column align-items-center justify-content-center">
+                    <a class="hvr-grow-rotate" href="/deteyling">
+                    <img class="hvr-grow-rotate" src="{{ asset('img/header-menu-icon3.png') }}" alt=""/>
+                    </a>
+                    <a class="hvr-grow-rotate" href="/deteyling">Детейлинг</a>
+                </div>
+                <div class="fullscreen-bg__content_menu-item d-flex flex-column align-items-center justify-content-center">
+                    <a class="hvr-skew-forward" href="/shumoizolyaciya">
+                    <img class="hvr-skew-forward" src="{{ asset('img/shuuum.png') }}" alt=""/>
+                    </a>
+                    <a class="hvr-skew-forward" href="/shumoizolyaciya">Шумоизоляция</a>
+                </div>
+            </div>
+
+            {# Callback button#}
+            <div class="callback-btn">
+                <button class="hvr-grow" type="button" data-toggle="modal" data-target="#callback_popup">Оставить заявку</button>
+            </div>
+
+        </div>
+
+    </div>
+    <video loop="" muted="" autoplay="" poster="{{ asset('video/video-bg-img1.jpg') }}" class="fullscreen-bg__video">
+        <source src="{{ asset('video/video_bg1.mp4') }}" type="video/mp4">
+    </video>
+</div>

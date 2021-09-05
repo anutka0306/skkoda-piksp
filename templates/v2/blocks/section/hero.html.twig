@@ -1,50 +1,33 @@
-
-<div class="fullscreen-bg">
-    <div class="overlay">
-        <div class="fullscreen-bg__content d-flex flex-column align-items-center">
-            <div class="short-logo">
-                <img src="{{ asset('img/short_logo.png') }}" alt="Styled.cc автосервис"/>
-            </div>
-            <div class="header-slogan">
-                <h1>Компания Styled делает ваши автомобили интереснее и лучше с 2010 года. Сделаем кузов блестящим, защитим и придадим стиля.</h1>
-            </div>
-            {# Menu #}
-            <div class="fullscreen-bg__content_menu d-flex justify-content-between">
-                <div class="fullscreen-bg__content_menu-item d-flex flex-column align-items-center justify-content-center">
-                    <a class="hvr-bounce-in" href="/Vinil">
-                    <img class="hvr-bounce-in" src="{{ asset('img/header-menu-icon1.png') }}" alt=""/>
-                    </a>
-                    <a class="hvr-bounce-in" href="/Vinil">Винил и винилография</a>
-                </div>
-                <div class="fullscreen-bg__content_menu-item d-flex flex-column align-items-center justify-content-center">
-                    <a class="hvr-rotate" href="/okleyka">
-                    <img class="hvr-rotate" src="{{ asset('img/header-menu-icon2.png') }}" alt=""/>
-                    </a>
-                    <a class="hvr-rotate" href="/okleyka">Оклейка полеуретаном</a>
-                </div>
-                <div class="fullscreen-bg__content_menu-item d-flex flex-column align-items-center justify-content-center">
-                    <a class="hvr-grow-rotate" href="/deteyling">
-                    <img class="hvr-grow-rotate" src="{{ asset('img/header-menu-icon3.png') }}" alt=""/>
-                    </a>
-                    <a class="hvr-grow-rotate" href="/deteyling">Детейлинг</a>
-                </div>
-                <div class="fullscreen-bg__content_menu-item d-flex flex-column align-items-center justify-content-center">
-                    <a class="hvr-skew-forward" href="/shumoizolyaciya">
-                    <img class="hvr-skew-forward" src="{{ asset('img/shuuum.png') }}" alt=""/>
-                    </a>
-                    <a class="hvr-skew-forward" href="/shumoizolyaciya">Шумоизоляция</a>
+<div class="header__inner">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <div class="header__main">
+                    <h1><span class="main-heading">Ремонт LEXUS</span><br>
+                        в Санкт-Петербурге</h1>
+                    <p class="header__text">Выполняем ТО, диагностику, чип тюнинг, <br>
+                        ремонт двигателей, кузовной ремонт и пр.</p>
+                    <a class="button" href="#FBForm2">Записаться сейчас</a>
+                    <ul class="header-info-menu">
+                        <li class="header-info-menu__item">
+                            <div class="header-info-menu__icon"><img src="/img/header-info-1.svg" width="40" height="40" alt=""></div>
+                            <div class="header-info-menu__text">Диагностика <br>
+                                подвески <span class="highlighted">бесплатно</span></div>
+                        </li>
+                        <li class="header-info-menu__item">
+                            <div class="header-info-menu__icon"><img src="/img/header-info-2.svg" width="39" height="36" alt=""></div>
+                            <div class="header-info-menu__text">Компьютерная <br>
+                                диагностика <span class="highlighted">499 р.</span></div>
+                        </li>
+                        <li class="header-info-menu__item">
+                            <div class="header-info-menu__icon"><img src="/img/header-info-3.svg" width="40" height="36" alt=""></div>
+                            <div class="header-info-menu__text">Замена
+                                масла <span class="highlighted">499 р.</span></div>
+                        </li>
+                    </ul>
                 </div>
             </div>
-
-            {# Callback button#}
-            <div class="callback-btn">
-                <button class="hvr-grow" type="button" data-toggle="modal" data-target="#callback_popup">Оставить заявку</button>
-            </div>
-
         </div>
-
     </div>
-    <video loop="" muted="" autoplay="" poster="{{ asset('video/video-bg-img1.jpg') }}" class="fullscreen-bg__video">
-        <source src="{{ asset('video/video_bg1.mp4') }}" type="video/mp4">
-    </video>
+
 </div>
