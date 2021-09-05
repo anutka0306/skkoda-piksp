@@ -1,56 +1,32 @@
-<footer class="page-footer">
-    <strong class="footer_title">
-        Как нас найти
-    </strong>
-    <span class="footer_description">
-        При въезде стоит знак "кирпич" (кроме клиентов), Вам сюда
-    </span>
-    <div class="footer__black-map">
-        <a href="https://yandex.ru/maps/213/moscow/?from=api-maps&amp;ll=37.614616%2C55.860985&amp;mode=routes&amp;origin=jsapi_2_1_78&amp;rtext=55.863926%2C37.605700~55.860539%2C37.621793&amp;rtt=pd&amp;ruri=~&amp;z=16" target="_blank" data-group="">
-            <img src="{{ asset('img/footer-map.svg') }}" alt=""/>
-        </a>
-    </div>
-    {# Блок Отзывы #}
-    {#{{ include('v2/blocks/section/reviews.html.twig') }}#}
-    <div class="uk-section-xsmall uk-container">
-        <div class="row">
-            <div class="col-md-1 d-sm-none d-none d-md-flex align-items-center">
-                <a href="/">
-                    <img src="{{ asset('img/footer-logo-solo.png') }}" alt="Styled.cc"/>
-                </a>
+<footer class="footer">
+    <div class="container">
+        <div class="row footer-row">
+            <div class="col-6 col-lg-2">
+                <img loading="lazy" src="{{ asset('img/footer-logo.svg') }}" alt="">
             </div>
-            <div class="col-md-8 col-sm-12">
-                {{ footer_menu() }}
+            <div class="col-lg-3 d-none d-lg-block">
+                <h4 class="nav__description">Специализированный <br>
+                    автосервис LEXUS</h4>
             </div>
-
-            <div class="d-md-none d-lg-none d-sm-12 d-flex align-items-center justify-content-center">
-                <a href="/">
-                    <img src="{{ asset('img/footer-logo-solo.png') }}" alt="Styled.cc"/>
-                </a>
+            <div class="col-lg-3 d-none d-lg-block">
+                <p class="copyright">© 2021 / Все права защищены</p>
             </div>
-
-            <div class=" col-md-3 col-sm-12 footer__address">
-                <span>
-                    &#169; Студия автостайлинга Styled<br>
-                    г. Москва ул. Декабристов, вл. 47а<br>
-                    +7(495)640-00-10
-                </span>
+            <div class="col-6 col-lg-4">
+                <div class="socials-wrapper">
+                    <span class="socials__text">Мы в соц. сетях: </span>
+                    <ul class="socials">
+                        <li class="socials__item">
+                            <a href="https://vk.com/wall532277388" target="__blank" class="socials__link"><i class="fab fa-vk" aria-hidden="true"></i></a>
+                        </li>
+                        <li class="socials__item d-none">
+                            <a href="#" target="__blank" class="socials__link"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                        </li>
+                        <li class="socials__item">
+                            <a href="https://www.youtube.com/channel/UCGcxF3E3mg1W7gQZj62nKtg" target="__blank" class="socials__link"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-
         </div>
     </div>
-    {#<div class="btn-fixed">
-        <a class="calc-btn" href="{{ path('calculator') }}">
-            <img src="/assets/images/icons/calc.png" alt="Калькулятор"/>
-            Калькулятор
-        </a>
-        <a class="repairs-btn js-popup-trigger" href="#">
-            <span data-uk-icon="cog"></span>
-            Записаться на ремонт
-        </a>
-    </div>#}
-
-
 </footer>
-
-

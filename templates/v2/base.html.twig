@@ -82,12 +82,12 @@
         </div>
 
         {% block extraModules %}
-            {{ include('v2/blocks/section/reviews.html.twig') }}
-            {{ our_works_slider(page) }}
+
         {% endblock %}
 
        {# {{ render_map(page) }}#}
     </main>
+    {{ include('v2/blocks/include/contacts.html.twig') }}
     {{ include('v2/blocks/include/footer.html.twig') }}
     {{ include('elements/popup/_callback_popup.html.twig') }}
 </div>
