@@ -13,6 +13,8 @@
     {{ price_list(page) }}
     {{ include('elements/_advantages.html.twig') }}
     {{ include('elements/_advantages2.html.twig') }}
+    {{ special_offers(page.brandAndModelName) }}
+    {{ include('elements/_about_company.html.twig') }}
 {% endblock %}
 
 {#
