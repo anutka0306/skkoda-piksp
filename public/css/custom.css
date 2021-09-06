@@ -15,6 +15,7 @@ html{
     font-family: 'Museo Sans Cyrl', sans-serif;
     font-size: 18px;
     color: #2a2e47;
+    overflow-x: hidden;
 }
 body{
     overflow-x: hidden;
@@ -291,6 +292,9 @@ h1 {
     font-size: 19px;
     font-weight: 400;
     line-height: 21.34px;
+}
+.content-push-main{
+    position: relative;
 }
 .content-push-image {
     max-width: 700px!important;
