@@ -25,10 +25,10 @@ section {
     scroll-margin-top: 60px;
 }
 
-.clearfix:before, .clearfix:after, .container:before, .container:after, .container-fluid:before, .container-fluid:after, .row:before, .row:after {
+/*.clearfix:before, .clearfix:after, .container:before, .container:after, .container-fluid:before, .container-fluid:after, .row:before, .row:after {
     content: " ";
     display: table;
-}
+}*/
 
 /*HEADER*/
 header{
@@ -108,6 +108,37 @@ header{
 .nav__contacts.trubka {
     display: none;
 }
+
+@media screen and (max-width: 991px) {
+    .nav__address, .nav__description {
+        display: none;
+    }
+}
+@media screen and (max-width: 768px) {
+    .nav__contacts {
+        display: none;
+    }
+}
+@media screen and (max-width: 768px) {
+    .nav__contacts.trubka {
+        display: block;
+    }
+    .nav__contacts.trubka a i{
+        color: #fff;
+    }
+}
+@media screen and (max-width: 600px) {
+    .btn-mobile-menu {
+        margin-left: 0;
+    }
+    .nav__contacts.trubka {
+        padding-right: 0;
+    }
+    .nav__contacts.trubka a i{
+        font-size: 34px !important;
+    }
+}
+
 
 /* Header banner*/
 .header__inner {
@@ -210,6 +241,39 @@ h1 {
 .highlighted {
     color: #d32920;
 }
+
+@media (max-width: 1200px) {
+    .header__inner::after{
+        right: 9%;
+    }
+}
+@media screen and (max-width: 991px){
+    .header__inner::after{
+        right: -17%;
+    }
+}
+@media screen and (max-width: 768px){
+    .header__inner::after {
+        display: none;
+    }
+    .header__inner .container .row .col-sm-6{
+        width: 100% !important;
+        text-align: center;
+    }
+    .header__inner{
+        background: #fff;
+    }
+    .header__inner::before{
+        display: none;
+    }
+    .header__inner .container::after{
+        display: none;
+    }
+    .header-info-menu{
+        align-items: center;
+    }
+}
+
 /* Content text block*/
 .content__text{
     padding-top: 90px;
@@ -499,6 +563,34 @@ h1 {
     margin-top: 0;
     line-height: 1.1;
 }
+.diagnostics-section__inner{
+    position: relative;
+    z-index: 10;
+}
+
+@media (max-width: 1024px) {
+    .diagnostics img{
+        max-width: 200px;
+    }
+}
+@media (max-width: 991px) {
+    .diagnostics img{
+        max-width: 160px;
+    }
+}
+@media (max-width: 768px) {
+    .diagnostics img{
+        max-width: 220px;
+    }
+}
+@media (max-width: 400px) {
+    .diagnostics img{
+        max-width: 160px;
+    }
+    .diagnostics-section{
+        padding-top: 180px;
+    }
+}
 
 /* About Block О компании в цифрах*/
 .numbers-section {
@@ -561,6 +653,11 @@ section {
 }
 .numbers__text {
     font-size: 21px;
+}
+@media screen and (max-width: 576px) {
+    .numbers {
+        grid-template-columns: 1fr;
+    }
 }
 
 
@@ -653,6 +750,7 @@ section {
 .subscribe__heading {
     text-align: left;
     margin-bottom: 0;
+    font-weight: 700;
 }
 .form__text {
     margin-top: 10px;
@@ -692,7 +790,70 @@ label {
 .form .button{
     z-index: 1;
 }
-/* Акции */
+
+@media (max-width: 992px) {
+    .border-col{
+        display: none;
+    }
+}
+@media (max-width: 768px) {
+    .container_subscribe {
+        max-width: 100% !important;
+        padding: 0 20px;
+    }
+
+    .message-wrapper {
+        justify-content: center;
+    }
+
+    .message, .container_subscribe .message {
+        display: flex;
+        align-items: center;
+        clip-path: polygon(0 0, 70% 0%, 100% 0, 100% 80%, 50% 100%, 0% 80%, 0% 30%);
+        padding: 5px 10px 80px;
+        justify-content: space-between;
+    }
+
+    .message__heading {
+        font-size: 27px;
+    }
+
+    .form-wrapper {
+        padding: 40px 20px 50px;
+        background-color: #dce0f9;
+        margin: 30px auto 0;
+        border-radius: 15px;
+    }
+    .message__text {
+        font-size: 20px;
+        text-align: right;
+    }
+    .message__item::before{
+        display: none;
+    }
+}
+
+@media (max-width: 600px){
+    .message{
+        flex-direction: column;
+    }
+    .message__item{
+        margin-left: 0;
+    }
+    .message__heading, .message__text{
+        max-width: 100% !important;
+    }
+    .message__text{
+        text-align: center;
+    }
+}
+@media (max-width: 400px){
+    .form__input{
+        max-width: 225px;
+    }
+}
+
+    /* Акции */
 .akcii_akcii-left {
     background-image: url(/img/turbina.png);
     background-color: #ffc600;
@@ -859,6 +1020,20 @@ label {
 .quote__author-photo {
     width: 380px;
 }
+
+@media (max-width: 768px) {
+    .quote-section{
+        background: #fff;
+    }
+    .quote__author-photo{
+        margin: 0 auto;
+    }
+}
+@media (max-width: 400px) {
+    .quote__author-photo{
+        width: 300px;
+    }
+}
 /* Team block */
 .team-section {
     padding: 140px 0;
@@ -907,6 +1082,7 @@ label {
 .contacts-section {
     background-color: #d9ddeb;
     position: relative;
+    height: 577px;
     /* padding: 110px 0 60px 0; */
 }
 .contacts-section::before {
@@ -959,6 +1135,34 @@ label {
     top: 0;
     width: 60%;
 }
+
+@media (max-width: 768px) {
+    .contacts__inner .container{
+        width: 100% !important;
+        margin: 0;
+    }
+}
+@media (max-width: 600px) {
+    .contacts__map{
+        position: static;
+        width: 100%;
+        padding: 10px;
+    }
+    .contacts{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 0;
+        padding-top: 30px;
+    }
+    .contacts__item{
+        min-width: 225px;
+    }
+    .contacts-section{
+        height: 100%;
+    }
+}
 /* Footer */
 .footer {
     padding: 35px 0;
@@ -993,4 +1197,13 @@ label {
 }
 .socials__link i {
     color: #fff;
+}
+
+@media (max-width: 600px) {
+   .socials-wrapper{
+       flex-direction: column;
+   }
+    .socials__text{
+        margin-bottom: 10px;
+    }
 }
