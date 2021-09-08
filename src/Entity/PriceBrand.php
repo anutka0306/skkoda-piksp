@@ -98,6 +98,11 @@ class PriceBrand
      */
     protected $photoFile;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo_big;
+
     public function __construct()
     {
         $this->priceModels = new ArrayCollection();
@@ -374,5 +379,17 @@ class PriceBrand
     public function getPopular(): ?bool
     {
         return $this->popular;
+    }
+
+    public function getPhotoBig(): ?string
+    {
+        return $this->photo_big;
+    }
+
+    public function setPhotoBig(?string $photo_big): self
+    {
+        $this->photo_big = $photo_big;
+
+        return $this;
     }
 }

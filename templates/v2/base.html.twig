@@ -69,7 +69,9 @@
 {#{{ include('v2/scripts/_yandex_metrics.html.twig') }}#}
 
 <div class="page-wrapper">
-    {{ include('v2/blocks/include/header.html.twig') }}
+    {% block header_line %}
+
+    {% endblock %}
     <main class="page-main">
         {% block header_banner %}
         {% endblock %}

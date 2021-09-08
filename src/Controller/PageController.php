@@ -10,6 +10,7 @@ use App\Entity\Simple;
 use App\Entity\Vacancy;
 use App\Entity\ServiceWithout;
 use App\Repository\ContentRepository;
+use App\Repository\PriceBrandRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,7 +73,7 @@ class PageController extends AbstractController
         }
 
         if ($page instanceof Brand) {
-            return $this->brand($page);
+            return $this->brand($page, $priceModelRepository);
         }
 
         if ($page instanceof Model) {
@@ -134,12 +135,14 @@ class PageController extends AbstractController
         ]);
     }
     
-    private function brand(Brand $brand)
+    private function brand(Brand $brand, PriceModelRepository $priceModelRepository)
     {
         $brand_name = $brand->getBrandName();
         return $this->render('v2/pages/brand.html.twig', [
             'page' => $brand,
             'brandName' => $brand_name,
+            'models' => $priceModelRepository->findBy(['priceBrand' => $brand->getBrandId()]),
+            'brandPath' => $brand->getPath(),
         ]);
     }
     

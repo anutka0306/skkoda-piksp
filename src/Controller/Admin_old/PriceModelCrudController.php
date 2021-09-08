@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 
 class PriceModelCrudController extends AbstractCrudController
 {
@@ -38,6 +39,8 @@ class PriceModelCrudController extends AbstractCrudController
             AssociationField::new('priceBrand', 'Бренд'),
             AssociationField::new('class', 'Нормо-час'),
             NumberField::new('increase', 'Наценка'),
+            ImageField::new('photo')->setUploadDir('/public/img/models/')->setBasePath('/img/models/'),
+            ImageField::new('photo_big')->setUploadDir('/public/img/models/big/')->setBasePath('/img/models/big/'),
             DateTimeField::new('modify_date', 'Дата изменения')->hideOnIndex(),
 
         ];

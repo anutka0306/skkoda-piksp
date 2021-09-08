@@ -11,9 +11,9 @@
 
             <div class="col-xs-12 col-sm-12 col-md-9">
                 <ul class="header__top-line_right">
-                    {% if brands is not null %}
-                        {% for brand in brands %}
-                            <li><a href="/{{ brand.code }}">{{ brand.name }}</a></li>
+                    {% if models is not null %}
+                        {% for model in models %}
+                            <li><a href="{{ brandPath }}{{ model.code }}">{{ model.name }}</a></li>
                         {% endfor %}
                     {%  endif %}
                 </ul>
@@ -52,7 +52,11 @@
             <a href="#"><img src="/img/lexus/logo.png" alt="ПИК" width="199" height="44"></a>
         </div>
         <h4 class="nav__description">Специализированный <br>
-            автосервис LEXUS</h4>
+            автосервис
+            {% if brandName is defined %}
+                {{ brandName|upper }}
+            {%  endif %}
+        </h4>
 
         <div class="nav__address">
             <i class="fas fa-map-marker-alt" aria-hidden="true"></i>

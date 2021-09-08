@@ -1,9 +1,47 @@
+{% if photoBig is defined and photoBig is not null %}
+    <style>
+        .header__inner::after{
+            content: '';
+            background: url(/img/brands/big/{{ photoBig }}) no-repeat;
+            width: 640px;
+            height: 310px;
+            background-size: cover;
+            position: absolute;
+            bottom: 80px;
+            right: 20%;
+            overflow-x: hidden;
+            z-index: 15;
+        }
+    </style>
+{% else %}
+    <style>
+        .header__inner::after{
+            content: '';
+            background: url({{ asset('img/lexus/car.png') }}) no-repeat;
+            width: 640px;
+            height: 310px;
+            background-size: cover;
+            position: absolute;
+            bottom: 80px;
+            right: 20%;
+            overflow-x: hidden;
+            z-index: 15;
+        }
+    </style>
+{% endif %}
+
 <div class="header__inner">
     <div class="container">
         <div class="row">
             <div class="col-12 col-sm-6">
                 <div class="header__main">
-                    <h1><span class="main-heading">Ремонт LEXUS</span><br>
+                    <h1><span class="main-heading">Ремонт
+                            {% if brandName is defined %}
+                            {{ brandName }}
+                                {% else %}
+                                АВТО
+                            {% endif %}
+                        </span><br>
                         в Санкт-Петербурге</h1>
                     <p class="header__text">Выполняем ТО, диагностику, чип тюнинг, <br>
                         ремонт двигателей, кузовной ремонт и пр.</p>
@@ -11,18 +49,30 @@
                     <ul class="header-info-menu">
                         <li class="header-info-menu__item">
                             <div class="header-info-menu__icon"><img src="/img/header-info-1.svg" width="40" height="40" alt=""></div>
-                            <div class="header-info-menu__text">Диагностика <br>
-                                подвески <span class="highlighted">бесплатно</span></div>
+                            <div class="header-info-menu__text">Диагностика
+                                подвески<br>
+                                {% if brandName is defined %}
+                                {{ brandName }}
+                                {% endif %}
+                                <span class="highlighted">бесплатно</span></div>
                         </li>
                         <li class="header-info-menu__item">
                             <div class="header-info-menu__icon"><img src="/img/header-info-2.svg" width="39" height="36" alt=""></div>
                             <div class="header-info-menu__text">Компьютерная <br>
-                                диагностика <span class="highlighted">499 р.</span></div>
+                                диагностика
+                                {% if brandName is defined %}
+                                    {{ brandName }}
+                                {% endif %}
+                                <span class="highlighted">499 р.</span></div>
                         </li>
                         <li class="header-info-menu__item">
                             <div class="header-info-menu__icon"><img src="/img/header-info-3.svg" width="40" height="36" alt=""></div>
                             <div class="header-info-menu__text">Замена
-                                масла <span class="highlighted">499 р.</span></div>
+                                масла
+                                {% if brandName is defined %}
+                                    {{ brandName }}
+                                {% endif %}
+                                <span class="highlighted">499 р.</span></div>
                         </li>
                     </ul>
                 </div>

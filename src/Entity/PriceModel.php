@@ -107,6 +107,16 @@ class PriceModel
      */
     private $increase;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo_big;
+
     public function __construct()
     {
         $this->beforeAfterImages = new ArrayCollection();
@@ -330,5 +340,29 @@ class PriceModel
     public function getPopular(): ?bool
     {
         return $this->popular;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getPhotoBig(): ?string
+    {
+        return $this->photo_big;
+    }
+
+    public function setPhotoBig(?string $photo_big): self
+    {
+        $this->photo_big = $photo_big;
+
+        return $this;
     }
 }

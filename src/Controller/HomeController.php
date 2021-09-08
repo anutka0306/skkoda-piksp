@@ -7,20 +7,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use App\Repository\PriceBrandRepository;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(ContentRepository $repository)
+    public function index(ContentRepository $repository, PriceBrandRepository $priceBrandRepository)
     {
         $page = $repository->findOneBy(['path'=>'/']);
+        $brands = $priceBrandRepository->findAll();
         $gallery = $this->getGalleryImages();
         
         return $this->render('v2/pages/home/index.html.twig', [
             'page' => $page,
             'gallery'=> $gallery,
+            'brands' => $brands,
         ]);
     }
 
@@ -40,4 +43,5 @@ class HomeController extends AbstractController
 
         return $files;
     }
+
 }
