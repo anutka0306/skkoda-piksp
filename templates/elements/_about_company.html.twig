@@ -68,11 +68,11 @@
             <div class="row message-row">
                 <div class="col-lg-8 col-12 message-wrapper">
                     <div class="message">
-                        <h2 class="message__heading subscribe__message-heading">Доверьте <span class="highlighted"> свой LEXUS </span> <br> профессионалам</h2>
+                        <h2 class="message__heading subscribe__message-heading">Доверьте <span class="highlighted"> свой {% if brandName is defined %}{{ brandName }}{% else %}LEXUS/INFINITI{% endif%} </span> <br> профессионалам</h2>
                         <ul class="message__list">
-                            <li class="message__item">Ремонт любой сложности</li>
-                            <li class="message__item">Техническое обслуживание</li>
-                            <li class="message__item">Любые запчасти в наличии</li>
+                            <li class="message__item">Ремонт {% if brandName is defined %}{{ brandName }}{% endif %} любой сложности</li>
+                            <li class="message__item">Техническое обслуживание {% if brandName is defined %}{{ brandName }}{% endif %}</li>
+                            <li class="message__item">Любые запчасти {% if brandName is defined %}{{ brandName }}{% endif %} в наличии</li>
                             <li class="message__item">Возможность срочной записи</li>
                         </ul>
                     </div>

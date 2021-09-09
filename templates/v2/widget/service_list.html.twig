@@ -1,6 +1,13 @@
 <section class="section b5" id="diagnos">
     <div class="container _mPS2id-t" id="raboti">
-        <div class="section__title"><h2>Сервис Lexus/Infiniti (услуги):</h2></div>
+        <div class="section__title"><h2>Сервис
+                {% if page.priceBrand is not null %}
+                    {{ page.priceBrand.name }}
+                {% else %}
+                Lexus/Infiniti
+                {% endif %}
+                (услуги):
+            </h2></div>
         <div class="section__text">Мы оказываем полный спектр услуг по обслуживанию, ремонту, тюнингу автомобилей Вольво.</div>
         <div class="row">
             {% for section in sections %}

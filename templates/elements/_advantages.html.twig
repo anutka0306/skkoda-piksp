@@ -2,7 +2,7 @@
     <div class="section__heading">
         <h2 class="section__h2">Что мы предлагаем</h2>
         <p class="section__heading-text">Мы позаботились о том, чтобы каждый владелец
-            <br>LEXUS нашел у нас то, что нужно именно ему.
+            <br>{% if brandName is defined %}{{ brandName|upper}} {% else %}LEXUS/INFINITI{% endif%} нашел у нас то, что нужно именно ему.
         </p>
     </div>
 
@@ -14,14 +14,14 @@
                         <div class="offer__icon">
                             <img loading="lazy" src="{{ asset('img/offer-1.svg') }}" alt="">
                         </div>
-                        <h4 class="offer__heading">Гарантия на все работы</h4>
-                        <p class="offer__text">По завершению ремонта или профилактических работ Вы получаете гарантию.</p>
+                        <h4 class="offer__heading">Гарантия на все работы {% if brandName is defined %}{{ brandName}}{% endif%}</h4>
+                        <p class="offer__text">По завершению ремонта или профилактических работ {% if brandName is defined %}{{ brandName}}{% endif%} Вы получаете гарантию.</p>
                     </div>
                     <div class="offer">
                         <div class="offer__icon">
                             <img loading="lazy" src="{{ asset('img/offer-3.svg') }}" alt="">
                         </div>
-                        <h4 class="offer__heading">Бонусная программа</h4>
+                        <h4 class="offer__heading">Бонусная программа {% if brandName is defined %}{{ brandName}}{% endif%}</h4>
                         <p class="offer__text">Для постоянных клиентов действуют накопительные скидки от 5 до 30%.</p>
                     </div>
                 </div>
@@ -35,8 +35,8 @@
                         <div class="offer__icon">
                             <img loading="lazy" src="{{ asset('img/offer-2.png') }}" alt="">
                         </div>
-                        <h4 class="offer__heading">Любые запчасти в наличии</h4>
-                        <p class="offer__text">Имеем свой склад запчастей: оригинальные и аналоги. Найдём даже редкие детали</p>
+                        <h4 class="offer__heading">Любые запчасти {% if brandName is defined %}{{ brandName}}{% endif%} в наличии</h4>
+                        <p class="offer__text">Имеем свой склад запчастей {% if brandName is defined %}{{ brandName}}{% endif%}: оригинальные и аналоги. Найдём даже редкие детали</p>
                     </div>
                     <div class="offer">
                         <div class="offer__icon">
