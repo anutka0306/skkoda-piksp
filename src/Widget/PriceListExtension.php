@@ -37,6 +37,8 @@ class PriceListExtension extends AbstractExtension
             new TwigFunction('price_blocks', [$this, 'price_blocks'], ['needs_environment' => true, 'is_safe' => ['html']]),
             new TwigFunction('price_list_full', [$this, 'price_list_full'],
                 ['needs_environment' => true, 'is_safe' => ['html']]),
+            new TwigFunction('service_list', [$this, 'service_list'],
+                ['needs_environment' => true, 'is_safe' => ['html']]),
         ];
     }
     
@@ -54,6 +56,23 @@ class PriceListExtension extends AbstractExtension
         $price_list_title = str_replace('в Москве','- цены:',$page->getName());
         
        return $twig->render('v2/widget/price_list.html.twig', compact('sections', 'price_list_title','page'));
+        //return $twig->render('elements/_price_list_orders.html.twig', compact('sections', 'price_list_title','page'));
+    }
+
+    public function service_list(Environment $twig, Content $page)
+    {
+
+        $sections = $this->model->getSectionsByPage($page);
+
+
+        if ( empty($sections) ) {
+            return '';
+        }
+
+        //$price_list_title = $this->model->getPricelistTitle();
+        $price_list_title = str_replace('в Москве','- цены:',$page->getName());
+
+        return $twig->render('v2/widget/service_list.html.twig', compact('sections', 'price_list_title','page'));
         //return $twig->render('elements/_price_list_orders.html.twig', compact('sections', 'price_list_title','page'));
     }
 

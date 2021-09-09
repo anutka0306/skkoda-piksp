@@ -13,8 +13,9 @@
 
 {% block body %}
     {{ include('elements/_content.html.twig') }}
-    {{ brands_service_block() }}
     {{ price_list(page) }}
+    {{ brands_service_block() }}
+    {{ service_list(page) }}
     {{ include('elements/_advantages.html.twig') }}
     {{ include('elements/_advantages2.html.twig') }}
     {{ special_offers(page.brandAndModelName) }}
