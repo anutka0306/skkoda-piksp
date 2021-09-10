@@ -1,0 +1,37 @@
+<section class="container price-list__block">
+<div class="services-prices">
+    <h3>{{ price_list_title }} цены:</h3>
+    <div class="price-list__ul-wrapper_service">
+
+            <ul data-uk-accordion="collapsible: true">
+
+                    {% for section in sections %}
+                        {% if section.priceServices is not empty %}
+                            <li><a class="uk-accordion-title" href="#">{{ section.name }}</a>
+                                <div class="uk-accordion-content">
+                                    <ul class="price-list">
+                                        {% for service in section.priceServices|filter(service => service.published ) %}
+                                            <li>
+                                            <span>
+                                                {% if service.path  and service.published %}
+                                                    <a href="{{ service.path }}">{{ service.nameInPriceList ?? service.name }}</a>
+                                                {% else %}
+                                                    {{ service.name }} {{ page.brandAndModelName }}
+                                                {% endif %}
+                                                <b>от {{ service.price|number_format(0, '', ' ') }}&nbsp;р.</b>
+                                            </span>
+                                                <span class="border"></span>
+                                                <span><a class="callback js-popup-trigger" data-toggle="modal" data-target="#callback_popup" href="#">Оставить заявку</a></span>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+            </ul>
+
+    </div>
+</div>
+</section>

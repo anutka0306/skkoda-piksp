@@ -1,4 +1,19 @@
-{% if photoBig is defined and photoBig is not null %}
+{% if photoModelBig is defined and photoModelBig is not null  %}
+    <style>
+        .header__inner::after{
+            content: '';
+            background: url(/img/models/big/{{ photoModelBig }}) no-repeat;
+            width: 640px;
+            height: 310px;
+            background-size: cover;
+            position: absolute;
+            bottom: 80px;
+            right: 20%;
+            overflow-x: hidden;
+            z-index: 15;
+        }
+    </style>
+{% elseif photoBig is defined and photoBig is not null %}
     <style>
         .header__inner::after{
             content: '';
@@ -38,6 +53,9 @@
                     <h1><span class="main-heading">Ремонт
                             {% if brandName is defined %}
                             {{ brandName }}
+                                {% if modelName is defined %}
+                                     {{ modelName }}
+                                    {% endif %}
                                 {% else %}
                                 АВТО
                             {% endif %}
@@ -54,6 +72,9 @@
                                 {% if brandName is defined %}
                                 {{ brandName }}
                                 {% endif %}
+                                {% if modelName is defined %}
+                                    {{ modelName }}
+                                {% endif %}
                                 <span class="highlighted">бесплатно</span></div>
                         </li>
                         <li class="header-info-menu__item">
@@ -63,6 +84,9 @@
                                 {% if brandName is defined %}
                                     {{ brandName }}
                                 {% endif %}
+                                {% if modelName is defined %}
+                                    {{ modelName }}
+                                {% endif %}
                                 <span class="highlighted">499 р.</span></div>
                         </li>
                         <li class="header-info-menu__item">
@@ -71,6 +95,9 @@
                                 масла
                                 {% if brandName is defined %}
                                     {{ brandName }}
+                                {% endif %}
+                                {% if modelName is defined %}
+                                    {{ modelName }}
                                 {% endif %}
                                 <span class="highlighted">499 р.</span></div>
                         </li>

@@ -89,6 +89,11 @@ class PriceService
      */
     private $excludedSalons;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_popular;
+
     
     public function __construct()
     {
@@ -442,6 +447,18 @@ class PriceService
     public function setPagetitle(?string $pagetitle): self
     {
         $this->pagetitle = $pagetitle;
+
+        return $this;
+    }
+
+    public function getIsPopular(): ?bool
+    {
+        return $this->is_popular;
+    }
+
+    public function setIsPopular(bool $is_popular): self
+    {
+        $this->is_popular = $is_popular;
 
         return $this;
     }

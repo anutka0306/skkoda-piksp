@@ -1,40 +1,23 @@
+
 {% extends 'v2/base.html.twig' %}
-{% block title %} {{ page.metaTitle ? page.metaTitle : (page.h1~' - Styled.cc') }} {% endblock %}
+{% block title %} {{ page.metaTitle ? page.metaTitle : (page.h1~' - ') }} {% endblock %}
+
+{% block header_line %}
+    {{ include('v2/blocks/include/header_services.html.twig', {'popularServices': popularServices}) }}
+{% endblock %}
+{% block header_banner %}
+    {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, photoBig : page.priceBrand.photoBig, photoModelBig: page.priceModel.photoBig, brandName : page.priceBrand.name, modelName: page.priceModel.name }) }}
+{% endblock %}
+
 {% block body %}
-    <div class="h1__inner-page" {% if page.pageIcon is not null %} style="background-image: url('/images/page-icons/{{ page.pageIcon}}')" {% endif %}>
-        <div class="uk-section uk-container">
-            <h1>{{ page.h1 }}</h1>
-        </div>
-    </div>
-    {% if page.text is not null and page.text is not empty %}
-    <div class="seo-box__wrapper">
-        {{ include('elements/_block_content_top.html.twig', {'text': page.text, 'textImg':page.textImg}) }}
-    </div>
-    {% endif %}
-    {% embed 'v2/embed/black-services-block.html.twig' %}
-        {% block content %}
-
-            {{ price_list(page) }}
-            {{ special_offers(page.brandAndModelName) }}
-        {% endblock %}
-    {% endembed %}
+    {{ include('elements/_content.html.twig') }}
+    {{ price_list(page) }}
+    {{ brand_models_service(page.priceBrand, page.priceBrand.path) }}
+    {{ service_list(page) }}
+    {{ include('elements/_advantages.html.twig',{brandName: page.priceBrand.name, modelName: page.priceModel.name}) }}
+    {{ include('elements/_advantages2.html.twig', {brandName: page.priceBrand.name, modelName: page.priceModel.name}) }}
+    {{ special_offers(page.brandAndModelName) }}
+    {{ include('elements/_about_company.html.twig', {brandName: page.priceBrand.name}) }}
+    {{ include('elements/_quote.html.twig') }}
+    {{ include('elements/_team.html.twig', {brandName: page.priceBrand.name}) }}
 {% endblock %}
-
-{% block extraModules %}
-    {{ service_text_down(page.textDown, page.textDown2, page.textDown3, page.textDown4, page.textDownImg, page.textDownImg2, page.textDownImg3, page.textDownImg4, page.textDownBg) }}
-    {% embed 'v2/embed/black-services-block.html.twig' %}
-        {% block content %}
-            {{ include('v2/blocks/section/advantages-inner.html.twig') }}
-            {{ include('v2/blocks/section/instagram-block.html.twig') }}
-        {% endblock %}
-    {% endembed %}
-    <div class="uk-background-secondary">
-        {{ include('elements/instagram_widget.html.twig') }}
-        {{ our_works_slider(page) }}
-        {# Блок мастеров #}
-        {# {{ include('v2/blocks/section/team.html.twig') }}#}
-        {{ inner_menu() }}
-    </div>
-
-{% endblock %}
-

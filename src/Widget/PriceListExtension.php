@@ -3,6 +3,7 @@
 namespace App\Widget;
 
 use App\Entity\Content;
+use App\Entity\RootService;
 use App\Entity\Service;
 use App\Model\PriceListModel;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
@@ -54,7 +55,9 @@ class PriceListExtension extends AbstractExtension
 
         //$price_list_title = $this->model->getPricelistTitle();
         $price_list_title = str_replace('в Москве','- цены:',$page->getName());
-        
+        if($page instanceof RootService){
+            return $twig->render('v2/widget/price_list_service.html.twig', compact('sections', 'price_list_title','page'));
+        }
        return $twig->render('v2/widget/price_list.html.twig', compact('sections', 'price_list_title','page'));
         //return $twig->render('elements/_price_list_orders.html.twig', compact('sections', 'price_list_title','page'));
     }
@@ -71,9 +74,10 @@ class PriceListExtension extends AbstractExtension
 
         //$price_list_title = $this->model->getPricelistTitle();
         $price_list_title = str_replace('в Москве','- цены:',$page->getName());
-
+    if($page instanceof RootService){
+        return $twig->render('v2/widget/service_list_root_service.html.twig', compact('sections', 'price_list_title','page'));
+    }
         return $twig->render('v2/widget/service_list.html.twig', compact('sections', 'price_list_title','page'));
-        //return $twig->render('elements/_price_list_orders.html.twig', compact('sections', 'price_list_title','page'));
     }
 
     public function price_list_turbo(Environment $twig, ServiceEntityReedInterface $page)
