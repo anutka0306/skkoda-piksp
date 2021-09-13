@@ -150,6 +150,40 @@ class PageGeneratorService
         $this->addRootServicePageByCategory(
             $priceCategory
         );
+        $price_brands = $this->price_brand_repository->findAll();
+
+        foreach ($price_brands as $price_brand) {
+            $brand_page = $this->brand_repository->findOneBy(['priceBrand' => $price_brand]);
+            if (null === $brand_page) {
+                $brand_page = $this->addRootBrandPage($price_brand);
+            }
+            $servicePage = new Service();
+            $servicePage->setName($priceCategory->getName() .' '. $price_brand->getName() . ' в Москве')
+                ->setText('')
+                ->setBrandId($price_brand->getId())
+                ->setPath($price_brand->getPath().$priceCategory->getSlug().'/')
+                ->setParent($this->content_repository->findOneBy(['brand_id' => $price_brand->getId(), 'path' => $price_brand->getPath()]))
+                ->setPriceCategory($priceCategory)
+            ;
+            $this->em->persist($servicePage);
+
+            foreach ($price_brand->getPriceModels() as $price_model) {
+                $model_page = $this->model_repository->findOneBy(['priceModel' => $price_model]);
+                if (null === $model_page) {
+                    $model_page = $this->addRootModelPage($price_model, $price_brand, $brand_page);
+                }
+                $servicePage = new Service();
+                $servicePage->setName($priceCategory->getName(). ' '. $price_brand->getName(). ' '. $price_model->getName(). ' в Москве')
+                    ->setText('')
+                    ->setModelId($price_model->getId())
+                    ->setPath($price_model->getPath().$priceCategory->getSlug().'/')
+                    ->setParent($this->content_repository->findOneBy(['model_id' => $price_model->getId(), 'path' => $price_model->getPath()]))
+                    ->setPriceCategory($priceCategory)
+                ;
+                $this->em->persist($servicePage);
+            }
+            
+        }
         $this->em->flush();
 
     }

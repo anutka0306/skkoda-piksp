@@ -36,6 +36,7 @@ class PriceServiceCrudController extends AbstractCrudController
             TextField::new('slug', 'Алиас'),
             NumberField::new('hours','Кол-во нормо-часов'),
             Field::new('published', 'Опубликовано'),
+            Field::new('is_popular', 'Популярная услуга'),
             TextField::new('pagetitle', 'Page Title')->hideOnIndex(),
         ];
     }
