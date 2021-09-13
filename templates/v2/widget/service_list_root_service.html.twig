@@ -25,9 +25,10 @@
             {% for section in sections %}
                 {% if section.priceServices is not empty %}
                     {% for service in section.priceServices|filter(service => service.published ) %}
+
                 <div class="col-xs-6 col-md-2 center pad5 imgmodel" itemscope="" itemtype="http://schema.org/Product">
                 <div class="caption thumbnail">
-                    <a itemprop="url" href="{{ service.path }}">
+                    <a itemprop="url" {% if service.path is not null %} href="{{ service.path }}" {% else %} href="/{{ section.slug }}/{{ service.slug }}/"{% endif %}>
                         {#<img itemprop="image" style="width: 60px; height: auto;" data-src="/images/category_images/{{ service.image }}" src="/images/category_images/{{ service.image }}" alt="{{ service.name }}" class=" lazyloaded">#}
                         <div itemprop="name" title="{{ service.name }}" style="margin-top: 5px; font-size: 16px; text-align: center;" class="h3"><span class="link">{{ service.name }}</span></div>
                     </a>

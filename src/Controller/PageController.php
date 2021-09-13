@@ -179,15 +179,18 @@ class PageController extends AbstractController
     {
         $brand_name = $service->getBrandName();
         $model_id = $service->getModelId();
+
         if($model_id){
            $model_name = $priceModelRepository->find($model_id)->getName();
         }else{
             $model_name = null;
         }
+        $services = $this->page_repository->findOneBy(['path' => '/'.$service->getPriceCategory()->getSlug().'/']);
         return $this->render('v2/pages/service.html.twig', [
             'page' => $service,
             'brandName' => $brand_name,
             'modelName' => $model_name,
+            'parentService' => $services,
         ]);
     }
     

@@ -55,7 +55,7 @@ class PriceListExtension extends AbstractExtension
 
         //$price_list_title = $this->model->getPricelistTitle();
         $price_list_title = str_replace('в Москве','- цены:',$page->getName());
-        if($page instanceof RootService){
+        if($page instanceof RootService or $page instanceof Service){
             return $twig->render('v2/widget/price_list_service.html.twig', compact('sections', 'price_list_title','page'));
         }
        return $twig->render('v2/widget/price_list.html.twig', compact('sections', 'price_list_title','page'));
@@ -65,7 +65,8 @@ class PriceListExtension extends AbstractExtension
     public function service_list(Environment $twig, Content $page)
     {
 
-        $sections = $this->model->getSectionsByPage($page);
+            $sections = $this->model->getSectionsByPage($page);
+
 
 
         if ( empty($sections) ) {
@@ -73,7 +74,7 @@ class PriceListExtension extends AbstractExtension
         }
 
         $price_list_title = str_replace('в Москве','- цены:',$page->getName());
-    if($page instanceof RootService){
+    if($page instanceof RootService or $page instanceof Service){
         return $twig->render('v2/widget/service_list_root_service.html.twig', compact('sections', 'price_list_title','page'));
     }
         return $twig->render('v2/widget/service_list.html.twig', compact('sections', 'price_list_title','page'));

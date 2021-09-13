@@ -13,7 +13,7 @@
                 <ul class="header__top-line_right">
                     {% if popularServices is not null and popularServices is not empty %}
                         {% for service in popularServices %}
-                            <li><a href="/{{ service.slug }}">{{ service.name }}</a></li>
+                            <li><a href="/{{ service.priceCategory.slug }}/{{ service.slug }}">{{ service.name }}</a></li>
                         {% endfor %}
                     {%  endif %}
                 </ul>

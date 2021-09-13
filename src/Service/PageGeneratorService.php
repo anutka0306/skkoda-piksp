@@ -158,7 +158,7 @@ class PageGeneratorService
                 $brand_page = $this->addRootBrandPage($price_brand);
             }
             $servicePage = new Service();
-            $servicePage->setName($priceCategory->getName() .' '. $price_brand->getName() . ' в Москве')
+            $servicePage->setName($priceCategory->getName() .' '. $price_brand->getName())
                 ->setText('')
                 ->setBrandId($price_brand->getId())
                 ->setPath($price_brand->getPath().$priceCategory->getSlug().'/')
@@ -173,7 +173,7 @@ class PageGeneratorService
                     $model_page = $this->addRootModelPage($price_model, $price_brand, $brand_page);
                 }
                 $servicePage = new Service();
-                $servicePage->setName($priceCategory->getName(). ' '. $price_brand->getName(). ' '. $price_model->getName(). ' в Москве')
+                $servicePage->setName($priceCategory->getName(). ' '. $price_brand->getName(). ' '. $price_model->getName())
                     ->setText('')
                     ->setModelId($price_model->getId())
                     ->setPath($price_model->getPath().$priceCategory->getSlug().'/')
@@ -182,7 +182,7 @@ class PageGeneratorService
                 ;
                 $this->em->persist($servicePage);
             }
-            
+
         }
         $this->em->flush();
 
