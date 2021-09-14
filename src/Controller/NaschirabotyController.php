@@ -25,7 +25,7 @@ class NaschirabotyController extends AbstractController
     }
 
     /**
-     * @Route("/naschiraboty/", name="naschiraboty_index")
+     * @Route("/blog/", name="naschiraboty_index")
      * @param ContentRepository $content_repository
      * @param  NaschirabotyRepository $naschiraboty_repository
      * @param Request $request
@@ -33,7 +33,7 @@ class NaschirabotyController extends AbstractController
      */
     public function index( ContentRepository $content_repository, NaschirabotyRepository $naschiraboty_repository,Request $request): Response
     {
-        $page = $content_repository->findOneByToken('naschiraboty');
+        $page = $content_repository->findOneByToken('blog');
         $works = $naschiraboty_repository->findAll();
 
         foreach ($works as $key => $value){
@@ -59,7 +59,7 @@ class NaschirabotyController extends AbstractController
     }
 
     /**
-     * @Route("/naschiraboty/{id}/", name="naschiraboty_item")
+     * @Route("/blog/{id}/", name="naschiraboty_item")
      * @param Naschiraboty $work
      * @param Request $request
      * @return Response

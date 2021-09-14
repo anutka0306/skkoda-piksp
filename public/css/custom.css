@@ -1323,3 +1323,25 @@ label {
     }
 
 }
+/* Nashi rabory*/
+.nashiraboty__item{
+    margin: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #cccccc;
+    width: 20%;
+}
+.nashiraboty__item img{
+    padding: 0 30px;
+    height: 140px;
+}
+.nashiraboty__item_title{
+    display: block;
+    padding: 0 30px;
+    text-align: center;
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

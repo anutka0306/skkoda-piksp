@@ -50,14 +50,19 @@
         <div class="row">
             <div class="col-12 col-sm-6">
                 <div class="header__main">
-                    <h1><span class="main-heading">Ремонт
-                            {% if brandName is defined %}
-                            {{ brandName }}
-                                {% if modelName is defined %}
-                                     {{ modelName }}
-                                    {% endif %}
-                                {% else %}
-                                АВТО
+                    <h1><span class="main-heading">
+                            {% if customH1 is defined %}
+                                {{ customH1 }}
+                            {% else %}
+                                Ремонт
+                                {% if brandName is defined %}
+                                {{ brandName }}
+                                    {% if modelName is defined %}
+                                         {{ modelName }}
+                                        {% endif %}
+                                    {% else %}
+                                    АВТО
+                                {% endif %}
                             {% endif %}
                         </span><br>
                         в Санкт-Петербурге</h1>

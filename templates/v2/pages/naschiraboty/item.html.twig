@@ -1,6 +1,14 @@
 {% extends 'v2/base.html.twig' %}
-{% block title %} {{ page.h1~' - наши работы – Детейлинг студия Styled' }} {% endblock %}
-{% block description %}{{ '⭐⭐⭐⭐⭐ '~ page.h1~' – примеры наших работ. Портфолио. Цены и сколько стоит – на сайте и по телефону. Расположены у метро Отрадное, СВАО, Москва! Детейлинг студия Styled.' }}{% endblock %}
+{% block title %} {{ page.h1~' - наши работы – ' }} {% endblock %}
+{% block description %}{{ '⭐⭐⭐⭐⭐ '~ page.h1~' – примеры наших работ. Портфолио. ' }}{% endblock %}
+{% block header_line %}
+{{ include('v2/blocks/include/header_models.html.twig', {models : models ?? null}) }}
+{% endblock %}
+{% block header_banner %}
+    {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, 'customH1': page.h1 }) }}
+{% endblock %}
+{% block breadcrumbs %}
+{% endblock %}
 
 {% block body %}
     {#{{ include('v2/blocks/section/content.html.twig',{text:page.text }) }}

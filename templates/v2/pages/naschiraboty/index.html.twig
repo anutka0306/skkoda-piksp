@@ -1,6 +1,13 @@
 {% extends 'v2/base.html.twig' %}
-{% block title %} {{ page.metaTitle }} {% endblock %}
-{% block seoDescription %} {{ page.metaDescription}} {% endblock %}
+{% block title %} {#{{ page.metaTitle }}#} {% endblock %}
+{% block description %} {#{{ page.metaDescription}}#} {% endblock %}
+{% block last_modified %}{% endblock %}
+{% block header_line %}
+    {{ include('v2/blocks/include/header_models.html.twig', {models : models ?? null}) }}
+{% endblock %}
+{% block header_banner %}
+    {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, 'customH1': page.h1 }) }}
+{% endblock %}
 
 {% block body %}
 
@@ -17,11 +24,12 @@
                 {#{% for image in work.images %}
                         {{ dump(image) }}
                 {% endfor %}#}
-                <div class="col-md-4 col-sm-6 col-12 nashiraboty__item">
-                    <a href="/naschiraboty/{{ work.id }}/">
+                <div class="col-md-3 col-sm-6 col-12 nashiraboty__item">
+                    <a href="/blog/{{ work.id }}/">
                         <img src="/img/naschiraboty/{{ work.id }}/{{ work.images[0].image }}">
                     </a>
-                    <a href="/naschiraboty/{{ work.id }}/">{{ work.name }}</a>
+                    <a class="nashiraboty__item_title" href="/blog/{{ work.id }}/">{{ work.name }}</a>
+                    <a href="/blog/{{ work.id }}/" class="nashiraboty__item_more">Подробнее</a>
                 </div>
             {% endfor %}
                 </div>
@@ -29,13 +37,3 @@
 
 {% endblock %}
 
-{% block extraModules %}
-    {% embed 'v2/embed/black-services-block.html.twig' %}
-        {% block content %}
-
-            {{ include('v2/blocks/section/instagram-block.html.twig') }}
-        {% endblock %}
-    {% endembed %}
-
-
-{% endblock %}
