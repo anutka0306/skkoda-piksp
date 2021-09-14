@@ -395,6 +395,10 @@ h1 {
     color: #2a2e47;
     text-decoration: none;
 }
+.brands__list_slider_item_link img{
+    max-width: 160px !important;
+    max-height: 70px !important;
+}
 /* Секция услуги */
 .section {
     position: relative;
