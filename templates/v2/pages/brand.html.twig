@@ -3,7 +3,7 @@
 {% block title %} {{ page.metaTitle ? page.metaTitle : (page.h1~' - ') }} {% endblock %}
 
 {% block header_line %}
-    {{ include('v2/blocks/include/header_models.html.twig', {models : models ?? null, brandPath, brandName : page.priceBrand.name}) }}
+    {{ include('v2/blocks/include/header_models.html.twig', {models : models ?? null, brandPath, brandName : page.priceBrand.name, logo : page.priceBrand.imgLogo}) }}
 {% endblock %}
 {% block header_banner %}
     {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, photoBig : page.priceBrand.photoBig, brandName : page.priceBrand.name }) }}

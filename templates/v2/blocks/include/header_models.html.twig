@@ -49,7 +49,11 @@
             </div>
         </div>
         <div class="header__logo">
-            <a href="/"><img src="/img/lexus/logo.png" alt="ПИК" width="199" height="44"></a>
+            {% if logo is defined and logo is not null %}
+                <a href="/"><img src="/img/brands/logo/{{ logo }}" alt="ПИК" width="199" height="44"></a>
+            {% else %}
+                <a href="/"><img src="/img/lexus/logo.png" alt="ПИК" width="199" height="44"></a>
+            {% endif %}
         </div>
         <h4 class="nav__description">Специализированный <br>
             автосервис

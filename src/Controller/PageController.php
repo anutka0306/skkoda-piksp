@@ -152,7 +152,7 @@ class PageController extends AbstractController
             'page' => $brand,
             'brandName' => $brand_name,
             'models' => $priceModelRepository->findBy(['priceBrand' => $brand->getBrandId()]),
-            'brandPath' => $brand->getPath(),
+            'brandPath' => $brand->getPath()
         ]);
     }
     

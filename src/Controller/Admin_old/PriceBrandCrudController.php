@@ -50,6 +50,7 @@ class PriceBrandCrudController extends AbstractCrudController
             TextField::new('code', 'Алиас'),
             ImageField::new('photo')->setUploadDir('/public/img/brands/')->setBasePath('/img/brands/'),
             ImageField::new('photo_big')->setUploadDir('/public/img/brands/big/')->setBasePath('/img/brands/big/'),
+            ImageField::new('img_logo')->setUploadDir('/public/img/brands/logo/')->setBasePath('/img/brands/logo/'),
             DateTimeField::new('modifyDate', 'Дата изменения')->hideOnIndex(),
         ];
     }

@@ -103,6 +103,11 @@ class PriceBrand
      */
     private $photo_big;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $img_logo;
+
     public function __construct()
     {
         $this->priceModels = new ArrayCollection();
@@ -389,6 +394,18 @@ class PriceBrand
     public function setPhotoBig(?string $photo_big): self
     {
         $this->photo_big = $photo_big;
+
+        return $this;
+    }
+
+    public function getImgLogo(): ?string
+    {
+        return $this->img_logo;
+    }
+
+    public function setImgLogo(?string $img_logo): self
+    {
+        $this->img_logo = $img_logo;
 
         return $this;
     }
