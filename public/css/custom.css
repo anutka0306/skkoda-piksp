@@ -906,7 +906,7 @@ label {
     color: #fff;
 }
 .btn_small-wrapper {
-    width: 160px;
+    max-width: 280px;
 }
 .btn_new-small {
     background-color: #2d314a;
@@ -931,7 +931,7 @@ label {
 .btn_small-right-wrapper {
     background-color: #ffc600;
     padding: 10px 0;
-    width: 160px;
+    max-width: 280px;
     text-align: center;
     border-radius: 5px;
 }
@@ -982,7 +982,7 @@ label {
 .btn_small-right-wrapper {
     background-color: #ffc600;
     padding: 10px 0;
-    width: 160px;
+    max-width: 280px;
     text-align: center;
     border-radius: 5px;
 }
