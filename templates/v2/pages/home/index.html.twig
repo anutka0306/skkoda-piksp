@@ -12,7 +12,7 @@
 {% block breadcrumbs %}{% endblock %}
 
 {% block body %}
-    {{ include('elements/_content.html.twig') }}
+    {{ include('elements/_content.html.twig', {'page':page}) }}
     {{ price_list(page) }}
     {{ brands_service_block() }}
     {{ service_list(page) }}

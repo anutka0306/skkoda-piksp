@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class SimpleCrudController extends AbstractCrudController
@@ -34,14 +35,14 @@ class SimpleCrudController extends AbstractCrudController
             Field::new('id', 'ID')->onlyOnIndex(),
             TextField::new('path', 'Алиас'),
             TextField::new('name','Название'),
-            TextField::new('h1', 'H1'),
+            TextField::new('h1', 'H2'),
             ImageField::new('pageIcon', 'Иконка страницы')->setUploadDir('/public/images/page-icons')->setBasePath('/images/page-icons/'),
             //Подгружает
             AssociationField::new('parent', 'Родитель')->hideOnIndex(),
             TextField::new('meta_title', 'Title')->hideOnIndex(),
-            CodeEditorField::new('meta_description','Description')->hideOnIndex(),
-            CodeEditorField::new('text', 'Текст')->hideOnIndex(),
-            ImageField::new('text_img', 'Картинка текста (верхнего)')->setUploadDir('/public/images/page-images')->setBasePath('/images/page-images/')->hideOnIndex(),
+            TextEditorField::new('meta_description','Description')->hideOnIndex(),
+            TextEditorField::new('text', 'Текст')->hideOnIndex(),
+           /* ImageField::new('text_img', 'Картинка текста (верхнего)')->setUploadDir('/public/images/page-images')->setBasePath('/images/page-images/')->hideOnIndex(),
             ImageField::new('text_down_bg', 'Фоновое изображение нижнего блока текста')->setUploadDir('/public/images/page-images')->setBasePath('/images/page-images/')->hideOnIndex(),
             CodeEditorField::new('text_down', 'Текст нижний')->hideOnIndex(),
             ImageField::new('text_down_img', 'Картинка нижнего блока')->setUploadDir('/public/images/page-images')->setBasePath('/images/page-images/')->hideOnIndex(),
@@ -50,7 +51,7 @@ class SimpleCrudController extends AbstractCrudController
             CodeEditorField::new('text_down3', 'Текст нижний 3-ий блок')->hideOnIndex(),
             ImageField::new('text_down_img3', 'Картинка нижнего блока3')->setUploadDir('/public/images/page-images')->setBasePath('/images/page-images/')->hideOnIndex(),
             CodeEditorField::new('text_down4', 'Текст нижний 4-ый блок')->hideOnIndex(),
-            ImageField::new('text_down_img4', 'Картинка нижнего блока4')->setUploadDir('/public/images/page-images')->setBasePath('/images/page-images/')->hideOnIndex(),
+            ImageField::new('text_down_img4', 'Картинка нижнего блока4')->setUploadDir('/public/images/page-images')->setBasePath('/images/page-images/')->hideOnIndex(),*/
             BooleanField::new('published', 'Активно'),
             NumberField::new('rating_value', 'Рейтинг')->hideOnIndex(),
             NumberField::new('rating_count', 'Кол-во голосов')->hideOnIndex(),
