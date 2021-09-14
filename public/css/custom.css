@@ -35,9 +35,12 @@ header{
     background: #F8F9FD;
     padding: 0 !important;
 }
+.header__top-line{
+    padding: 5px 0;
+}
 .header__top-line_right{
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     list-style-type: none;
     height: 100%;
@@ -54,6 +57,7 @@ header{
 }
 .header__top-line_left li a, .header__top-line_right li a{
     color: #6c6c6c;
+    font-family: 'Cambria';
 }
 .header__top-line_left li a:hover, .header__top-line_right li a:hover{
     color: #ec4324;
