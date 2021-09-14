@@ -42,7 +42,7 @@ class AdminController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Styled.cc');
+            ->setTitle('Lexus Пик');
     }
 
     public function configureMenuItems(): iterable
@@ -65,7 +65,6 @@ class AdminController extends AbstractDashboardController
             ]),
             MenuItem::linkToCrud('Акции', 'fa fa-money', SpecialOffer::class),
             MenuItem::linkToCrud('Галерея наших работ', 'fas fa-car', OurWorks::class),
-            MenuItem::linkToCrud('Наши партнеры', 'fa fa-fw fa-hand-holding-usd', Partners::class),
             MenuItem::linkToCrud('Наши работы', 'fa fa-fw fa-hand-holding-usd', Naschiraboty::class),
             MenuItem::linkToCrud('Галерея на главной',null,AttachMainGallery::class),
         ];
