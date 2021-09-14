@@ -1184,7 +1184,15 @@ label {
     color: #fff;
 }
 .footer-row {
-    align-items: center;
+    align-items: flex-start;
+}
+.footer__link{
+    display: block;
+    color: #ffffff;
+    margin-top: 7px;
+}
+.footer__link:hover{
+    text-decoration: none;
 }
 .copyright {
     font-size: 16px;
