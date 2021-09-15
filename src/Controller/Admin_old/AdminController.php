@@ -4,6 +4,7 @@ namespace App\Controller\Admin_old;
 
 use App\Entity\AttachMainGallery;
 use App\Entity\Brand;
+use App\Entity\MenuTop;
 use App\Entity\Model;
 use App\Entity\Naschiraboty;
 use App\Entity\OurWorks;
@@ -49,6 +50,9 @@ class AdminController extends AbstractDashboardController
     {
         return[
             MenuItem::linktoDashboard('Dashboard', 'fa fa-home'),
+            MenuItem::subMenu('Меню', 'fa fa-fw fa-file')->setSubItems([
+                MenuItem::linkToCrud('Верхнее меню', 'fa fa-fw fa-file', MenuTop::class),
+            ]),
             MenuItem::subMenu('Редактор страниц', 'fa fa-fw fa-file-alt')->setSubItems([
                 MenuItem::linkToCrud('Инфо страницы', 'fa fa-fw fa-file', Simple::class),
                 MenuItem::linkToCrud('Стр. Марок', 'fas fa-car', Brand::class),

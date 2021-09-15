@@ -2,7 +2,7 @@
 {% block title %} {{ page.h1~' - наши работы – ' }} {% endblock %}
 {% block description %}{{ '⭐⭐⭐⭐⭐ '~ page.h1~' – примеры наших работ. Портфолио. ' }}{% endblock %}
 {% block header_line %}
-{{ include('v2/blocks/include/header_models.html.twig', {models : models ?? null}) }}
+{{ include('v2/blocks/include/header.html.twig', {'brands' : brands, 'topMenu' : topMenu}) }}
 {% endblock %}
 {% block header_banner %}
     {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, 'customH1': page.h1 }) }}

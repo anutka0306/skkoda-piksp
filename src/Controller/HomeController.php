@@ -8,22 +8,26 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use App\Repository\PriceBrandRepository;
+use App\Entity\MenuTop;
+use App\Repository\MenuTopRepository;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(ContentRepository $repository, PriceBrandRepository $priceBrandRepository)
+    public function index(ContentRepository $repository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository)
     {
         $page = $repository->findOneBy(['path'=>'/']);
         $brands = $priceBrandRepository->findAll();
         $gallery = $this->getGalleryImages();
+        $topMenu = $menuTopRepository->findAll();
         
         return $this->render('v2/pages/home/index.html.twig', [
             'page' => $page,
             'gallery'=> $gallery,
             'brands' => $brands,
+            'topMenu' => $topMenu,
         ]);
     }
 

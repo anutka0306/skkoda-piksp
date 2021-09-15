@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Form\SalonFilterType;
+use App\Repository\MenuTopRepository;
+use App\Repository\PriceBrandRepository;
 use App\Service\SalonManager;
 use App\Entity\Naschiraboty;
 use App\Repository\ContentRepository;
@@ -31,10 +33,12 @@ class NaschirabotyController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function index( ContentRepository $content_repository, NaschirabotyRepository $naschiraboty_repository,Request $request): Response
+    public function index( ContentRepository $content_repository, NaschirabotyRepository $naschiraboty_repository,Request $request, MenuTopRepository $menuTopRepository, PriceBrandRepository $priceBrandRepository): Response
     {
         $page = $content_repository->findOneByToken('blog');
         $works = $naschiraboty_repository->findAll();
+        $topMenu = $menuTopRepository->findAll();
+        $brands = $priceBrandRepository->findAll();
 
         foreach ($works as $key => $value){
             $images = $value->getAttach();
@@ -55,6 +59,8 @@ class NaschirabotyController extends AbstractController
             'form' => $form->createView(),
             'availableSalons' => $availableSalons,
             'works' => $works,
+            'topMenu' => $topMenu,
+            'brands' => $brands,
         ]);
     }
 
@@ -64,9 +70,11 @@ class NaschirabotyController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function item(Naschiraboty $work, Request $request): Response
+    public function item(Naschiraboty $work, Request $request, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository): Response
     {
         $images = $work->getAttach();
+        $topMenu = $menuTopRepository->findAll();
+        $brands = $priceBrandRepository->findAll();
 
         $form = $this->createForm(
             SalonFilterType::class,
@@ -83,6 +91,8 @@ class NaschirabotyController extends AbstractController
             'form' => $form->createView(),
             'availableSalons' => $availableSalons,
             'images' => $images,
+            'topMenu' => $topMenu,
+            'brands' => $brands,
         ]);
     }
 }

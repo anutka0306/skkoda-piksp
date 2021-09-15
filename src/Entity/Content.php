@@ -188,6 +188,11 @@ class Content implements PageInterface
      */
     private $adv_text4;
 
+    /**
+     * @ORM\OneToMany(targetEntity=MenuTop::class, mappedBy="link", orphanRemoval=true)
+     */
+    private $top_menu;
+
 
 
     public function __construct()
@@ -195,6 +200,12 @@ class Content implements PageInterface
         $this->pages = new ArrayCollection();
         $this->ratingValue = $this->getRandomRatingValue();
         $this->ratingCount = $this->getRandomRatingCount();
+        $this->top_menu = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getName();
     }
 
     public function getId(): ?int
@@ -605,6 +616,36 @@ class Content implements PageInterface
     public function setAdvText4(?string $adv_text4): self
     {
         $this->adv_text4 = $adv_text4;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MenuTop[]
+     */
+    public function getTopMenu(): Collection
+    {
+        return $this->top_menu;
+    }
+
+    public function addTopMenu(MenuTop $topMenu): self
+    {
+        if (!$this->top_menu->contains($topMenu)) {
+            $this->top_menu[] = $topMenu;
+            $topMenu->setLink($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTopMenu(MenuTop $topMenu): self
+    {
+        if ($this->top_menu->removeElement($topMenu)) {
+            // set the owning side to null (unless already changed)
+            if ($topMenu->getLink() === $this) {
+                $topMenu->setLink(null);
+            }
+        }
 
         return $this;
     }

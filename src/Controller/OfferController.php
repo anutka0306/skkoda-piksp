@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\SpecialOfferRepository;
+use App\Repository\ContentRepository;
+use App\Repository\PriceBrandRepository;
+use App\Repository\MenuTopRepository;
 
 class OfferController extends AbstractController
 {
@@ -15,9 +18,27 @@ class OfferController extends AbstractController
      */
     protected $offer_repository;
 
-    public function __construct(SpecialOfferRepository $offer_repository)
+    /**
+     * @var ContentRepository
+     */
+    protected $contentRepository;
+
+    /**
+     * @var PriceBrandRepository
+     */
+    protected $priceBrandRepository;
+
+    /**
+     * @var MenuTopRepository
+     */
+    protected $menuTopRepository;
+
+    public function __construct(SpecialOfferRepository $offer_repository, ContentRepository $contentRepository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository)
     {
         $this->offer_repository = $offer_repository;
+        $this->contentRepository = $contentRepository;
+        $this->priceBrandRepository = $priceBrandRepository;
+        $this->menuTopRepository = $menuTopRepository;
     }
 
     /**
@@ -26,8 +47,14 @@ class OfferController extends AbstractController
     public function index(): Response
     {
         $offers = $this->offer_repository->findBy(['published' => 1]);
+        $page = $this->contentRepository->findOneBy(['path' => '/offers/']);
+        $brands = $this->priceBrandRepository->findAll();
+        $topMenu = $this->menuTopRepository->findAll();
         return $this->render('offer/index.html.twig', [
             'offers' => $offers,
+            'page' => $page,
+            'brands' => $brands,
+            'topMenu' => $topMenu,
         ]);
     }
 
