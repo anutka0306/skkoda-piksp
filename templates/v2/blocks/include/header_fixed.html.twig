@@ -29,10 +29,18 @@
 
     </div>
     <div class="header__logo">
+        {% if logo is defined and logo is not null %}
+        <a href="/"><img src="/img/brands/logo/{{ logo }}" alt="ПИК" width="199" height="44"></a>
+        {% else %}
         <a href="/"><img src="/img/lexus/logo.png" alt="ПИК" width="199" height="44"></a>
+        {% endif %}
     </div>
     <h4 class="nav__description">Специализированный <br>
-        автосервис LEXUS</h4>
+        автосервис
+        {% if brandName is defined %}
+            {{ brandName|upper }}
+        {%  endif %}
+        </h4>
 
     <div class="nav__address">
         <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
