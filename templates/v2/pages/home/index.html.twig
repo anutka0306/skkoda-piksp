@@ -20,6 +20,7 @@
     {{ include('elements/_advantages2.html.twig') }}
     {{ special_offers(page.brandAndModelName) }}
     {{ include('elements/_about_company.html.twig') }}
+    {{ include('elements/examples.html.twig', {'pageWork' : pageWork}) }}
     {{ include('elements/_quote.html.twig') }}
     {{ include('elements/_team.html.twig') }}
 {% endblock %}

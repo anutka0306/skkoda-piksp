@@ -11,19 +11,21 @@ use App\Repository\PriceBrandRepository;
 use App\Entity\MenuTop;
 use App\Repository\MenuTopRepository;
 use App\Repository\MenuLeftRepository;
+use App\Repository\NaschirabotyRepository;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(ContentRepository $repository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository)
+    public function index(ContentRepository $repository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, NaschirabotyRepository $naschirabotyRepository)
     {
         $page = $repository->findOneBy(['path'=>'/']);
         $brands = $priceBrandRepository->findAll();
         $gallery = $this->getGalleryImages();
         $topMenu = $menuTopRepository->findAll();
         $leftMenu = $menuLeftRepository->findAll();
+        $work = $naschirabotyRepository->findOneBy([],['id' =>'DESC']);
         
         return $this->render('v2/pages/home/index.html.twig', [
             'page' => $page,
@@ -31,6 +33,7 @@ class HomeController extends AbstractController
             'brands' => $brands,
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
+            'pageWork' => $work,
         ]);
     }
 

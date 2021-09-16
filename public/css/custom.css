@@ -1345,3 +1345,217 @@ label {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/* Nashi raboti block na stranitse*/
+.work-examples__section {
+    background: url(/img/fface-bg-2.jpg);
+    background-size: 100%;
+    position: relative;
+}
+.rey_box, .rey_box_in {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 15px;
+    overflow: hidden;
+}
+.rey_examples_box {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    margin: 0 auto -40px auto;
+    width: 90%;
+}
+.rey_bg_dark {
+    background: #2a2e47;
+}
+.rey_examples_box_left {
+    padding: 50px 0;
+    z-index: 2;
+}
+.rey_text_white, .rey_text_white a {
+    color: #fff !important;
+}
+.rey_title_stantart {
+    color: #2a2e47;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 50px 0 25px 0;
+}
+.rey_text_red {
+    color: #ec4322;
+}
+.rey_examples_title_audi {
+    background: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    overflow: hidden;
+    padding: 10px 15px;
+}
+.rey_examples_title_audi {
+    border-radius: 5px;
+    width: 191px;
+}
+.rey_examples_box_img {
+    margin: 0 -150px 0 0;
+}
+.rey_bg_grey_light {
+    background: #F9FAFE;
+}
+.rey_examples_box_right {
+    padding: 50px 0 50px 150px;
+    z-index: 1;
+}
+.rey_title_stantart {
+    color: #2a2e47;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 50px 0 25px 0;
+}
+.rey_text_standart_small {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+.rey_text_dark {
+    color: #2a2e47;
+}
+.rey_examples_box_right .rey_text_standart_small {
+    overflow: hidden;
+    width: 100%;
+}
+.rey_examples_box_right .rey_text_standart_small div {
+    float: left;
+    margin: 0 15px 0 0;
+}
+.rey_examples_listing {
+    border-left: 3px solid #f73d31;
+    line-height: 1.5;
+    margin: 25px 0;
+    padding: 0 0 0 15px;
+    width: 90%;
+}
+.rey_text_standart {
+    color: #2a2e47;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.rey_text_black {
+    color: #000;
+}
+.rey_button_standart {
+    background: #f73d31;
+    text-decoration: none;
+    border: none;
+    border-bottom: 3px solid #ca180d;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    padding: 15px 20px 10px 20px;
+    color: #fff;
+    cursor: pointer;
+}
+.rey_button_standart:hover{
+    text-decoration: none;
+    color: #fff;
+}
+@media (max-width: 830px) {
+    /* EXAMPLES */
+    .work-examples__section {
+        background: none;
+    }
+
+    .rey_examples .rey_box {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .rey_examples .rey_examples_box {
+        width: 100%;
+    }
+
+    .rey_examples_box {
+        grid-template-columns:repeat(1, 100%);
+    }
+
+    .rey_examples_box_left .rey_title_stantart {
+        font: 32px museo-sans-cyrl-900;
+        line-height: 1.5;
+        margin: -20px 0 0 50px;
+    }
+
+    .rey_examples_title_audi {
+        float: right;
+        margin: -150px 0 0 0;
+    }
+
+    .rey_examples_box_img {
+        text-align: center;
+        width: 100%;
+    }
+
+    .rey_examples_box_img img {
+        margin: 0 0 -100px 0;
+        width: 70%;
+    }
+
+    .rey_examples_box_right .rey_title_stantart,
+    .rey_examples_box_right .rey_text_black {
+        text-align: center;
+        width: 80%;
+    }
+
+    .rey_examples_box_right .rey_text_standart_small {
+        margin: 0 0 0 50px;
+        width: 80%;
+    }
+
+    .rey_examples_box_right .rey_examples_listing {
+        width: 70%;
+    }
+
+    .rey_examples_box_right .rey_examples_box_right_button {
+        text-align: center;
+        width: 80%;
+    }
+
+    .rey_examples_slide_arrow_left {
+        left: 10px;
+        top: -460px;
+    }
+
+    .rey_examples_slide_arrow_right {
+        left: 94%;
+        top: -498px;
+    }
+}
+
+@media (max-width: 764px) {
+    .rey_examples_slide_arrow_right {
+        left: 92%;
+    }
+    .rey_box, .rey_box_in{
+        padding: 0;
+    }
+    .rey_examples_box{
+        width: 100%;
+    }
+}
+@media (max-width: 600px) {
+    .rey_examples_box_right {
+        padding: 50px 0 50px 50px;
+    }
+}
+
+@media (max-width: 560px) {
+    .rey_examples_title_audi {
+        float: none;
+        margin: 0px 50px;
+    }
+}
+@media (max-width: 430px) {
+    .rey_examples_slide_arrow_right {
+        left: 88%;
+    }
+}

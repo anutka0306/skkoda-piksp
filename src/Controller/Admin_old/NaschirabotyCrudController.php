@@ -10,10 +10,12 @@ use App\Form\ImagesDownloadType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Configurator\TextEditorConfigurator;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -44,6 +46,11 @@ class NaschirabotyCrudController extends AbstractCrudController
             NumberField::new('sum', 'Стоимость'),
             NumberField::new('sort', 'Сортировка'),
             TextEditorField::new('shortText', 'Короткое описание'),
+            AssociationField::new('model'),
+            AssociationField::new('service'),
+            ImageField::new('main_img', 'Картинка, которая отображается в блоке на разных страницах')->setHelp('.png, прозрачный фон, 640Х340')->setUploadDir('/public/img/nashiraboty_main/')->setBasePath('/img/nashiraboty_main/'),
+            TextField::new('kuzov'),
+            TextField::new('year'),
             Field::new('clientName', 'Имя клиента'),
             DateTimeField::new('modifyDate'),
             CollectionField::new('attach')

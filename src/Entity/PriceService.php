@@ -94,12 +94,18 @@ class PriceService
      */
     private $is_popular;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Naschiraboty::class, mappedBy="service")
+     */
+    private $nashiraboty;
+
     
     public function __construct()
     {
         $this->contents = new ArrayCollection();
         $this->beforeAfterImages = new ArrayCollection();
         $this->excludedSalons = new ArrayCollection();
+        $this->nashiraboty = new ArrayCollection();
 
     }
     
@@ -459,6 +465,36 @@ class PriceService
     public function setIsPopular(bool $is_popular): self
     {
         $this->is_popular = $is_popular;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Naschiraboty[]
+     */
+    public function getNashiraboty(): Collection
+    {
+        return $this->nashiraboty;
+    }
+
+    public function addNashiraboty(Naschiraboty $nashiraboty): self
+    {
+        if (!$this->nashiraboty->contains($nashiraboty)) {
+            $this->nashiraboty[] = $nashiraboty;
+            $nashiraboty->setService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNashiraboty(Naschiraboty $nashiraboty): self
+    {
+        if ($this->nashiraboty->removeElement($nashiraboty)) {
+            // set the owning side to null (unless already changed)
+            if ($nashiraboty->getService() === $this) {
+                $nashiraboty->setService(null);
+            }
+        }
 
         return $this;
     }

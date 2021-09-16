@@ -26,9 +26,15 @@ use Symfony\Component\Finder\Finder;
 use App\Entity\MenuTop;
 use App\Repository\MenuTopRepository;
 use App\Repository\MenuLeftRepository;
+use App\Repository\NaschirabotyRepository;
+
 
 class PageController extends AbstractController
 {
+    /**
+     * @var NaschirabotyRepository
+     */
+    protected $naschirabotyRepository;
     /**
      * @var ContentRepository
      */
@@ -63,7 +69,7 @@ class PageController extends AbstractController
      */
     protected $menuLeftRepository;
 
-    public function __construct(ContentRepository $repository, EntityManagerInterface $em, PaginatorInterface $paginator, PriceModelRepository $price_model_repository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository)
+    public function __construct(ContentRepository $repository, EntityManagerInterface $em, PaginatorInterface $paginator, PriceModelRepository $price_model_repository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, NaschirabotyRepository $naschirabotyRepository)
     {
         $this->page_repository = $repository;
         $this->em = $em;
@@ -72,6 +78,7 @@ class PageController extends AbstractController
         $this->priceBrandRepository = $priceBrandRepository;
         $this->menuTopRepository = $menuTopRepository;
         $this->menuLeftRepository = $menuLeftRepository;
+        $this->naschirabotyRepository = $naschirabotyRepository;
 
     }
 
@@ -91,7 +98,7 @@ class PageController extends AbstractController
     /**
      * @Route("/{token}", name="dynamic_pages",requirements={"token"= ".+\/$"})
      */
-    public function index($token, EntityManagerInterface $em, PaginatorInterface $paginator, Request $request, PriceModelRepository $priceModelRepository, PriceServiceRepository $priceServiceRepository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository)
+    public function index($token, EntityManagerInterface $em, PaginatorInterface $paginator, Request $request, PriceModelRepository $priceModelRepository, PriceServiceRepository $priceServiceRepository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, NaschirabotyRepository $naschirabotyRepository)
     {
         $topMenu = $menuTopRepository->findAll();
         $leftMenu = $menuLeftRepository->findAll();
@@ -100,23 +107,23 @@ class PageController extends AbstractController
         }
 
         if ($page instanceof Brand) {
-            return $this->brand($page, $priceModelRepository, $topMenu, $leftMenu);
+            return $this->brand($page, $priceModelRepository, $topMenu, $leftMenu, $naschirabotyRepository);
         }
 
         if ($page instanceof Model) {
-            return $this->model($page, $priceModelRepository, $priceServiceRepository, $topMenu, $leftMenu);
+            return $this->model($page, $priceModelRepository, $priceServiceRepository, $topMenu, $leftMenu, $naschirabotyRepository);
         }
 
         if ($page instanceof Service) {
             /* echo 'Page is '.$page;
             exit();*/
-            return $this->service($page, $priceModelRepository, $topMenu, $leftMenu);
+            return $this->service($page, $priceModelRepository, $topMenu, $leftMenu, $naschirabotyRepository, $priceServiceRepository);
         }
 
         if ($page instanceof RootService) {
            /* echo 'Page is '.$page;
             exit();*/
-            return $this->rootService($page, $priceBrandRepository, $topMenu, $leftMenu);
+            return $this->rootService($page, $priceBrandRepository, $topMenu, $leftMenu, $naschirabotyRepository);
         }
 
         if ($page instanceof Simple) {
@@ -162,24 +169,38 @@ class PageController extends AbstractController
         ]);
     }
     
-    private function brand(Brand $brand, PriceModelRepository $priceModelRepository, $topMenu, $leftMenu)
+    private function brand(Brand $brand, PriceModelRepository $priceModelRepository, $topMenu, $leftMenu, NaschirabotyRepository $naschirabotyRepository)
     {
         $brand_name = $brand->getBrandName();
+        $models = $priceModelRepository->findBy(['priceBrand' => $brand->getBrandId()]);
+        $work = $naschirabotyRepository->findBy(['model'=> $models], ['id' => 'DESC'], 1);
+        if(empty($work)){
+            $work = $naschirabotyRepository->findOneBy([],['id' =>'DESC']);
+        }
         return $this->render('v2/pages/brand.html.twig', [
             'page' => $brand,
             'brandName' => $brand_name,
-            'models' => $priceModelRepository->findBy(['priceBrand' => $brand->getBrandId()]),
+            'models' => $models,
             'brandPath' => $brand->getPath(),
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
+            'pageWork' => $work,
         ]);
     }
     
     
-    private function model(Model $model, PriceModelRepository $priceModelRepository, PriceServiceRepository $priceServiceRepository, $topMenu, $leftMenu)
+    private function model(Model $model, PriceModelRepository $priceModelRepository, PriceServiceRepository $priceServiceRepository, $topMenu, $leftMenu, NaschirabotyRepository $naschirabotyRepository)
     {
         $brand_name = $model->getBrandName();
         $model_id = $model->getModelId();
+        $work = $naschirabotyRepository->findOneBy(['model'=> $model_id], ['id' => 'DESC']);
+        if(empty($work)){
+            $allBrandModels = $priceModelRepository->findBy(['priceBrand'=>$model->getBrandId()]);
+            $work = $naschirabotyRepository->findBy(['model'=> $allBrandModels], ['id' => 'DESC'], 1);
+        }
+        if(empty($work)){
+            $work = $naschirabotyRepository->findOneBy([],['id' =>'DESC']);
+        }
         $popular_services = $priceServiceRepository->findBy(['is_popular' => 1, 'published'=> 1], [], 5);
         if($model_id){
             $model_name = $priceModelRepository->find($model_id)->getName();
@@ -193,17 +214,34 @@ class PageController extends AbstractController
             'popularServices' => $popular_services,
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
+            'pageWork' => $work,
         ]);
     }
     
-    private function service(Service $service, PriceModelRepository $priceModelRepository, $topMenu, $leftMenu)
+    private function service(Service $service, PriceModelRepository $priceModelRepository, $topMenu, $leftMenu, NaschirabotyRepository $naschirabotyRepository, PriceServiceRepository $priceServiceRepository)
     {
+        $popular_services = $priceServiceRepository->findBy(['is_popular' => 1, 'published'=> 1], [], 5);
         $brand_name = $service->getBrandName();
         $model_id = $service->getModelId();
 
         if($model_id){
+            $work = $naschirabotyRepository->findOneBy(['model' => $model_id, 'service'=> $service->getId()]);
+            if(empty($work)){
+                $work = $naschirabotyRepository->findOneBy(['service'=> $service->getId()]);
+                if(empty($work)){
+                    $work = $naschirabotyRepository->findOneBy(['model' => $model_id]);
+                }
+            }
            $model_name = $priceModelRepository->find($model_id)->getName();
         }else{
+            $work = $naschirabotyRepository->findOneBy(['service'=> $service->getId()]);
+            if(empty($work)){
+                $models = $priceModelRepository->findBy(['priceBrand' => $service->getBrandId()]);
+                $work = $naschirabotyRepository->findBy(['model'=> $models], ['id' => 'DESC'], 1);
+                if(empty($work)){
+                    $work = $naschirabotyRepository->findOneBy([],['id' =>'DESC']);
+                }
+            }
             $model_name = null;
         }
         $services = $this->page_repository->findOneBy(['path' => '/'.$service->getPriceCategory()->getSlug().'/']);
@@ -214,10 +252,12 @@ class PageController extends AbstractController
             'parentService' => $services,
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
+            'pageWork' => $work,
+            'popularServices' => $popular_services,
         ]);
     }
     
-    private function rootService(RootService $rootService, PriceBrandRepository $priceBrandRepository, $topMenu, $leftMenu)
+    private function rootService(RootService $rootService, PriceBrandRepository $priceBrandRepository, $topMenu, $leftMenu, NaschirabotyRepository $naschirabotyRepository)
     {
         if(is_null($rootService->getAdvIcon1())) {
             if ($rootService->getParent() !== null && $rootService->getParent()->getAdvIcon1() !== null) {
@@ -260,6 +300,11 @@ class PageController extends AbstractController
             }
         }
 
+        $work = $naschirabotyRepository->findBy(['service' => $rootService->getService()->getId()], ['id' => 'DESC'], 1);
+        if(empty($work)){
+            $work = $naschirabotyRepository->findOneBy([],['id' =>'DESC']);
+        }
+
         $brands = $priceBrandRepository->findAll();
 
         return $this->render('v2/pages/root-service.html.twig', [
@@ -267,6 +312,7 @@ class PageController extends AbstractController
             'brands' => $brands,
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
+            'pageWork' => $work,
         ]);
     }
     

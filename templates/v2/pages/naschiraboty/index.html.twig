@@ -24,9 +24,12 @@
                 {#{% for image in work.images %}
                         {{ dump(image) }}
                 {% endfor %}#}
+
                 <div class="col-md-3 col-sm-6 col-12 nashiraboty__item">
                     <a href="/blog/{{ work.id }}/">
+                        {% if work.images is not empty %}
                         <img src="/img/naschiraboty/{{ work.id }}/{{ work.images[0].image }}">
+                        {% endif %}
                     </a>
                     <a class="nashiraboty__item_title" href="/blog/{{ work.id }}/">{{ work.name }}</a>
                     <a href="/blog/{{ work.id }}/" class="nashiraboty__item_more">Подробнее</a>

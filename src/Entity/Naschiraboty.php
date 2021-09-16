@@ -79,6 +79,31 @@ class Naschiraboty implements PageInterface
      */
     private $attach;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=PriceModel::class, inversedBy="naschiraboty")
+     */
+    private $model;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $kuzov;
+
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $year;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $main_img;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=PriceService::class, inversedBy="nashiraboty")
+     */
+    private $service;
+
     public function __construct()
     {
         $this->priceServices = new ArrayCollection();
@@ -278,6 +303,66 @@ class Naschiraboty implements PageInterface
                 $attach->setNashiraboty(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getModel(): ?PriceModel
+    {
+        return $this->model;
+    }
+
+    public function setModel(?PriceModel $model): self
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    public function getKuzov(): ?string
+    {
+        return $this->kuzov;
+    }
+
+    public function setKuzov(?string $kuzov): self
+    {
+        $this->kuzov = $kuzov;
+
+        return $this;
+    }
+
+    public function getYear(): ?string
+    {
+        return $this->year;
+    }
+
+    public function setYear(?string $year): self
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    public function getMainImg(): ?string
+    {
+        return $this->main_img;
+    }
+
+    public function setMainImg(?string $main_img): self
+    {
+        $this->main_img = $main_img;
+
+        return $this;
+    }
+
+    public function getService(): ?PriceService
+    {
+        return $this->service;
+    }
+
+    public function setService(?PriceService $service): self
+    {
+        $this->service = $service;
 
         return $this;
     }

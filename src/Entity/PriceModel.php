@@ -117,10 +117,16 @@ class PriceModel
      */
     private $photo_big;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Naschiraboty::class, mappedBy="model")
+     */
+    private $naschiraboty;
+
     public function __construct()
     {
         $this->beforeAfterImages = new ArrayCollection();
         $this->excludedSalons = new ArrayCollection();
+        $this->naschiraboty = new ArrayCollection();
     }
     
 
@@ -362,6 +368,36 @@ class PriceModel
     public function setPhotoBig(?string $photo_big): self
     {
         $this->photo_big = $photo_big;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Naschiraboty[]
+     */
+    public function getNaschiraboty(): Collection
+    {
+        return $this->naschiraboty;
+    }
+
+    public function addNaschiraboty(Naschiraboty $naschiraboty): self
+    {
+        if (!$this->naschiraboty->contains($naschiraboty)) {
+            $this->naschiraboty[] = $naschiraboty;
+            $naschiraboty->setModel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNaschiraboty(Naschiraboty $naschiraboty): self
+    {
+        if ($this->naschiraboty->removeElement($naschiraboty)) {
+            // set the owning side to null (unless already changed)
+            if ($naschiraboty->getModel() === $this) {
+                $naschiraboty->setModel(null);
+            }
+        }
 
         return $this;
     }
