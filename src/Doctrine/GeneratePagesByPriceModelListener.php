@@ -4,6 +4,7 @@ namespace App\Doctrine;
 
 use App\Entity\PriceModel;
 use App\Service\PageGeneratorService;
+use App\Entity\Content;
 
 class GeneratePagesByPriceModelListener
 {
@@ -20,6 +21,10 @@ class GeneratePagesByPriceModelListener
     public function postPersist(PriceModel $price_model)
     {
         $this->page_generator_service->generateByNewModel($price_model);
+    }
+
+    public function preRemove(PriceModel $priceModel){
+        $this->page_generator_service->removeByModel($priceModel);
     }
     
 }

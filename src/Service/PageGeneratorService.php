@@ -145,6 +145,20 @@ class PageGeneratorService
         $this->em->flush();
     }
 
+    public function removeByModel(PriceModel $price_model){
+        $modelId = $price_model->getId();
+        $modelPage = $this->content_repository->findOneBy(['model_id' => $modelId])->getId();
+        $servicesPages = $this->content_repository->findBy(['parent' => $modelPage]);
+
+        foreach ($servicesPages as $serv){
+            $query = $this->em->createQueryBuilder();
+            $query->delete(Content::class, 'c')->where('c.id = :services')->setParameter('services', $serv)->getQuery()->execute();
+        }
+        $query = $this->em->createQueryBuilder();
+        $query->delete(Content::class, 'c')->where('c.id = ?1')->setParameter(1, $modelPage)->getQuery()->execute();
+
+    }
+
 
     public function generateByNewCategory(PriceCategory $priceCategory){
         $this->addRootServicePageByCategory(
