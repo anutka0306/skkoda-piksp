@@ -40,7 +40,7 @@ class WhyUsExtension extends AbstractExtension
         ];
         $brand_model            = '';
         if ($page->getBrandName()) {
-            $location = '3 автосервиса ' . $page->getBrandName() . ' в Москве';
+            $location = '3 автосервиса ' . $page->getBrandName();
         }
         $root_category = $this->price_list_helper->getRootCategory($page);
         if ($root_category) {

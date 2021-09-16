@@ -4,6 +4,7 @@ namespace App\Controller\Admin_old;
 
 use App\Entity\AttachMainGallery;
 use App\Entity\Brand;
+use App\Entity\MenuLeft;
 use App\Entity\MenuTop;
 use App\Entity\Model;
 use App\Entity\Naschiraboty;
@@ -52,6 +53,7 @@ class AdminController extends AbstractDashboardController
             MenuItem::linktoDashboard('Dashboard', 'fa fa-home'),
             MenuItem::subMenu('Меню', 'fa fa-fw fa-file')->setSubItems([
                 MenuItem::linkToCrud('Верхнее меню', 'fa fa-fw fa-file', MenuTop::class),
+                MenuItem::linkToCrud('Левое меню', 'fa fa-fw fa-file', MenuLeft::class),
             ]),
             MenuItem::subMenu('Редактор страниц', 'fa fa-fw fa-file-alt')->setSubItems([
                 MenuItem::linkToCrud('Инфо страницы', 'fa fa-fw fa-file', Simple::class),
@@ -68,7 +70,7 @@ class AdminController extends AbstractDashboardController
                 MenuItem::linkToCrud('Классы', 'fa fa-fw fa-hand-holding-usd', PriceClass::class),
             ]),
             MenuItem::linkToCrud('Акции', 'fa fa-money', SpecialOffer::class),
-            MenuItem::linkToCrud('Галерея наших работ', 'fas fa-car', OurWorks::class),
+           /* MenuItem::linkToCrud('Галерея наших работ', 'fas fa-car', OurWorks::class),*/
             MenuItem::linkToCrud('Наши работы', 'fa fa-fw fa-hand-holding-usd', Naschiraboty::class),
             MenuItem::linkToCrud('Галерея на главной',null,AttachMainGallery::class),
         ];

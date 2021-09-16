@@ -1,8 +1,0 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
-    {{ paint_menu() }}
-
-    {{ price_list(page) }}
-    {{ wrap_content(page.text|remove_gallery) }}
-{% endblock %}

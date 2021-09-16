@@ -10,24 +10,27 @@ use Symfony\Component\Finder\Finder;
 use App\Repository\PriceBrandRepository;
 use App\Entity\MenuTop;
 use App\Repository\MenuTopRepository;
+use App\Repository\MenuLeftRepository;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(ContentRepository $repository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository)
+    public function index(ContentRepository $repository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository)
     {
         $page = $repository->findOneBy(['path'=>'/']);
         $brands = $priceBrandRepository->findAll();
         $gallery = $this->getGalleryImages();
         $topMenu = $menuTopRepository->findAll();
+        $leftMenu = $menuLeftRepository->findAll();
         
         return $this->render('v2/pages/home/index.html.twig', [
             'page' => $page,
             'gallery'=> $gallery,
             'brands' => $brands,
             'topMenu' => $topMenu,
+            'leftMenu' => $leftMenu,
         ]);
     }
 

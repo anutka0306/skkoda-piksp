@@ -25,6 +25,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use App\Entity\MenuTop;
 use App\Repository\MenuTopRepository;
+use App\Repository\MenuLeftRepository;
 
 class PageController extends AbstractController
 {
@@ -57,7 +58,12 @@ class PageController extends AbstractController
      */
     protected $menuTopRepository;
 
-    public function __construct(ContentRepository $repository, EntityManagerInterface $em, PaginatorInterface $paginator, PriceModelRepository $price_model_repository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository)
+    /**
+     * @var MenuLeftRepository
+     */
+    protected $menuLeftRepository;
+
+    public function __construct(ContentRepository $repository, EntityManagerInterface $em, PaginatorInterface $paginator, PriceModelRepository $price_model_repository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository)
     {
         $this->page_repository = $repository;
         $this->em = $em;
@@ -65,6 +71,7 @@ class PageController extends AbstractController
         $this->price_model_repository = $price_model_repository;
         $this->priceBrandRepository = $priceBrandRepository;
         $this->menuTopRepository = $menuTopRepository;
+        $this->menuLeftRepository = $menuLeftRepository;
 
     }
 
@@ -84,35 +91,36 @@ class PageController extends AbstractController
     /**
      * @Route("/{token}", name="dynamic_pages",requirements={"token"= ".+\/$"})
      */
-    public function index($token, EntityManagerInterface $em, PaginatorInterface $paginator, Request $request, PriceModelRepository $priceModelRepository, PriceServiceRepository $priceServiceRepository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository)
+    public function index($token, EntityManagerInterface $em, PaginatorInterface $paginator, Request $request, PriceModelRepository $priceModelRepository, PriceServiceRepository $priceServiceRepository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository)
     {
         $topMenu = $menuTopRepository->findAll();
+        $leftMenu = $menuLeftRepository->findAll();
         if ( ! $page = $this->page_repository->findOnePublishedByToken($token)) {
             throw $this->createNotFoundException(sprintf('Page %s not found',$token));
         }
 
         if ($page instanceof Brand) {
-            return $this->brand($page, $priceModelRepository, $topMenu);
+            return $this->brand($page, $priceModelRepository, $topMenu, $leftMenu);
         }
 
         if ($page instanceof Model) {
-            return $this->model($page, $priceModelRepository, $priceServiceRepository, $topMenu);
+            return $this->model($page, $priceModelRepository, $priceServiceRepository, $topMenu, $leftMenu);
         }
 
         if ($page instanceof Service) {
             /* echo 'Page is '.$page;
             exit();*/
-            return $this->service($page, $priceModelRepository, $topMenu);
+            return $this->service($page, $priceModelRepository, $topMenu, $leftMenu);
         }
 
         if ($page instanceof RootService) {
            /* echo 'Page is '.$page;
             exit();*/
-            return $this->rootService($page, $priceBrandRepository, $topMenu);
+            return $this->rootService($page, $priceBrandRepository, $topMenu, $leftMenu);
         }
 
         if ($page instanceof Simple) {
-            return $this->simple($page, $topMenu);
+            return $this->simple($page, $topMenu, $leftMenu);
         }
 
         if ($page instanceof Vacancy) {
@@ -132,7 +140,7 @@ class PageController extends AbstractController
             );
 
             // parameters to template
-            return $this->render('sitemap/index.html.twig', ['pagination' => $pagination,'page'=>$page, 'topMenu'=>$topMenu]);
+            return $this->render('sitemap/index.html.twig', ['pagination' => $pagination,'page'=>$page, 'topMenu'=>$topMenu, 'leftMenu'=>$leftMenu]);
         }
 
         throw $this->createNotFoundException('Page is instance of '.get_class($page));
@@ -154,7 +162,7 @@ class PageController extends AbstractController
         ]);
     }
     
-    private function brand(Brand $brand, PriceModelRepository $priceModelRepository, $topMenu)
+    private function brand(Brand $brand, PriceModelRepository $priceModelRepository, $topMenu, $leftMenu)
     {
         $brand_name = $brand->getBrandName();
         return $this->render('v2/pages/brand.html.twig', [
@@ -163,11 +171,12 @@ class PageController extends AbstractController
             'models' => $priceModelRepository->findBy(['priceBrand' => $brand->getBrandId()]),
             'brandPath' => $brand->getPath(),
             'topMenu' => $topMenu,
+            'leftMenu' => $leftMenu,
         ]);
     }
     
     
-    private function model(Model $model, PriceModelRepository $priceModelRepository, PriceServiceRepository $priceServiceRepository, $topMenu)
+    private function model(Model $model, PriceModelRepository $priceModelRepository, PriceServiceRepository $priceServiceRepository, $topMenu, $leftMenu)
     {
         $brand_name = $model->getBrandName();
         $model_id = $model->getModelId();
@@ -183,10 +192,11 @@ class PageController extends AbstractController
             'modelName' => $model_name,
             'popularServices' => $popular_services,
             'topMenu' => $topMenu,
+            'leftMenu' => $leftMenu,
         ]);
     }
     
-    private function service(Service $service, PriceModelRepository $priceModelRepository, $topMenu)
+    private function service(Service $service, PriceModelRepository $priceModelRepository, $topMenu, $leftMenu)
     {
         $brand_name = $service->getBrandName();
         $model_id = $service->getModelId();
@@ -203,10 +213,11 @@ class PageController extends AbstractController
             'modelName' => $model_name,
             'parentService' => $services,
             'topMenu' => $topMenu,
+            'leftMenu' => $leftMenu,
         ]);
     }
     
-    private function rootService(RootService $rootService, PriceBrandRepository $priceBrandRepository, $topMenu)
+    private function rootService(RootService $rootService, PriceBrandRepository $priceBrandRepository, $topMenu, $leftMenu)
     {
         if(is_null($rootService->getAdvIcon1())) {
             if ($rootService->getParent() !== null && $rootService->getParent()->getAdvIcon1() !== null) {
@@ -255,14 +266,16 @@ class PageController extends AbstractController
             'page' => $rootService,
             'brands' => $brands,
             'topMenu' => $topMenu,
+            'leftMenu' => $leftMenu,
         ]);
     }
     
-    private function simple(Simple $simple, $topMenu)
+    private function simple(Simple $simple, $topMenu, $leftMenu)
     {
         return $this->render('v2/pages/simple.html.twig', [
             'page' => $simple,
             'topMenu' => $topMenu,
+            'leftMenu' => $leftMenu,
         ]);
     }
     

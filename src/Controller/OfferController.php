@@ -10,6 +10,7 @@ use App\Repository\SpecialOfferRepository;
 use App\Repository\ContentRepository;
 use App\Repository\PriceBrandRepository;
 use App\Repository\MenuTopRepository;
+use App\Repository\MenuLeftRepository;
 
 class OfferController extends AbstractController
 {
@@ -33,12 +34,18 @@ class OfferController extends AbstractController
      */
     protected $menuTopRepository;
 
-    public function __construct(SpecialOfferRepository $offer_repository, ContentRepository $contentRepository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository)
+    /**
+     * @var MenuLeftRepository
+     */
+    protected $menuLeftRepository;
+
+    public function __construct(SpecialOfferRepository $offer_repository, ContentRepository $contentRepository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository)
     {
         $this->offer_repository = $offer_repository;
         $this->contentRepository = $contentRepository;
         $this->priceBrandRepository = $priceBrandRepository;
         $this->menuTopRepository = $menuTopRepository;
+        $this->menuLeftRepository = $menuLeftRepository;
     }
 
     /**
@@ -50,11 +57,13 @@ class OfferController extends AbstractController
         $page = $this->contentRepository->findOneBy(['path' => '/offers/']);
         $brands = $this->priceBrandRepository->findAll();
         $topMenu = $this->menuTopRepository->findAll();
+        $leftMenu = $this->menuLeftRepository->findAll();
         return $this->render('offer/index.html.twig', [
             'offers' => $offers,
             'page' => $page,
             'brands' => $brands,
             'topMenu' => $topMenu,
+            'leftMenu' => $leftMenu,
         ]);
     }
 

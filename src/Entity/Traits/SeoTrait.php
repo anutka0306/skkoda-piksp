@@ -40,7 +40,7 @@ trait SeoTrait
             return $this->h1;
         }
         if ($this->name) {
-            return $this->name.' в Москве';
+            return $this->name;
         }
         return null;
     }

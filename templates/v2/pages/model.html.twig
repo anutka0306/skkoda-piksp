@@ -3,7 +3,7 @@
 {% block title %} {{ page.metaTitle ? page.metaTitle : (page.h1~' - ') }} {% endblock %}
 
 {% block header_line %}
-    {{ include('v2/blocks/include/header_services.html.twig', {'popularServices': popularServices, logo : page.parent.priceBrand.imgLogo, 'topMenu': topMenu}) }}
+    {{ include('v2/blocks/include/header_services.html.twig', {'popularServices': popularServices, logo : page.parent.priceBrand.imgLogo, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
 {% endblock %}
 {% block header_banner %}
     {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, photoBig : page.priceBrand.photoBig, photoModelBig: page.priceModel.photoBig, brandName : page.priceBrand.name, modelName: page.priceModel.name }) }}

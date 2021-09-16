@@ -193,6 +193,11 @@ class Content implements PageInterface
      */
     private $top_menu;
 
+    /**
+     * @ORM\OneToMany(targetEntity=MenuLeft::class, mappedBy="link", orphanRemoval=true)
+     */
+    private $menu_left;
+
 
 
     public function __construct()
@@ -201,6 +206,7 @@ class Content implements PageInterface
         $this->ratingValue = $this->getRandomRatingValue();
         $this->ratingCount = $this->getRandomRatingCount();
         $this->top_menu = new ArrayCollection();
+        $this->menu_left = new ArrayCollection();
     }
 
     public function __toString()
@@ -644,6 +650,36 @@ class Content implements PageInterface
             // set the owning side to null (unless already changed)
             if ($topMenu->getLink() === $this) {
                 $topMenu->setLink(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MenuLeft[]
+     */
+    public function getMenuLeft(): Collection
+    {
+        return $this->menu_left;
+    }
+
+    public function addMenuLeft(MenuLeft $menuLeft): self
+    {
+        if (!$this->menu_left->contains($menuLeft)) {
+            $this->menu_left[] = $menuLeft;
+            $menuLeft->setLink($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenuLeft(MenuLeft $menuLeft): self
+    {
+        if ($this->menu_left->removeElement($menuLeft)) {
+            // set the owning side to null (unless already changed)
+            if ($menuLeft->getLink() === $this) {
+                $menuLeft->setLink(null);
             }
         }
 

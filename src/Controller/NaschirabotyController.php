@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\SalonFilterType;
 use App\Repository\MenuTopRepository;
+use  App\Repository\MenuLeftRepository;
 use App\Repository\PriceBrandRepository;
 use App\Service\SalonManager;
 use App\Entity\Naschiraboty;
@@ -33,11 +34,12 @@ class NaschirabotyController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function index( ContentRepository $content_repository, NaschirabotyRepository $naschiraboty_repository,Request $request, MenuTopRepository $menuTopRepository, PriceBrandRepository $priceBrandRepository): Response
+    public function index( ContentRepository $content_repository, NaschirabotyRepository $naschiraboty_repository,Request $request, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, PriceBrandRepository $priceBrandRepository): Response
     {
         $page = $content_repository->findOneByToken('blog');
         $works = $naschiraboty_repository->findAll();
         $topMenu = $menuTopRepository->findAll();
+        $leftMenu = $menuLeftRepository->findAll();
         $brands = $priceBrandRepository->findAll();
 
         foreach ($works as $key => $value){
@@ -60,6 +62,7 @@ class NaschirabotyController extends AbstractController
             'availableSalons' => $availableSalons,
             'works' => $works,
             'topMenu' => $topMenu,
+            'leftMenu' =>$leftMenu,
             'brands' => $brands,
         ]);
     }
@@ -70,10 +73,11 @@ class NaschirabotyController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function item(Naschiraboty $work, Request $request, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository): Response
+    public function item(Naschiraboty $work, Request $request, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository): Response
     {
         $images = $work->getAttach();
         $topMenu = $menuTopRepository->findAll();
+        $leftMenu = $menuLeftRepository->findAll();
         $brands = $priceBrandRepository->findAll();
 
         $form = $this->createForm(
@@ -92,6 +96,7 @@ class NaschirabotyController extends AbstractController
             'availableSalons' => $availableSalons,
             'images' => $images,
             'topMenu' => $topMenu,
+            'leftMenu' => $leftMenu,
             'brands' => $brands,
         ]);
     }

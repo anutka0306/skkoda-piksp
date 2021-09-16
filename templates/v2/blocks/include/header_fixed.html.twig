@@ -14,11 +14,9 @@
                 <div class="offcanvas-body">
                     <div>
                         <ul class="uk-nav uk-nav-default uk-nav-parent-icon mobile-menu__ul" data-uk-nav="multiple: true">
-                            <li><a href="/">Главная</a></li>
-                            <li><a href="#">Сервисы</a></li>
-                            <li><a href="#">Наши услуги</a></li>
-                            <li><a href="#">Предложения</a></li>
-                            <li><a href="#">Контакты</a></li>
+                            {% for leftMenu_item in leftMenu %}
+                                <li><a href="{{ leftMenu_item.link.path }}">{{ leftMenu_item.name }}</a></li>
+                            {% endfor %}
 
                         </ul>
                     </div>
