@@ -3,7 +3,7 @@
     <h3>{{ price_list_title }}</h3>
     <div class="price-list__ul-wrapper_service">
 
-            <ul data-uk-accordion="collapsible: true">
+            <ul data-uk-accordion="collapsible: {% if page.text is empty %}false {% else %}true{% endif %}">
 
                     {% for section in sections %}
                         {% if section.priceServices is not empty %}
