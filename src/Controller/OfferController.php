@@ -68,14 +68,20 @@ class OfferController extends AbstractController
     }
 
     /**
-     * @Route("/offer/{token}", name="dinamic_offers")
+     * @Route("/offers/{token}", name="dinamic_offers")
      */
     public function offer_item($token): Response{
+        $topMenu = $this->menuTopRepository->findAll();
+        $leftMenu = $this->menuLeftRepository->findAll();
         if ( !$offer = $this->offer_repository->findOneBy(['published'=>1, 'slug'=>$token])) {
             throw $this->createNotFoundException(sprintf('Offer %s not found',$token));
         }
         if($offer instanceof SpecialOffer){
-           return $this->render('offer/offer.html.twig', ['offer'=>$offer]);
+           return $this->render('offer/offer.html.twig', [
+               'page'=>$offer,
+               'topMenu' => $topMenu,
+               'leftMenu' => $leftMenu,
+               ]);
         }
     }
 }

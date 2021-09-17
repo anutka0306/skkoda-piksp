@@ -36,6 +36,7 @@ class SpecialOfferCrudController extends AbstractCrudController
             TextField::new('description', 'Описание')->hideOnIndex(),
             NumberField::new('oldPrice', 'Старая цена'),
             NumberField::new('newPrice', 'Новая цена'),
+            TextEditorField::new('text', 'Текст акции'),
             BooleanField::new('published', 'Активность'),
             NumberField::new('ordering','Позиция'),
             TextField::new('metaTitle','Title')->hideOnIndex(),
