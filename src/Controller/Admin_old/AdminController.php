@@ -27,6 +27,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+
 
 class AdminController extends AbstractDashboardController
 {
@@ -35,16 +37,15 @@ class AdminController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        /*$routeBuilder = $this->get(CrudUrlGenerator::class)->build();
-            $url = $routeBuilder->setController(BrandCrudController::class)->generateUrl();
-            return $this->redirect($url);*/
-        return parent::index();
+        $routeBuilder = $this->get(AdminUrlGenerator::class);
+        $url = $routeBuilder->setController(PriceBrandCrudController::class)->generateUrl();
+        return $this->redirect($url);
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Lexus Пик');
+            ->setTitle('PikSP.ru');
     }
 
     public function configureMenuItems(): iterable

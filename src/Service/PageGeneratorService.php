@@ -120,6 +120,7 @@ class PageGeneratorService
                 $price_brand->getName()
             );
         }
+
         $this->em->flush();
     }
     
