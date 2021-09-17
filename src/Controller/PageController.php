@@ -27,6 +27,7 @@ use App\Entity\MenuTop;
 use App\Repository\MenuTopRepository;
 use App\Repository\MenuLeftRepository;
 use App\Repository\NaschirabotyRepository;
+use App\Repository\ConfigRepository;
 
 
 class PageController extends AbstractController
@@ -69,7 +70,14 @@ class PageController extends AbstractController
      */
     protected $menuLeftRepository;
 
-    public function __construct(ContentRepository $repository, EntityManagerInterface $em, PaginatorInterface $paginator, PriceModelRepository $price_model_repository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, NaschirabotyRepository $naschirabotyRepository)
+    /**
+     * @var ConfigRepository
+     */
+    protected $configRepository;
+
+    protected $phone;
+
+    public function __construct(ContentRepository $repository, EntityManagerInterface $em, PaginatorInterface $paginator, PriceModelRepository $price_model_repository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, NaschirabotyRepository $naschirabotyRepository, ConfigRepository $configRepository)
     {
         $this->page_repository = $repository;
         $this->em = $em;
@@ -79,8 +87,10 @@ class PageController extends AbstractController
         $this->menuTopRepository = $menuTopRepository;
         $this->menuLeftRepository = $menuLeftRepository;
         $this->naschirabotyRepository = $naschirabotyRepository;
-
+        $this->configRepository = $configRepository;
+        $this->phone = $configRepository->findOneBy(['name' =>'phone']);
     }
+
 
     /**
      * @Route("/vakancies/{vakancy}", name="vakancy", requirements={"token"= "\/.+\/$"})
@@ -185,6 +195,7 @@ class PageController extends AbstractController
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
             'pageWork' => $work,
+            'phone' => $this->phone,
         ]);
     }
     
@@ -215,6 +226,7 @@ class PageController extends AbstractController
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
             'pageWork' => $work,
+            'phone' => $this->phone,
         ]);
     }
     
@@ -254,6 +266,7 @@ class PageController extends AbstractController
             'leftMenu' => $leftMenu,
             'pageWork' => $work,
             'popularServices' => $popular_services,
+            'phone' => $this->phone,
         ]);
     }
     
@@ -312,6 +325,7 @@ class PageController extends AbstractController
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
             'pageWork' => $work,
+            'phone' => $this->phone,
         ]);
     }
     
@@ -321,6 +335,7 @@ class PageController extends AbstractController
             'page' => $simple,
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
+            'phone' => $this->phone,
         ]);
     }
     
