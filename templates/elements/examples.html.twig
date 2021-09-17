@@ -1,4 +1,4 @@
-
+{% if pageWork is defined and pageWork is not empty %}
 <section class="work-examples__section">
 
     <!-- example.phtml -->
@@ -8,7 +8,9 @@
                     ПРИМЕРЫ НАШИХ РАБОТ
                 </div>
                 <div class="rey_text_red rey_examples_title_audi">
+                    {% if pageWork.model is not empty%}
                     <b>{{ pageWork.model|upper }}</b>
+                    {% endif %}
                     <!--<a href="--><!--"></a>-->
                 </div>
                 <div class="rey_examples_box_img">
@@ -36,3 +38,4 @@
     <!-- example.phtml END -->
 
 </section>
+{% endif %}
