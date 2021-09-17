@@ -3,10 +3,10 @@
     <div class="section__heading">
         <div class="section__heading-text">
             {% if page.h1 is not empty %}
-            <h2 class="section__h2">{{ page.name }}</h2>
+            <h2 class="section__h2">{{ page.name|replace('BRAND':'') }}</h2>
             {% endif %}
             {% if page.description is not empty %}
-        {{ page.description|raw }}
+        {{ page.description|raw|replace('BRAND':'') }}
             {% endif %}
             {% if page.text is not empty %}
                 <div class="container">

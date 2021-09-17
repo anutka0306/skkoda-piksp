@@ -302,7 +302,7 @@ class PageController extends AbstractController
 
 
             $work = $naschirabotyRepository->findOneBy([],['id' =>'DESC']);
-       
+
 
         $brands = $priceBrandRepository->findAll();
 
