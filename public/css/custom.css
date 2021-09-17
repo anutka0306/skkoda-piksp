@@ -1560,3 +1560,15 @@ label {
         left: 88%;
     }
 }
+.navigation .pagination{
+    margin:  50px auto;
+    display: flex;
+    justify-content: center;
+}
+.navigation .pagination span{
+    padding: 5px 10px;
+    margin: 0 5px;
+    display: block;
+    background: #ccc;
+    border-radius: 3px;
+}
