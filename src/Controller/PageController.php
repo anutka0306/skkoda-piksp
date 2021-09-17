@@ -300,10 +300,9 @@ class PageController extends AbstractController
             }
         }
 
-        $work = $naschirabotyRepository->findBy(['service' => $rootService->getService()->getId()], ['id' => 'DESC'], 1);
-        if(empty($work)){
+
             $work = $naschirabotyRepository->findOneBy([],['id' =>'DESC']);
-        }
+       
 
         $brands = $priceBrandRepository->findAll();
 
