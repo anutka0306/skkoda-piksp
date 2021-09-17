@@ -2,9 +2,10 @@
 <html lang="ru">
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}{{ page.metaTitle ?? (page.h1~' - Lexus Infiniti') }}{% endblock %}</title>
+    <title>{% block title %}{{ page.metaTitle ?? (page.h1~' в Санкт-Петербурге. «Автосервис ПИК»') }}{% endblock %}</title>
     <meta name="author">
-    <meta name="description" content="{% block description %}{{ page.metaDescription|raw }}{% endblock %}"/>
+    <meta name="description" content="{% block description %}{{ (page.h1 ~ '  в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ Ремонт день в обращения ✔ Сколько стоит, цена за Ремонт Audi - подскажем. ✔ Гарантия 1 год! Профильный автосервис «ПИК» - ☎ *номер телефона*
+') }}{% endblock %}"/>
     <meta name="keywords" content="{% block keywords %}{% endblock %}"/>
     <meta http-equiv="Last-Modified" content="{% block last_modified %}{{ page.modifyDate|date('D, d M Y H:i:s') }}{% endblock%} GMT">
     <link rel="canonical" href="{% block canonical %}{{ app.request.schemeAndHttpHost~page.path }}{% endblock %}"/>
