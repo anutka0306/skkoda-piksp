@@ -10,12 +10,17 @@
 
 {% block breadcrumbs %}{% endblock %}
 {% block body %}
-    <div class="sitemap-container">
+    <div class="container">
+        <h2 class="section__h2">Карта сайта</h2>
+    </div>
+    <div class="sitemap-container container d-flex justify-content-between" style="margin-top: 30px">
+        {% for row in pagination|batch(50) %}
         <ul>
-            {% for item in pagination %}
+            {% for item in row %}
                 <li><a href="{{ item.path }}">{{ item.h1 }}</a></li>
             {% endfor %}
         </ul>
+        {% endfor %}
         <div class="navigation">
             {{ knp_pagination_render(pagination) }}
         </div>

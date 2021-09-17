@@ -143,7 +143,7 @@ class PageController extends AbstractController
             $pagination = $paginator->paginate(
                 $query, /* query NOT result */
                 $request->query->getInt('page', 1), /*page number*/
-                500 /*limit per page*/
+                100 /*limit per page*/
             );
 
             // parameters to template
