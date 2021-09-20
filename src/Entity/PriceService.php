@@ -280,6 +280,7 @@ class PriceService
         $brand = $content->getBrand();
 
         if ($brand) {
+            //$this->path = 'path';
             foreach ($brand->getPages() as $page) {
                 if ($page instanceof Service && $page->getService() && $page->getService()->getId() === $this->getId()) {
                     if ($page->getPublished()) {
@@ -299,20 +300,12 @@ class PriceService
 
 
                     //если коды не совпали, то будем проверять в табл. content
-                    $path = $this->slug.$brand->getPriceBrand()->getCode().'/';
+                    $path = '/'.$brand->getPriceBrand()->getCode().'/'.$this->getPriceCategory()->getSlug().'/'.$this->getSlug().'/';
 
-                    if($contentRepository->findOneBy(['path' => $path])){
+                    if($contentRepository->findOneBy(['path' => $path, 'published' => 1])){
                         $this->path = $path;
-                    }else{
-                        // это отрабатывает для Пежо, Форд страницы сервис/бренд
-                        $brandId = $content->getBrand()->getBrandId();
-                        $path = $this->slug.str_replace('-euro','',$this->getBrandById($brandId, $priceBrandRepository)->getCode()).'/';
-
-                       if($contentRepository->findOneBy(['path' => $path])){
-                            $this->path = $path;
-                        }
-
                     }
+
 
                     return $this;
                 }//end else
