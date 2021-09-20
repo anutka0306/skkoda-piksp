@@ -20,7 +20,7 @@ use App\Service\ConfigService;
 
 class PriceListModel
 {
-    public const BASE_PRICE_HOUR = 1400;
+    public const BASE_PRICE_HOUR = 1600;
     
     /**
      * @var PriceServiceRepository
