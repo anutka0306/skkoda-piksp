@@ -815,6 +815,10 @@ section {
     margin-top: 10px;
     font-weight: 600;
 }
+.form__text a b{
+    font-size: 18px;
+    font-family: 'LabGrotesque';
+}
 .subscribe__form .form {
     display: flex;
     flex-direction: column;

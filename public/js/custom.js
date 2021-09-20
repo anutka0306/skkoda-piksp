@@ -10,6 +10,22 @@ jQuery(function($) {
 });
 
 $(document).ready(function () {
+
+    //placeholder на формах
+    $('input#phoneN2').hover(function (){
+        $(this).attr('placeholder', '+7-___-___-__-__');
+    },
+        function (){
+            $(this).attr('placeholder', '');
+        });
+
+    $('input#phoneN3').hover(function (){
+            $(this).attr('placeholder', '+7-___-___-__-__');
+        },
+        function (){
+            $(this).attr('placeholder', '');
+        });
+
     $('.brands__list_slider').slick({
         infinite: true,
         slidesToShow: 4,
