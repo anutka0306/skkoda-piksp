@@ -8,6 +8,24 @@
     {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, 'customH1': page.h1 }) }}
 {% endblock %}
 {% block breadcrumbs %}
+    <section id="breadcrumbs" style="margin-top: 100px;">
+        <div class="breadcrumbs_wrapper">
+                <span class="navigation_item">
+                    <a href="/">Главная</a>
+                    <span>&#8646;</span>
+                </span>
+            <span class="navigation_item">
+                    <a href="/blog">Наши работы</a>
+                    <span>&#8646;</span>
+                </span>
+
+            <span class="navigation_item">
+                    <a href="#">{{ page.h1 }}</a>
+                </span>
+
+
+        </div>
+    </section>
 {% endblock %}
 
 {% block body %}
