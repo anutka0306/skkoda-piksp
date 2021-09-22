@@ -66,9 +66,10 @@
 <body itemscope="itemscope" itemtype="https://schema.org/Product">
 
 
-
+{# Roistat #}
+{{ include('v2/scripts/roistat.html.twig') }}
 {# Yandex Метрика #}
-{#{{ include('v2/scripts/_yandex_metrics.html.twig') }}#}
+{{ include('v2/scripts/_yandex_metrics.html.twig') }}
 
 <div class="page-wrapper">
     {% block header_line %}
