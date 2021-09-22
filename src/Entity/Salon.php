@@ -336,9 +336,9 @@ class Salon
             return '';
         }
         $phone = preg_replace('/\D/','',$this->getPhone());
-        if (7 == $phone{0}) {
+        /*if (7 == $phone{0}) {
             $phone = '+'.$phone;
-        }
+        }*/
         return $phone;
     }
 
