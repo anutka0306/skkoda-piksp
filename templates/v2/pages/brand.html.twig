@@ -1,6 +1,6 @@
 
 {% extends 'v2/base.html.twig' %}
-{% block title %} {{ page.priceBrand.name~' в Санкт-Петербурге. Автосервис '~  page.priceBrand.name|upper~' ПИК' }} {% endblock %}
+{% block title %} {{ 'Ремонт '~page.priceBrand.name~' в Санкт-Петербурге. Автосервис '~  page.priceBrand.name|upper~' ПИК' }} {% endblock %}
 {% block description %} {% if phone is defined %}{{'Ремонт '~ page.priceBrand.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ *Название страницы* (марка модель на руском) в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис '~page.priceBrand.name|upper~ ' «ПИК» - ☎ '~phone.value }} {% else%} {{'Ремонт '~ page.priceBrand.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ *Название страницы* (марка модель на руском) в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис '~page.priceBrand.name|upper~ ' «ПИК» - ☎ '}}{% endif %}{% endblock %}
 
 {% block header_line %}
