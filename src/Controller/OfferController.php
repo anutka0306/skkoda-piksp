@@ -56,8 +56,8 @@ class OfferController extends AbstractController
         $offers = $this->offer_repository->findBy(['published' => 1]);
         $page = $this->contentRepository->findOneBy(['path' => '/offers/']);
         $brands = $this->priceBrandRepository->findAll();
-        $topMenu = $this->menuTopRepository->findAll();
-        $leftMenu = $this->menuLeftRepository->findAll();
+        $topMenu = $this->menuTopRepository->findBy([], ['ordering'=>'ASC']);
+        $leftMenu = $this->menuLeftRepository->findBy([], ['ordering'=>'ASC']);
         return $this->render('offer/index.html.twig', [
             'offers' => $offers,
             'page' => $page,
@@ -71,8 +71,8 @@ class OfferController extends AbstractController
      * @Route("/offers/{token}", name="dinamic_offers")
      */
     public function offer_item($token): Response{
-        $topMenu = $this->menuTopRepository->findAll();
-        $leftMenu = $this->menuLeftRepository->findAll();
+        $topMenu = $this->menuTopRepository->findBy([], ['ordering'=>'ASC']);
+        $leftMenu = $this->menuLeftRepository->findBy([], ['ordering'=>'ASC']);
         if ( !$offer = $this->offer_repository->findOneBy(['published'=>1, 'slug'=>$token])) {
             throw $this->createNotFoundException(sprintf('Offer %s not found',$token));
         }

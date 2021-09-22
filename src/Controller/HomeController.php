@@ -23,8 +23,8 @@ class HomeController extends AbstractController
         $page = $repository->findOneBy(['path'=>'/']);
         $brands = $priceBrandRepository->findAll();
         $gallery = $this->getGalleryImages();
-        $topMenu = $menuTopRepository->findAll();
-        $leftMenu = $menuLeftRepository->findAll();
+        $topMenu = $menuTopRepository->findBy([], ['ordering'=>'ASC']);
+        $leftMenu = $menuLeftRepository->findBy([], ['ordering'=>'ASC']);
         $work = $naschirabotyRepository->findOneBy([],['id' =>'DESC']);
         
         return $this->render('v2/pages/home/index.html.twig', [

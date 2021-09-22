@@ -38,8 +38,8 @@ class NaschirabotyController extends AbstractController
     {
         $page = $content_repository->findOneByToken('blog');
         $works = $naschiraboty_repository->findAll();
-        $topMenu = $menuTopRepository->findAll();
-        $leftMenu = $menuLeftRepository->findAll();
+        $topMenu = $menuTopRepository->findBy([], ['ordering'=>'ASC']);
+        $leftMenu = $menuLeftRepository->findBy([], ['ordering'=>'ASC']);
         $brands = $priceBrandRepository->findAll();
 
         foreach ($works as $key => $value){
@@ -76,8 +76,8 @@ class NaschirabotyController extends AbstractController
     public function item(Naschiraboty $work, Request $request, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository): Response
     {
         $images = $work->getAttach();
-        $topMenu = $menuTopRepository->findAll();
-        $leftMenu = $menuLeftRepository->findAll();
+        $topMenu = $menuTopRepository->findBy([], ['ordering'=>'ASC']);
+        $leftMenu = $menuLeftRepository->findBy([], ['ordering'=>'ASC']);
         $brands = $priceBrandRepository->findAll();
 
         $form = $this->createForm(

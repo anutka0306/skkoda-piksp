@@ -47,8 +47,8 @@ class ContactController extends AbstractController
         if(! $page = $this->page_repository->findOneBy(['path'=>'/contacts/'])){
             throw $this->createNotFoundException('Page /contacts/ not found');
         }
-        $topMenu = $this->menuTopRepository->findAll();
-        $leftMenu = $this->menuLeftRepository->findAll();
+        $topMenu = $this->menuTopRepository->findBy([], ['ordering'=>'ASC']);
+        $leftMenu = $this->menuLeftRepository->findBy([], ['ordering'=>'ASC']);
         $brands = $this->priceBrandRepository->findAll();
 
         return $this->render('v2/pages/contact/index.html.twig', [
