@@ -463,7 +463,7 @@ h1 {
 .b5::before {
     content: '';
     position: absolute;
-    top: -90px;
+    top: -70px;
     left: -50px;
     right: -50px;
     height: 300px;
