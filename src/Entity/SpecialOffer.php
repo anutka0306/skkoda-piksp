@@ -18,7 +18,7 @@ class SpecialOffer implements PageInterface
     use VichImageTrait;
     use SeoTrait;
 
-    public const BASE_PATH = '/akcii/';
+    public const BASE_PATH = '/offers/';
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

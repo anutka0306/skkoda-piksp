@@ -110,8 +110,8 @@ class PageController extends AbstractController
      */
     public function index($token, EntityManagerInterface $em, PaginatorInterface $paginator, Request $request, PriceModelRepository $priceModelRepository, PriceServiceRepository $priceServiceRepository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, NaschirabotyRepository $naschirabotyRepository)
     {
-        $topMenu = $menuTopRepository->findAll();
-        $leftMenu = $menuLeftRepository->findAll();
+        $topMenu = $menuTopRepository->findBy([], ['ordering'=>'ASC']);
+        $leftMenu = $menuLeftRepository->findBy([], ['ordering'=>'ASC']);
         if ( ! $page = $this->page_repository->findOnePublishedByToken($token)) {
             throw $this->createNotFoundException(sprintf('Page %s not found',$token));
         }
