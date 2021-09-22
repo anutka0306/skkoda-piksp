@@ -1,6 +1,6 @@
 
 {% extends 'v2/base.html.twig' %}
-{% block title %} {{ page.metaTitle ? page.metaTitle : (page.h1~' - ') }} {% endblock %}
+{#{% block title %} {{ page.metaTitle ? page.metaTitle : (page.h1~' - ') }} {% endblock %}#}
 
 {% block header_line %}
     {{ include('v2/blocks/include/header.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
