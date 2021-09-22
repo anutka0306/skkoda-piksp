@@ -299,12 +299,15 @@ h1 {
 
 @media (max-width: 1200px) {
     .header__inner::after{
-        right: 9%;
+        right: 9% !important;
+        width: 492px !important;
+        height: 238px !important;
     }
+
 }
-@media screen and (max-width: 991px){
+@media screen and (max-width: 950px){
     .header__inner::after{
-        right: -17%;
+        right: 0 !important;
     }
 }
 @media screen and (max-width: 768px){
