@@ -23,7 +23,7 @@ class PriceServiceCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Услуга')
             ->setEntityLabelInPlural('Услуги')
             ->setPaginatorPageSize(100)
-            ->setSearchFields(['name', 'code']);
+            ->setSearchFields(['name', 'slug']);
     }
 
 
