@@ -123,18 +123,17 @@ class MailerController extends AbstractController
      * @Route("/callback_form", name="callback_form")
      */
     public function callback_form(Request $request, MailerInterface $mailer){
-        $to = explode(',',$this->getTo_salonWithout() );
-        foreach ($to as $recipient){
+        $to = 'anya-programmist@qmotors.ru';
+
             $email = (new Email())
                 ->from('robot@mirakpp.ru')
-                ->to((string)$recipient)
+                ->to((string)$to)
                 ->subject('Новая заявка с сайта Styled.cc')
                 ->html('<p>Новая заявка с сайта Styled.cc</p>
-             <p>Имя отправителя: ' . $request->get('name') . '</p>
             <p>Телефон отправителя: ' . $request->get('phone') . '</p>'
                 );
             $mailer->send($email);
-        }
+
 
         return new JsonResponse(['success'=>'<p>Спасибо! Ваша заявка отправлена.</p>']);
     }

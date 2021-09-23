@@ -98,6 +98,7 @@
     $(document).ready(function(){
         //Скрыть PopUp при загрузке страницы
         PopUpHide();
+
         $(".popup-send-button").click(function (e){
             e.preventDefault();
             if($('.phoneN3-popup').val() == ''){
@@ -106,8 +107,25 @@
             }
             if($('.phoneN3-popup').val().length < 17){
                 alert('Неверный формат номер телефона');
-                return;;
+                return;
             }
+                let phone = $('.phoneN3-popup').val();
+            $.ajax({
+                url:     "/callback_form",
+                type:     "POST", //метод отправки
+                dataType: "html", //формат данных
+
+                data: {
+                    'phone' : phone,
+                },
+                success: function(response) { //Данные отправлены успешно
+                    //$('.callback-popup-body').html('<p style="text-align: center; font-weight: 700; padding: 20px;">Спасибо! Ваша заявка отправлена.</p>');
+                     console.log(response);
+                },
+                error: function(response) { // Данные не отправлены
+                    console.log('error');
+                }
+            });
 
 
            PopUpHide();
