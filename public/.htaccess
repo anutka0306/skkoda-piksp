@@ -4,6 +4,15 @@
 # start page (path "/") because otherwise Apache will apply the rewriting rules
 # to each configured DirectoryIndex file (e.g. index.php, index.html, index.pl).
 DirectoryIndex index.php
+RewriteEngine On RewriteBase /
+
+Order Allow,Deny
+Allow from all
+Deny from 31.173.0.0/18 31.173.80.0/21 178.176.64.0/19
+
+RewriteCond %{HTTP:X-HTTPS} !1
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
 # By default, Apache does not evaluate symbolic links if you did not enable this
 # feature in your server configuration. Uncomment the following line if you
