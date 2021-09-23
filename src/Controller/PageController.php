@@ -257,6 +257,7 @@ class PageController extends AbstractController
             $model_name = null;
         }
         $services = $this->page_repository->findOneBy(['path' => '/'.$service->getPriceCategory()->getSlug().'/']);
+        $service->setName(str_replace([$brand_name.' '.$model_name, 'в Москве'], ['', ''], $service->getName() ));
         return $this->render('v2/pages/service.html.twig', [
             'page' => $service,
             'brandName' => $brand_name,
