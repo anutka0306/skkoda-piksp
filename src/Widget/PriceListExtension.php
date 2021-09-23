@@ -3,8 +3,11 @@
 namespace App\Widget;
 
 use App\Entity\Content;
+use App\Entity\Naschiraboty;
 use App\Entity\RootService;
 use App\Entity\Service;
+use App\Entity\Simple;
+use App\Entity\SpecialOffer;
 use App\Model\PriceListModel;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Twig\Environment;
@@ -55,11 +58,19 @@ class PriceListExtension extends AbstractExtension
 
         //$price_list_title = $this->model->getPricelistTitle();
         $price_list_title = str_replace('в Москве','- цены:',$page->getName());
-        if($page instanceof RootService or $page instanceof Service){
+        if($page instanceof Service){
             return $twig->render('v2/widget/price_list_service.html.twig', compact('sections', 'price_list_title','page'));
         }
-       return $twig->render('v2/widget/price_list.html.twig', compact('sections', 'price_list_title','page'));
-        //return $twig->render('elements/_price_list_orders.html.twig', compact('sections', 'price_list_title','page'));
+        if($page instanceof RootService or $page instanceof Simple or $page instanceof SpecialOffer or $page instanceof Naschiraboty) {
+            $withoutLinks = true;
+            if($page instanceof RootService) {
+                return $twig->render('v2/widget/price_list_service.html.twig', compact('sections', 'price_list_title','page', 'withoutLinks'));
+
+            }else{
+                return $twig->render('v2/widget/price_list.html.twig', compact('sections', 'price_list_title', 'page', 'withoutLinks'));
+            }
+        }
+        return $twig->render('v2/widget/price_list.html.twig', compact('sections', 'price_list_title', 'page'));
     }
 
     public function service_list(Environment $twig, Content $page)
