@@ -7,7 +7,7 @@
     {{ include('v2/blocks/include/header_services.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu, 'popularServices': popularServices}) }}
 {% endblock %}
 {% block header_banner %}
-    {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1 }) }}
+    {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, 'serviceName':page.name, 'photoBig':page.priceBrand.photoBig }) }}
 {% endblock %}
 
 {% block body %}

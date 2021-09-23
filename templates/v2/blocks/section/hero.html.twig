@@ -54,7 +54,11 @@
                             {% if customH1 is defined %}
                                 {{ customH1 }}
                             {% else %}
+                                {% if serviceName is defined %}
+                                    {{ serviceName }}
+                                    {% else %}
                                 Ремонт
+                                        {% endif %}
                                 {% if brandName is defined %}
                                 {{ brandName }}
                                     {% if modelName is defined %}
