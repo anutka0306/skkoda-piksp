@@ -123,13 +123,13 @@ class MailerController extends AbstractController
      * @Route("/callback_form", name="callback_form")
      */
     public function callback_form(Request $request, MailerInterface $mailer){
-        $to = 'anya-programmist@qmotors.ru';
+        $to = 'Lexus@acpik.ru';
 
             $email = (new Email())
                 ->from('info@my-side.online')
                 ->to((string)$to)
                 ->subject('Новая заявка с сайта Piksp.ru')
-                ->html('<p>Новая заявка с сайта Styled.cc</p>
+                ->html('<p>Новая заявка с сайта Piksp.ru</p>
             <p>Телефон отправителя: ' . $request->get('phone') . '</p>'
                 );
             $mailer->send($email);
