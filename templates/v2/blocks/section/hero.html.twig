@@ -53,17 +53,16 @@
                     <h1><span class="main-heading">
                             {% if customH1 is defined %}
                                 {{ customH1 }}
-                            {% else %}
-                                {% if serviceName is defined %}
+                            {% elseif serviceName is defined %}
                                     {{ serviceName }}
                                     {% else %}
                                 Ремонт
                                         {% endif %}
                                 {% if brandName is defined %}
-                                {{ brandName }}
+                                {#{{ brandName }}
                                     {% if modelName is defined %}
                                          {{ modelName }}
-                                        {% endif %}
+                                        {% endif %}#}
                                     {% else %}
                                     АВТО
                                 {% endif %}
