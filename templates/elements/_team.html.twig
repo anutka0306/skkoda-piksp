@@ -81,14 +81,51 @@
                         <div class="form__inner">
                             <div class="form__item">
                                 <label for="phoneN3">Введите телефон</label>
-                                <input class="form__input" type="tel" id="phoneN3" name="phone" required="" inputmode="text">
+                                <input class="form__input phoneN1-popup" type="tel" id="phoneN3" name="phone" required="" inputmode="text">
                             </div>
 
                         </div>
-                        <button class="button">Отправить заявку</button>
+                        <button class="button contact-send-button">Отправить заявку</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    $(document).ready(function(){
+
+        $(".contact-send-button").click(function (e){
+            e.preventDefault();
+            if($('.phoneN1-popup').val() == ''){
+                alert('Заполните поле телефон');
+                return;
+            }
+            if($('.phoneN1-popup').val().length < 17){
+                alert('Неверный формат номер телефона');
+                return;
+            }
+            let phone = $('.phoneN1-popup').val();
+            $.ajax({
+                url:     "/callback_form",
+                type:     "POST", //метод отправки
+                dataType: "html", //формат данных
+
+                data: {
+                    'phone' : phone,
+                },
+                success: function(response) { //Данные отправлены успешно
+                    //$('.callback-popup-body').html('<p style="text-align: center; font-weight: 700; padding: 20px;">Спасибо! Ваша заявка отправлена.</p>');
+                    console.log(response);
+                },
+                error: function(response) { // Данные не отправлены
+                    console.log('error');
+                }
+            });
+            
+            ResultShow();
+        });
+    });
+
+</script>
