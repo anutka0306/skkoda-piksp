@@ -4,6 +4,7 @@ namespace App\Controller\Admin_old;
 
 use App\Entity\AttachMainGallery;
 use App\Entity\Brand;
+use App\Entity\Config;
 use App\Entity\MenuLeft;
 use App\Entity\MenuTop;
 use App\Entity\Model;
@@ -74,6 +75,7 @@ class AdminController extends AbstractDashboardController
            /* MenuItem::linkToCrud('Галерея наших работ', 'fas fa-car', OurWorks::class),*/
             MenuItem::linkToCrud('Наши работы', 'fa fa-fw fa-hand-holding-usd', Naschiraboty::class),
             MenuItem::linkToCrud('Галерея на главной',null,AttachMainGallery::class),
+            MenuItem::linkToCrud('Конфиги', null, Config::class),
         ];
     }
 }

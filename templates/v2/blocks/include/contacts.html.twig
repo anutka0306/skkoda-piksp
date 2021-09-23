@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="contacts__info">
                                     <h6 class="contact__heading">Телефон</h6>
-                                    <p><a href="tel:+78129159153">8&nbsp;(812)&nbsp;915-91-53</a></p>
+                                    <p> <span class="phone-number"><a href="{% if phone is defined %}tel:{{ phone.value }}{% endif %}">{% if phone is defined %}{{ phone.title }}{% endif %}</a></span></p>
                                 </div>
                             </li>
                             <li class="contacts__item">

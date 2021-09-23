@@ -75,7 +75,7 @@
                 <div class="subscribe__form form-wrapper">
                     <h3 class="form__heading subscribe__heading">Свяжитесь с нами</h3>
                     <p class="form__text">Оставьте заявку или звоните
-                        по <a href="tel:+78129159153">тел. <b>8&nbsp;(812)&nbsp;915-91-53</b></a></p>
+                        по  <span class="phone-number"><a href="{% if phone is defined %}tel:{{ phone.value }}{% endif %}">{% if phone is defined %}{{ phone.title }}{% endif %}</a></span></p>
                     <form class="form" action="/" method="POST">
 
                         <div class="form__inner">
