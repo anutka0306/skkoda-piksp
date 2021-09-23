@@ -126,7 +126,7 @@ class MailerController extends AbstractController
         $to = 'anya-programmist@qmotors.ru';
 
             $email = (new Email())
-                ->from('robot@piksp.ru')
+                ->from('info@my-side.online')
                 ->to((string)$to)
                 ->subject('Новая заявка с сайта Piksp.ru')
                 ->html('<p>Новая заявка с сайта Styled.cc</p>
