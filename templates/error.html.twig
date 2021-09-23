@@ -49,7 +49,7 @@
 {{ include('v2/scripts/_yandex_metrics.html.twig') }}
 <div class="page-wrapper">
     {% block header_line %}
-        {{ include('v2/blocks/include/header.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
+        {{ include('v2/blocks/include/header_error.html.twig') }}
     {% endblock %}
 
     {% block header_banner %}
