@@ -1,2 +1,4 @@
 User-agent: *
-Disallow: /
+Disallow: /admin
+Host: piksp.ru
+Sitemap: https://piksp.ru/sitemap.xml
