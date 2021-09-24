@@ -51,6 +51,9 @@
     #popup2{
         display: none;
     }
+    #popup4{
+        display: none;
+    }
     .white-popup{
         margin:40px auto 0px auto;
         width:320px;
@@ -94,10 +97,34 @@
     </div>
 </div>
 
+<div class="b-popup" id="popup4">
+    <div class="b-popup-content">
+        <div class="col-lg-12 col-12">
+            <a class="close-popup_perezvon" href="javascript:PopUp2Hide()">X</a>
+            <div class="subscribe__form form-wrapper">
+                <h3 class="form__heading subscribe__heading">Заявка на обслуживание</h3>
+
+                <form class="form" action="/" method="POST">
+
+                    <div class="form__inner">
+                        <div class="form__item">
+                            <label for="phoneN3">Введите телефон</label>
+                            <input class="form__input phoneN4-popup" type="tel" id="phoneN4" name="phone" required="" inputmode="text">
+                        </div>
+
+                    </div>
+                    <button class="button popup-send-button4">Отправить заявку</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function(){
         //Скрыть PopUp при загрузке страницы
         PopUpHide();
+        PopUp2Hide();
 
         $(".popup-send-button").click(function (e){
             e.preventDefault();
@@ -131,6 +158,39 @@
            PopUpHide();
            ResultShow();
         });
+
+        $(".popup-send-button4").click(function (e){
+            e.preventDefault();
+            if($('.phoneN4-popup').val() == ''){
+                alert('Заполните поле телефон');
+                return;
+            }
+            if($('.phoneN4-popup').val().length < 17){
+                alert('Неверный формат номер телефона');
+                return;
+            }
+            let phone = $('.phoneN4-popup').val();
+            $.ajax({
+                url:     "/callback_form",
+                type:     "POST", //метод отправки
+                dataType: "html", //формат данных
+
+                data: {
+                    'phone' : phone,
+                },
+                success: function(response) { //Данные отправлены успешно
+                    //$('.callback-popup-body').html('<p style="text-align: center; font-weight: 700; padding: 20px;">Спасибо! Ваша заявка отправлена.</p>');
+                    console.log(response);
+                },
+                error: function(response) { // Данные не отправлены
+                    console.log('error');
+                }
+            });
+
+
+            PopUp2Hide();
+            ResultShow();
+        });
     });
     //Функция отображения PopUp
     function PopUpShow(){
@@ -139,6 +199,14 @@
     //Функция скрытия PopUp
     function PopUpHide(){
         $("#popup1").hide();
+    }
+
+    function PopUp2Show(){
+        $("#popup4").show();
+    }
+    //Функция скрытия PopUp
+    function PopUp2Hide(){
+        $("#popup4").hide();
     }
 
     function ResultShow(){
