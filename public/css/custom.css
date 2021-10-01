@@ -925,8 +925,10 @@ label {
     background-color: #ffc600;
     background-size: 260px;
     background-repeat: no-repeat;
-    background-position: right bottom;
+   /* background-position: right bottom;*/
+    background-position: 20% 87%;
 }
+
 .big_padding {
     padding: 50px!important;
 }
@@ -939,7 +941,7 @@ label {
 }
 .akcii_content-wrapper {
     width: 200px;
-    margin: 0 auto;
+    margin: 0 10px 0 auto;
     text-align: left;
 }
 .akcii_akcii .akcii_services-heading {
