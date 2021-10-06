@@ -150,6 +150,9 @@ header{
     column-gap: 16px;
     font-weight: 300;
 }
+.nav__address, .nav__contacts .phone-number{
+    color: #ffffff !important;
+}
 .nav__contacts{
     padding-right: 20px;
 }
