@@ -6,7 +6,25 @@
                 Используем современные сканеры и фирменное ПО.</p>
         </div>
 
-        <div class="diagnostics">
+        {% if diagnostic is defined and diagnostic is not empty %}
+            <div class="diagnostics">
+                <div class="container">
+                    <div class="row">
+                        {% for item in diagnostic %}
+                            <div class="col-6 col-md-3">
+                            <div class="diagnostics__item">
+                                <div class="diagnostics__img">
+                                    <img loading="lazy" src="/img/diagnostics/{{ item.image }}" alt="">
+                                </div>
+                                <h5><a href="{{ item.article.path }}"> {{ item.article.h1 }}</a></h5>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="diagnostics">
             <div class="container">
                 <div class="row">
                     <div class="col-6 col-md-3">
@@ -48,6 +66,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
 
         <div class="section__heading">
             <p class="section__heading-text">

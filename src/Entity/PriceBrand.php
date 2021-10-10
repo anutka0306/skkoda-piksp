@@ -108,10 +108,16 @@ class PriceBrand
      */
     private $img_logo;
 
+    /**
+     * @ORM\OneToMany(targetEntity=DiagnosticBrand::class, mappedBy="brand")
+     */
+    private $diagnostic;
+
     public function __construct()
     {
         $this->priceModels = new ArrayCollection();
         $this->excludedSalons = new ArrayCollection();
+        $this->diagnostic = new ArrayCollection();
     }
     
     public function getId(): ?int
@@ -406,6 +412,36 @@ class PriceBrand
     public function setImgLogo(?string $img_logo): self
     {
         $this->img_logo = $img_logo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DiagnosticBrand[]
+     */
+    public function getDiagnostic(): Collection
+    {
+        return $this->diagnostic;
+    }
+
+    public function addDiagnostic(DiagnosticBrand $diagnostic): self
+    {
+        if (!$this->diagnostic->contains($diagnostic)) {
+            $this->diagnostic[] = $diagnostic;
+            $diagnostic->setBrand($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiagnostic(DiagnosticBrand $diagnostic): self
+    {
+        if ($this->diagnostic->removeElement($diagnostic)) {
+            // set the owning side to null (unless already changed)
+            if ($diagnostic->getBrand() === $this) {
+                $diagnostic->setBrand(null);
+            }
+        }
 
         return $this;
     }

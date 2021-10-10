@@ -5,6 +5,7 @@ namespace App\Controller\Admin_old;
 use App\Entity\AttachMainGallery;
 use App\Entity\Brand;
 use App\Entity\Config;
+use App\Entity\DiagnosticBrand;
 use App\Entity\MenuLeft;
 use App\Entity\MenuTop;
 use App\Entity\Model;
@@ -70,6 +71,9 @@ class AdminController extends AbstractDashboardController
                 MenuItem::linkToCrud('Категории услуг', 'fa fa-fw fa-folder', PriceCategory::class),
                 MenuItem::linkToCrud('Услуги', 'fa fa-fw fa-wrench', PriceService::class),
                 MenuItem::linkToCrud('Классы', 'fa fa-fw fa-hand-holding-usd', PriceClass::class),
+            ]),
+            MenuItem::subMenu('Блок диагностика', 'fa fa-fw fa-hand-holding-usd')->setSubItems([
+                MenuItem::linkToCrud('Блок диагностика для брендов', 'fas fa-car', DiagnosticBrand::class),
             ]),
             MenuItem::linkToCrud('Акции', 'fa fa-money', SpecialOffer::class),
            /* MenuItem::linkToCrud('Галерея наших работ', 'fas fa-car', OurWorks::class),*/

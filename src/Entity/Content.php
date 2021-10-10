@@ -198,6 +198,11 @@ class Content implements PageInterface
      */
     private $menu_left;
 
+    /**
+     * @ORM\OneToMany(targetEntity=DiagnosticBrand::class, mappedBy="article")
+     */
+    private $diagnostic;
+
 
 
     public function __construct()
@@ -207,11 +212,12 @@ class Content implements PageInterface
         $this->ratingCount = $this->getRandomRatingCount();
         $this->top_menu = new ArrayCollection();
         $this->menu_left = new ArrayCollection();
+        $this->diagnostic = new ArrayCollection();
     }
 
     public function __toString()
     {
-        return (string) $this->getName();
+        return (string) $this->getH1();
     }
 
     public function getId(): ?int
@@ -680,6 +686,36 @@ class Content implements PageInterface
             // set the owning side to null (unless already changed)
             if ($menuLeft->getLink() === $this) {
                 $menuLeft->setLink(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DiagnosticBrand[]
+     */
+    public function getDiagnostic(): Collection
+    {
+        return $this->diagnostic;
+    }
+
+    public function addDiagnostic(DiagnosticBrand $diagnostic): self
+    {
+        if (!$this->diagnostic->contains($diagnostic)) {
+            $this->diagnostic[] = $diagnostic;
+            $diagnostic->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiagnostic(DiagnosticBrand $diagnostic): self
+    {
+        if ($this->diagnostic->removeElement($diagnostic)) {
+            // set the owning side to null (unless already changed)
+            if ($diagnostic->getArticle() === $this) {
+                $diagnostic->setArticle(null);
             }
         }
 

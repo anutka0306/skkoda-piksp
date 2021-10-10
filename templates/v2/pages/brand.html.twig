@@ -16,7 +16,7 @@
     {{ brand_models_service(page.priceBrand, page.priceBrand.path) }}
     {{ service_list(page) }}
     {{ include('elements/_advantages.html.twig',{brandName: page.priceBrand.name}) }}
-    {{ include('elements/_advantages2.html.twig', {brandName: page.priceBrand.name}) }}
+    {{ include('elements/_advantages2.html.twig', {brandName: page.priceBrand.name, 'diagnostic':diagnostic}) }}
     {{ special_offers(page.brandAndModelName) }}
     {{ include('elements/_about_company.html.twig', {brandName: page.priceBrand.name}) }}
 
