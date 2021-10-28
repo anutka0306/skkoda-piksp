@@ -65,13 +65,22 @@
         <div class="nav__address">
             <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
             <a target="__blank" href="https://yandex.ru/maps/2/saint-petersburg/?um=constructor%3A0b426416135d33a3e9907c055362662e47f0382f0994f673e33c6d4b4799f7f8">Санкт-Петербург, <br>
-                ул Ворошилова д. 2АЕ</a>
+                {% if brandName == 'Land Rover' %}
+                    Кушелевская дорога, 20
+                {% else %}
+                    ул Ворошилова д. 2АЕ
+                {% endif %}
+            </a>
         </div>
 
         <div class="nav__contacts">
             <i class="fas fa-phone" aria-hidden="true"></i>
             <div class="nav__phone">
+                {% if brandName == 'Land Rover' %}
+                    <span class="phone-number"><a href="+78129195913">+7(812) 919-59-13</a></span>
+                {% else %}
                 <span class="phone-number"><a href="{% if phone is defined %}tel:{{ phone.value }}{% endif %}">{% if phone is defined %}{{ phone.title }}{% endif %}</a></span>
+                {% endif %}
                 <a class="phone-message" href="javascript:PopUpShow();">Заказать обратный звонок</a>
             </div>
         </div>
@@ -83,3 +92,4 @@
 
    {{ include('v2/blocks/include/header_fixed.html.twig') }}
 </header>
+
