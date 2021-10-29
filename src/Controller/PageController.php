@@ -196,6 +196,9 @@ class PageController extends AbstractController
         if(empty($work)){
             $work = $naschirabotyRepository->findOneBy([],['id' =>'DESC']);
         }
+        if($brand_name == 'Land Rover'){
+            $this->phone = array('value'=>'+78129195913', 'title'=>'+7(812) 919-59-13');
+        }
         return $this->render('v2/pages/brand.html.twig', [
             'page' => $brand,
             'brandName' => $brand_name,
@@ -228,6 +231,9 @@ class PageController extends AbstractController
             $model_name = $priceModelRepository->find($model_id)->getName();
         }else{
             $model_name = null;
+        }
+        if($brand_name == 'Land Rover'){
+            $this->phone = array('value'=>'+78129195913', 'title'=>'+7(812) 919-59-13');
         }
         return $this->render('v2/pages/model.html.twig', [
             'page' => $model,
@@ -272,6 +278,11 @@ class PageController extends AbstractController
         }
         $services = $this->page_repository->findOneBy(['path' => '/'.$service->getPriceCategory()->getSlug().'/']);
         $service->setName(str_replace([$brand_name.' '.$model_name, 'в Москве'], ['', ''], $service->getName() ));
+
+        if($brand_name == 'Land Rover'){
+            $this->phone = array('value'=>'+78129195913', 'title'=>'+7(812) 919-59-13');
+        }
+        
         return $this->render('v2/pages/service.html.twig', [
             'page' => $service,
             'brandName' => $brand_name,
