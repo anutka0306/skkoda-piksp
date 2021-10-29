@@ -282,7 +282,7 @@ class PageController extends AbstractController
         if($brand_name == 'Land Rover'){
             $this->phone = array('value'=>'+78129195913', 'title'=>'+7(812) 919-59-13');
         }
-        
+
         return $this->render('v2/pages/service.html.twig', [
             'page' => $service,
             'brandName' => $brand_name,
