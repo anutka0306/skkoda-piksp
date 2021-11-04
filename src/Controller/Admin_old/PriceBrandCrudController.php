@@ -52,6 +52,12 @@ class PriceBrandCrudController extends AbstractCrudController
             ImageField::new('photo_big')->setUploadDir('/public/img/brands/big/')->setBasePath('/img/brands/big/'),
             ImageField::new('img_logo')->setUploadDir('/public/img/brands/logo/')->setBasePath('/img/brands/logo/'),
             DateTimeField::new('modifyDate', 'Дата изменения')->hideOnIndex(),
+            TextField::new('phone', 'Телефон автосервиса')->hideOnIndex(),
+            TextField::new('address', 'Адрес автосервиса')->hideOnIndex(),
+            CodeEditorField::new('map', 'Код карты сервиса')->hideOnIndex(),
+            TextField::new('phone2', 'Телефон автосервиса 2')->hideOnIndex(),
+            TextField::new('address2', 'Адрес автосервиса 2')->hideOnIndex(),
+            CodeEditorField::new('map2', 'Код карты сервиса 2')->hideOnIndex(),
         ];
     }
 
