@@ -77,6 +77,9 @@ class PageController extends AbstractController
     protected $configRepository;
 
     protected $phone;
+    protected  $phone2;
+    protected $address;
+    protected $address2;
 
     /**
      * @var DiagnosticBrandRepository
@@ -95,6 +98,9 @@ class PageController extends AbstractController
         $this->naschirabotyRepository = $naschirabotyRepository;
         $this->configRepository = $configRepository;
         $this->phone = $configRepository->findOneBy(['name' =>'phone']);
+        $this->phone2 = $configRepository->findOneBy(['name' =>'phone2']);
+        $this->address = $configRepository->findOneBy(['name' =>'address']);
+        $this->address2 = $configRepository->findOneBy(['name' =>'address2']);
         $this->diagnosticBrandRepository = $diagnosticBrandRepository;
 
     }
@@ -192,13 +198,35 @@ class PageController extends AbstractController
         $brand_name = $brand->getBrandName();
         $models = $priceModelRepository->findBy(['priceBrand' => $brand->getBrandId()]);
         $work = $naschirabotyRepository->findBy(['model'=> $models], ['id' => 'DESC'], 1);
+
+        $phone['value'] = str_replace(array('(',')','-', ' '), '',$brand->getPriceBrand()->getPhone());
+        $phone['title'] = $brand->getPriceBrand()->getPhone();
+        if(empty($phone['value'])){
+            $phone = $this->phone;
+        }
+
+        $phone2['value'] = str_replace(array('(',')','-', ' '), '',$brand->getPriceBrand()->getPhone2());
+        $phone2['title'] = $brand->getPriceBrand()->getPhone2();
+        if(empty($phone2['value'])){
+            $phone2 = null;
+        }
+
+        $address = $brand->getPriceBrand()->getAddress();
+        if(empty($address)){
+            $address = $this->configRepository->findOneBy(['name'=>'address'])->getValue();
+        }
+        $address2 = $brand->getPriceBrand()->getAddress2();
+        if(empty($address2)){
+            $address2 = null;
+        }
+
         $diagnostic = $diagnosticBrandRepository->findBy(['brand' => $brand->getPriceBrand()],[], 4 );
         if(empty($work)){
             $work = $naschirabotyRepository->findOneBy([],['id' =>'DESC']);
         }
-        if($brand_name == 'Land Rover'){
+        /*if($brand_name == 'Land Rover'){
             $this->phone = array('value'=>'+78129195913', 'title'=>'+7(812) 919-59-13');
-        }
+        }*/
         return $this->render('v2/pages/brand.html.twig', [
             'page' => $brand,
             'brandName' => $brand_name,
@@ -207,7 +235,10 @@ class PageController extends AbstractController
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
             'pageWork' => $work,
-            'phone' => $this->phone,
+            'phone' => $phone,
+            'phone2' => $phone2,
+            'address' => $address,
+            'address2' => $address2,
             'diagnostic' => $diagnostic,
         ]);
     }
@@ -232,9 +263,30 @@ class PageController extends AbstractController
         }else{
             $model_name = null;
         }
-        if($brand_name == 'Land Rover'){
-            $this->phone = array('value'=>'+78129195913', 'title'=>'+7(812) 919-59-13');
+
+        $phone['value'] = str_replace(array('(',')','-', ' '), '',$model->getPriceBrand()->getPhone());
+        $phone['title'] = $model->getPriceBrand()->getPhone();
+        if(empty($phone['value'])){
+            $phone = $this->phone;
         }
+
+        $phone2['value'] = str_replace(array('(',')','-', ' '), '',$model->getPriceBrand()->getPhone2());
+        $phone2['title'] = $model->getPriceBrand()->getPhone2();
+        if(empty($phone2['value'])){
+            $phone2 = null;
+        }
+
+        $address = $model->getPriceBrand()->getAddress();
+        if(empty($address)){
+            $address = $this->configRepository->findOneBy(['name'=>'address'])->getValue();
+        }
+        $address2 = $model->getPriceBrand()->getAddress2();
+        if(empty($address2)){
+            $address2 = null;
+        }
+        /*if($brand_name == 'Land Rover'){
+            $this->phone = array('value'=>'+78129195913', 'title'=>'+7(812) 919-59-13');
+        }*/
         return $this->render('v2/pages/model.html.twig', [
             'page' => $model,
             'brandName' => $brand_name,
@@ -243,7 +295,10 @@ class PageController extends AbstractController
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
             'pageWork' => $work,
-            'phone' => $this->phone,
+            'phone' => $phone,
+            'phone2'=> $phone2,
+            'address'=> $address,
+            'address2'=> $address2,
             'diagnostic' => $diagnostic,
         ]);
     }
@@ -279,9 +334,30 @@ class PageController extends AbstractController
         $services = $this->page_repository->findOneBy(['path' => '/'.$service->getPriceCategory()->getSlug().'/']);
         $service->setName(str_replace([$brand_name.' '.$model_name, 'в Москве'], ['', ''], $service->getName() ));
 
-        if($brand_name == 'Land Rover'){
-            $this->phone = array('value'=>'+78129195913', 'title'=>'+7(812) 919-59-13');
+        $phone['value'] = str_replace(array('(',')','-', ' '), '',$service->getPriceBrand()->getPhone());
+        $phone['title'] = $service->getPriceBrand()->getPhone();
+        if(empty($phone['value'])){
+            $phone = $this->phone;
         }
+
+        $phone2['value'] = str_replace(array('(',')','-', ' '), '',$service->getPriceBrand()->getPhone2());
+        $phone2['title'] = $service->getPriceBrand()->getPhone2();
+        if(empty($phone2['value'])){
+            $phone2 = null;
+        }
+
+        $address = $service->getPriceBrand()->getAddress();
+        if(empty($address)){
+            $address = $this->address->getValue();
+        }
+        $address2 = $service->getPriceBrand()->getAddress2();
+        if(empty($address2)){
+            $address2 = null;
+        }
+
+       /* if($brand_name == 'Land Rover'){
+            $this->phone = array('value'=>'+78129195913', 'title'=>'+7(812) 919-59-13');
+        }*/
 
         return $this->render('v2/pages/service.html.twig', [
             'page' => $service,
@@ -292,7 +368,10 @@ class PageController extends AbstractController
             'leftMenu' => $leftMenu,
             'pageWork' => $work,
             'popularServices' => $popular_services,
-            'phone' => $this->phone,
+            'phone' => $phone,
+            'phone2' => $phone2,
+            'address' => $address,
+            'address2' => $address2,
             'diagnostic' => $diagnostic,
         ]);
     }
@@ -353,6 +432,9 @@ class PageController extends AbstractController
             'leftMenu' => $leftMenu,
             'pageWork' => $work,
             'phone' => $this->phone,
+            'phone2'=> $this->phone2,
+            'address' => $this->address->getValue(),
+            'address2'=> $this->address2->getValue(),
         ]);
     }
     

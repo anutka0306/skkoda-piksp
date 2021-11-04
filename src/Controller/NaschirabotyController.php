@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ConfigRepository;
 
 class NaschirabotyController extends AbstractController
 {
@@ -22,9 +23,15 @@ class NaschirabotyController extends AbstractController
      */
     protected $salon_manager;
 
-    public function __construct(SalonManager $salon_manager)
+    /**
+     * @var ConfigRepository
+     */
+    protected $configRepository;
+
+    public function __construct(SalonManager $salon_manager, ConfigRepository $configRepository)
     {
         $this->salon_manager = $salon_manager;
+        $this->configRepository = $configRepository;
     }
 
     /**
@@ -34,13 +41,18 @@ class NaschirabotyController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function index( ContentRepository $content_repository, NaschirabotyRepository $naschiraboty_repository,Request $request, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, PriceBrandRepository $priceBrandRepository): Response
+    public function index( ContentRepository $content_repository, NaschirabotyRepository $naschiraboty_repository,Request $request, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, PriceBrandRepository $priceBrandRepository, ConfigRepository $configRepository): Response
     {
         $page = $content_repository->findOneByToken('blog');
         $works = $naschiraboty_repository->findAll();
         $topMenu = $menuTopRepository->findBy([], ['ordering'=>'ASC']);
         $leftMenu = $menuLeftRepository->findBy([], ['ordering'=>'ASC']);
         $brands = $priceBrandRepository->findAll();
+
+        $this->phone = $this->configRepository->findOneBy(['name' =>'phone']);
+        $this->phone2 = $this->configRepository->findOneBy(['name' => 'phone2']);
+        $this->address = $this->configRepository->findOneBy(['name' => 'address']);
+        $this->address2 = $this->configRepository->findOneBy(['name'=> 'address2']);
 
         foreach ($works as $key => $value){
             $images = $value->getAttach();
@@ -64,6 +76,10 @@ class NaschirabotyController extends AbstractController
             'topMenu' => $topMenu,
             'leftMenu' =>$leftMenu,
             'brands' => $brands,
+            'phone' => $this->phone,
+            'phone2' => $this->phone2,
+            'address' => $this->address->getValue(),
+            'address2' => $this->address2->getValue(),
         ]);
     }
 
@@ -73,12 +89,17 @@ class NaschirabotyController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function item(Naschiraboty $work, Request $request, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository): Response
+    public function item(Naschiraboty $work, Request $request, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, ConfigRepository $configRepository): Response
     {
         $images = $work->getAttach();
         $topMenu = $menuTopRepository->findBy([], ['ordering'=>'ASC']);
         $leftMenu = $menuLeftRepository->findBy([], ['ordering'=>'ASC']);
         $brands = $priceBrandRepository->findAll();
+
+        $this->phone = $this->configRepository->findOneBy(['name' =>'phone']);
+        $this->phone2 = $this->configRepository->findOneBy(['name' => 'phone2']);
+        $this->address = $this->configRepository->findOneBy(['name' => 'address']);
+        $this->address2 = $this->configRepository->findOneBy(['name'=> 'address2']);
 
         $form = $this->createForm(
             SalonFilterType::class,
@@ -98,6 +119,10 @@ class NaschirabotyController extends AbstractController
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
             'brands' => $brands,
+            'phone' => $this->phone,
+            'phone2' => $this->phone2,
+            'address' => $this->address->getValue(),
+            'address2' => $this->address2->getValue(),
         ]);
     }
 }

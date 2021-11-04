@@ -163,6 +163,10 @@ header{
     display: flex;
     flex-direction: column;
 }
+
+.nav__phone .phone-number{
+    display: none;
+}
 .nav__contacts.trubka {
     display: none;
 }

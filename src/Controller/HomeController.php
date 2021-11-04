@@ -28,6 +28,9 @@ class HomeController extends AbstractController
         $leftMenu = $menuLeftRepository->findBy([], ['ordering'=>'ASC']);
         $work = $naschirabotyRepository->findOneBy([],['id' =>'DESC']);
         $this->phone = $configRepository->findOneBy(['name' =>'phone']);
+        $this->phone2 = $configRepository->findOneBy(['name' => 'phone2']);
+        $this->address = $configRepository->findOneBy(['name' => 'address'])->getValue();
+        $this->address2 = $configRepository->findOneBy(['name'=> 'address2'])->getValue();
         
         return $this->render('v2/pages/home/index.html.twig', [
             'page' => $page,
@@ -37,6 +40,9 @@ class HomeController extends AbstractController
             'leftMenu' => $leftMenu,
             'pageWork' => $work,
             'phone' => $this->phone,
+            'phone2' => $this->phone2,
+            'address' => $this->address,
+            'address2' => $this->address2,
         ]);
     }
 

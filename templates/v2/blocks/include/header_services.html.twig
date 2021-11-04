@@ -62,15 +62,28 @@
             {%  endif %}
         </span>
 
-        <div class="nav__address">
-            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-            <a target="__blank" href="https://yandex.ru/maps/2/saint-petersburg/?um=constructor%3A0b426416135d33a3e9907c055362662e47f0382f0994f673e33c6d4b4799f7f8">Санкт-Петербург, <br>
-                {% if brandName is defined and brandName == 'Land Rover' %}
-                    Кушелевская дорога, 20
-                {% else %}
-                    ул Ворошилова д. 2АЕ</a>
-                {% endif %}
-        </div>
+        {% if (phone is defined and phone is not null) and (address is defined and address is not null)%}
+            <div class="nav__address">
+                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                <div>
+                    {{ address }}<br>
+                    <a style="display: block" href="tel:{{ phone.value }}">
+                        {{ phone.title }}
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+        {% if (phone2 is defined and phone2 is not null) and (address2 is defined and address2 is not null) %}
+            <div class="nav__address">
+                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                <div>
+                    {{ address2 }}<br>
+                    <a style="display: block" href="tel:{{ phone2.value }}">
+                        {{ phone2.title }}
+                    </a>
+                </div>
+            </div>
+        {% endif %}
 
         <div class="nav__contacts">
             <i class="fas fa-phone" aria-hidden="true"></i>
