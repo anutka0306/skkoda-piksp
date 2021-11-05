@@ -51,6 +51,8 @@ class PriceBrandCrudController extends AbstractCrudController
             ImageField::new('photo')->setUploadDir('/public/img/brands/')->setBasePath('/img/brands/'),
             ImageField::new('photo_big')->setUploadDir('/public/img/brands/big/')->setBasePath('/img/brands/big/'),
             ImageField::new('img_logo')->setUploadDir('/public/img/brands/logo/')->setBasePath('/img/brands/logo/'),
+            ImageField::new('about_img', 'Картинка для блока О компании в цифрах')->setUploadDir('/public/img/brands/about/')->setBasePath('/img/brands/about/')->hideOnIndex()->setHelp('Рекомендуемые размеры: 500 X 500, квадратное изображение'),
+            ImageField::new('utp_img', 'Картинка для УТП блока')->setUploadDir('/public/img/brands/utp/')->setBasePath('/img/brands/utp/')->hideOnIndex()->setHelp('Рекомендуемые размеры: 676 X 666, либо квадратное'),
             DateTimeField::new('modifyDate', 'Дата изменения')->hideOnIndex(),
             TextField::new('phone', 'Телефон автосервиса')->hideOnIndex(),
             TextField::new('address', 'Адрес автосервиса')->hideOnIndex(),

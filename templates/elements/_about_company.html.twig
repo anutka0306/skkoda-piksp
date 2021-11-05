@@ -37,7 +37,11 @@
                 </div>
                 <div class="col-12 col-md-5">
                     <div class="numbers__photo">
-                        <img loading="lazy" src="{{ asset('img/in_digits.jpg') }}" alt="">
+                        {% if aboutImg is defined and aboutImg is not null %}
+                            <img style="border-radius:50%" loading="lazy" src="/img/brands/about/{{ aboutImg }}" alt="">
+                        {% else %}
+                            <img loading="lazy" src="{{ asset('img/in_digits.jpg') }}" alt="">
+                        {% endif %}
                         <ul class="numbers__switcher d-none">
                             <li class="numbers__switch-wrapper">
                                 <button class="numbers__switch numbers__switch_active"></button>

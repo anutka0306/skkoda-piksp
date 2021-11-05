@@ -17,10 +17,10 @@
         {{ brand_models_service(page.priceBrand, page.priceBrand.path) }}
     {% endif %}
     {{ service_list(page) }}
-    {{ include('elements/_advantages.html.twig') }}
+    {{ include('elements/_advantages.html.twig', {'utpImg': page.priceBrand.utpImg}) }}
     {{ include('elements/_advantages2.html.twig') }}
     {{ special_offers(page.brandAndModelName) }}
-    {{ include('elements/_about_company.html.twig') }}
+    {{ include('elements/_about_company.html.twig', {'aboutImg': page.priceBrand.aboutImg}) }}
     {% if pageWork is not empty %}
         {% if pageWork is iterable %}
             {{ include('elements/examples.html.twig', {'pageWork' : pageWork[0]}) }}

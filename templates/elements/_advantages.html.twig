@@ -27,7 +27,11 @@
                 </div>
                 <div class="col-6 d-none d-lg-block">
                     <div class="offers__car-wrapper">
-                        <img loading="lazy" class="offers__car" src="{{ asset('img/advantages1/offer-car.png') }}" alt="">
+                        {% if utpImg is defined and utpImg is not null %}
+                            <img loading="lazy" class="offers__car" src="/img/brands/utp/{{ utpImg }}" alt="">
+                        {% else %}
+                            <img loading="lazy" class="offers__car" src="{{ asset('img/advantages1/offer-car.png') }}" alt="">
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-6 col-lg-3">

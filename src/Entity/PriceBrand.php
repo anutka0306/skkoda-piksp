@@ -143,6 +143,16 @@ class PriceBrand
      */
     private $map2;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $about_img;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $utp_img;
+
     public function __construct()
     {
         $this->priceModels = new ArrayCollection();
@@ -544,6 +554,30 @@ class PriceBrand
     public function setMap2(?string $map2): self
     {
         $this->map2 = $map2;
+
+        return $this;
+    }
+
+    public function getAboutImg(): ?string
+    {
+        return $this->about_img;
+    }
+
+    public function setAboutImg(?string $about_img): self
+    {
+        $this->about_img = $about_img;
+
+        return $this;
+    }
+
+    public function getUtpImg(): ?string
+    {
+        return $this->utp_img;
+    }
+
+    public function setUtpImg(?string $utp_img): self
+    {
+        $this->utp_img = $utp_img;
 
         return $this;
     }
