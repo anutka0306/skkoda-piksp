@@ -220,6 +220,11 @@ class PageController extends AbstractController
             $address2 = null;
         }
 
+        $map = $brand->getPriceBrand()->getMap();
+        if(empty($map)){
+            $map = null;
+        }
+
         $diagnostic = $diagnosticBrandRepository->findBy(['brand' => $brand->getPriceBrand()],[], 4 );
         if(empty($work)){
             $work = $naschirabotyRepository->findOneBy([],['id' =>'DESC']);
@@ -240,6 +245,7 @@ class PageController extends AbstractController
             'address' => $address,
             'address2' => $address2,
             'diagnostic' => $diagnostic,
+            'map'=> $map,
         ]);
     }
     
@@ -284,6 +290,12 @@ class PageController extends AbstractController
         if(empty($address2)){
             $address2 = null;
         }
+
+        $map = $model->getPriceBrand()->getMap();
+        if(empty($map)){
+            $map = null;
+        }
+
         /*if($brand_name == 'Land Rover'){
             $this->phone = array('value'=>'+78129195913', 'title'=>'+7(812) 919-59-13');
         }*/
@@ -300,6 +312,7 @@ class PageController extends AbstractController
             'address'=> $address,
             'address2'=> $address2,
             'diagnostic' => $diagnostic,
+            'map' => $map,
         ]);
     }
     
@@ -355,6 +368,11 @@ class PageController extends AbstractController
             $address2 = null;
         }
 
+        $map = $service->getPriceBrand()->getMap();
+        if(empty($map)){
+            $map = null;
+        }
+
        /* if($brand_name == 'Land Rover'){
             $this->phone = array('value'=>'+78129195913', 'title'=>'+7(812) 919-59-13');
         }*/
@@ -373,6 +391,7 @@ class PageController extends AbstractController
             'address' => $address,
             'address2' => $address2,
             'diagnostic' => $diagnostic,
+            'map' => $map,
         ]);
     }
     
