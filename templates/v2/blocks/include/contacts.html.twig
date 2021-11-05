@@ -6,7 +6,6 @@
                 <div class="col-lg-5 col-12">
                     <div class="contacts">
                         <h2 class="contacts__heading">Контакты</h2>
-                        <p>ООО Автоцентр ПИК</p>
                         <ul class="contacts">
                             <li class="contacts__item">
                                 <div class="contacts__icon">
@@ -14,11 +13,11 @@
                                 </div>
                                 <div class="contacts__info">
                                     <h6 class="contact__heading">Адрес</h6>
-                                    <a target="__blank" href="https://yandex.ru/maps/2/saint-petersburg/?um=constructor%3A0b426416135d33a3e9907c055362662e47f0382f0994f673e33c6d4b4799f7f8">Санкт-Петербург, <br>
-                                        {% if brandName is defined and brandName == 'Land Rover' %}
-                                            Кушелевская дорога, 20
-                                        {% else %}
-                                            ул Ворошилова д. 2АЕ</a>
+                                    {% if (phone is defined and phone is not null) and (address is defined and address is not null) %}
+                                        <p style="line-height: .5">{{ address }}</p>
+                                    {% endif %}
+                                    {% if (phone2 is defined and phone2 is not null) and (address2 is defined and address2 is not null) %}
+                                        <p style="line-height: .5">{{ address2 }}</p>
                                     {% endif %}
                                 </div>
                             </li>
@@ -28,7 +27,12 @@
                                 </div>
                                 <div class="contacts__info">
                                     <h6 class="contact__heading">Телефон</h6>
-                                    <p> <span class="phone-number"><a href="{% if phone is defined %}tel:{{ phone.value }}{% endif %}">{% if phone is defined %}{{ phone.title }}{% endif %}</a></span></p>
+                                    {% if (phone is defined and phone is not null) and (address is defined and address is not null) %}
+                                        <p style="line-height: .5"> <span class="phone-number"><a href="tel:{{ phone.value }}">{{ phone.title }}</a></span></p>
+                                    {% endif%}
+                                    {% if (phone2 is defined and phone2 is not null) and (address2 is defined and address2 is not null) %}
+                                        <p style="line-height: .5"> <span class="phone-number"><a href="tel:{{ phone2.value }}">{{ phone2.title }}</a></span></p>
+                                    {% endif %}
                                 </div>
                             </li>
                             <li class="contacts__item">
