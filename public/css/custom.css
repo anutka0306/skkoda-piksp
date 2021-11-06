@@ -104,6 +104,13 @@ header{
     }
 }
 
+@media (max-width: 1521px) and (min-width: 1024px){
+    .header__logo img{
+        max-width: 65%;
+        margin-left: 75px !important;
+    }
+}
+
 .container_nav, .container_nav__fixed {
     display: flex;
     justify-content: space-between;
