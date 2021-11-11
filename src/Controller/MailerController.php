@@ -123,6 +123,24 @@ class MailerController extends AbstractController
      * @Route("/callback_form", name="callback_form")
      */
     public function callback_form(Request $request, MailerInterface $mailer){
+
+        $token = "1737028189:AAEFd51Z6vSHslgX-CNMtItwWD6Iy5EIP74";
+        $chat_id = "-1001493902889";# Заявки VAG-PIK
+
+        $arr = array(
+            "Заявка с" => " с формы piksp.ru ",
+            "Телефон" => $request->get('phone'),
+        );
+        /*Цикл по массиву (собираем сообщение) */
+        $txt = '';
+        foreach($arr as $key => $value) {
+            $txt .= "<b>".$key."</b>: ".htmlspecialchars($value)."\n";
+        }
+        $sendTextToTelegram = file_get_contents("https://api.telegram.org/bot$token/sendMessage?chat_id=$chat_id&parse_mode=html&text=".rawurlencode($txt))."\n";
+if (!$sendTextToTelegram){
+    return new JsonResponse(['error'=>'<p>Ошибка при отправке в Telegram</p>']);
+}
+
         $to = 'info@piksp.ru';
 
             $email = (new Email())
@@ -208,6 +226,10 @@ class MailerController extends AbstractController
 
      public function getTo_salonWithout(){
          return 'anya-programmist@qmotors.ru, Sav@styled.cc';
+     }
+
+     public function sendToTelegramm(){
+
      }
 
 }
