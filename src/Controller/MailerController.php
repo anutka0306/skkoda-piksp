@@ -125,7 +125,7 @@ class MailerController extends AbstractController
     public function callback_form(Request $request, MailerInterface $mailer){
 
         $token = "1737028189:AAEFd51Z6vSHslgX-CNMtItwWD6Iy5EIP74";
-        $chat_id = "-1001493902889";# Заявки VAG-PIK
+        $chat_id = "-1001408803296";# Заявки VAG-PIK
 
         $arr = array(
             "Заявка с" => " с формы piksp.ru ",
