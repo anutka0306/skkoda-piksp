@@ -49,6 +49,7 @@ class NaschirabotyCrudController extends AbstractCrudController
             AssociationField::new('model'),
             AssociationField::new('service'),
             ImageField::new('main_img', 'Картинка, которая отображается в блоке на разных страницах')->setHelp('.png, прозрачный фон, 640Х340')->setUploadDir('/public/img/nashiraboty_main/')->setBasePath('/img/nashiraboty_main/'),
+            ImageField::new('blog_img', 'Картика, которая отображется на странице блога')->setBasePath('/img/nashiraboty_small/')->setUploadDir('/public/img/nashiraboty_small/')->setHelp('Предпочтительные размеры: 235 Х 140 px'),
             TextField::new('kuzov'),
             TextField::new('year'),
             Field::new('clientName', 'Имя клиента'),

@@ -109,6 +109,11 @@ class Naschiraboty implements PageInterface
      */
     private $gallery;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $blog_img;
+
     public function __construct()
     {
         $this->priceServices = new ArrayCollection();
@@ -388,6 +393,18 @@ class Naschiraboty implements PageInterface
         }else{
             $this->gallery = implode('|',$gallery);
         }
+
+        return $this;
+    }
+
+    public function getBlogImg(): ?string
+    {
+        return $this->blog_img;
+    }
+
+    public function setBlogImg(?string $blog_img): self
+    {
+        $this->blog_img = $blog_img;
 
         return $this;
     }

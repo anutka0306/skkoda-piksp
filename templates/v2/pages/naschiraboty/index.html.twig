@@ -43,8 +43,8 @@
 
                 <div class="col-md-3 col-sm-6 col-12 nashiraboty__item">
                     <a href="/blog/{{ work.id }}/">
-                        {% if work.images is not empty %}
-                        <img src="/img/naschiraboty/{{ work.id }}/{{ work.images[0].image }}">
+                        {% if work.blogImg is not empty and work.blogImg is not null %}
+                        <img src="/img/nashiraboty_small/{{ work.blogImg }}">
                         {% endif %}
                     </a>
                     <a class="nashiraboty__item_title" href="/blog/{{ work.id }}/">{{ work.name }}</a>
