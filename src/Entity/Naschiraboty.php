@@ -383,7 +383,11 @@ class Naschiraboty implements PageInterface
 
     public function setGallery(?array $gallery): self
     {
-        $this->gallery = implode('|',$gallery);
+        if($gallery == ''){
+            $this->gallery = '';
+        }else{
+            $this->gallery = implode('|',$gallery);
+        }
 
         return $this;
     }
