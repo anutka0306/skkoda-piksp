@@ -104,6 +104,11 @@ class Naschiraboty implements PageInterface
      */
     private $service;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $gallery;
+
     public function __construct()
     {
         $this->priceServices = new ArrayCollection();
@@ -363,6 +368,22 @@ class Naschiraboty implements PageInterface
     public function setService(?PriceService $service): self
     {
         $this->service = $service;
+
+        return $this;
+    }
+
+    public function getGallery(): ?array
+    {
+        if($this->gallery) {
+            return explode('|', $this->gallery);
+        }else{
+            return null;
+        }
+    }
+
+    public function setGallery(?array $gallery): self
+    {
+        $this->gallery = implode('|',$gallery);
 
         return $this;
     }

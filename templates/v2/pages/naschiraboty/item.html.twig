@@ -42,9 +42,25 @@
                 <h1>{{ page.name }} примеры</h1>
             </div>
         </div>
+
+
+
         <div class="nashiraboty__text">
             {{ page.text|raw }}
         </div>
+
+        {% if page.gallery is not null and page.gallery is not empty %}
+            <div class="nashiraboty__gallery">
+                {% for galleryImage in page.gallery  %}
+                    <div class="nashiraboty__gallery_item">
+                        <a class="image-link" href="/images/ourworks/{{ galleryImage }}">
+                            <img src="/images/ourworks/{{ galleryImage }}" alt="">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
         {% if images is not empty %}
             <div class="nashiraboty__photo">
                 {% for image in images %}

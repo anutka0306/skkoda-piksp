@@ -56,6 +56,11 @@ class NaschirabotyCrudController extends AbstractCrudController
             CollectionField::new('attach')
                 ->setEntryType(AttachmentNashiRabType::class)
                 ->onlyWhenUpdating(),
+            ImageField::new('gallery')
+                ->setUploadDir('public/images/ourworks')
+                ->setBasePath('public/images/ourworks')
+                ->setUploadedFileNamePattern('[year]-[month]-[day]-[contenthash].[extension]')
+                ->setFormTypeOption('multiple', true),
         ];
     }
 

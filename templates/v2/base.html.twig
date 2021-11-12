@@ -36,6 +36,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('js/magnific-popup.css') }}">
 
     <meta property="schema:name" content="{{ block('title') }}"/>
     <meta property="schema:description" content="{{ block('description') }}"/>
@@ -107,11 +108,11 @@
     <script src="{{ asset('js/roistat.js') }}"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/custom.js') }}"></script>
-
+    <script type="text/javascript" src="{{ asset('js/jquery.magnific-popup.js') }}"></script>
     <script>
         $(".form__item input[name=phone]").mask("+7(999) 999-99-99");
         /*$("#modal_2 input[name=user_phone]").mask("+7(999) 999-99-99");*/
-
+        $('.image-link').magnificPopup({type:'image'});
     </script>
     {#{{ encore_entry_script_tags('app2') }}#}
 {% endblock %}

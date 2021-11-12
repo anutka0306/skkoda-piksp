@@ -1648,3 +1648,24 @@ label {
     padding-top: 30px;
     padding-bottom: 30px;
 }
+.nashiraboty__gallery{
+    margin-top: 30px;
+}
+.nashiraboty__gallery_item{
+    width: 300px !important;
+    height: 250px !important;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.nashiraboty__gallery_item img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 0 0;
+}
+.nashiraboty__gallery .slick-list.draggable{
+    height: 350px !important;
+}
+.slick-prev:before, .slick-next:before{
+    color: black !important;
+}
