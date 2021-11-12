@@ -377,7 +377,7 @@ class Naschiraboty implements PageInterface
         if($this->gallery) {
             return explode('|', $this->gallery);
         }else{
-            return null;
+            return array();
         }
     }
 
