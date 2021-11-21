@@ -6,7 +6,7 @@
 {{ include('v2/blocks/include/header.html.twig', {'brands' : brands, 'topMenu' : topMenu, 'leftMenu': leftMenu}) }}
 {% endblock %}
 {% block header_banner %}
-    {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, 'customH1': page.h1 }) }}
+    {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, 'customH1': page.h1, 'nashirabotyPhotoBig': page.mainImg  }) }}
 {% endblock %}
 {% block breadcrumbs %}
     <section id="breadcrumbs" style="margin-top: 100px;">

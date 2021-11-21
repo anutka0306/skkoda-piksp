@@ -112,7 +112,32 @@
     <script>
         $(".form__item input[name=phone]").mask("+7(999) 999-99-99");
         /*$("#modal_2 input[name=user_phone]").mask("+7(999) 999-99-99");*/
-        $('.image-link').magnificPopup({type:'image'});
+        //Старый вызов magnific-popup
+        /*$('.image-link').magnificPopup({type:'image'});*/
+
+        //Новый вызов magnific-popup
+        $('.nashiraboty__gallery').magnificPopup({
+            delegate: 'a',
+            type: 'image',
+            closeOnContentClick: false,
+            closeBtnInside: false,
+            mainClass: 'mfp-with-zoom mfp-img-mobile',
+            image: {
+                verticalFit: true,
+
+            },
+            gallery: {
+                enabled: true
+            },
+            zoom: {
+                enabled: true,
+                duration: 300, // don't foget to change the duration also in CSS
+                opener: function(element) {
+                    return element.find('img');
+                }
+            }
+
+        });
     </script>
     {#{{ encore_entry_script_tags('app2') }}#}
 {% endblock %}
