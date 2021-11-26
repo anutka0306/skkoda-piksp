@@ -87,6 +87,8 @@
                         <div class="form__item">
                             <label for="phoneN3">Введите телефон</label>
                             <input class="form__input phoneN3-popup" type="tel" id="phoneN3" name="phone" required="" inputmode="text">
+                            <input type="hidden" id="urlN3" name="url" value="{{ path(app.request.attributes.get('_route'),
+                                app.request.attributes.get('_route_params')) }}">
                         </div>
 
                     </div>
@@ -110,6 +112,8 @@
                         <div class="form__item">
                             <label for="phoneN3">Введите телефон</label>
                             <input class="form__input phoneN4-popup" type="tel" id="phoneN4" name="phone" required="" inputmode="text">
+                            <input type="hidden" id="urlN4" name="url" value="{{ path(app.request.attributes.get('_route'),
+                                app.request.attributes.get('_route_params')) }}">
                         </div>
 
                     </div>
@@ -137,6 +141,7 @@
                 return;
             }
                 let phone = $('.phoneN3-popup').val();
+                let url = $('#urlN3').val();
             $.ajax({
                 url:     "/callback_form",
                 type:     "POST", //метод отправки
@@ -144,6 +149,7 @@
 
                 data: {
                     'phone' : phone,
+                    'url': url,
                 },
                 success: function(response) { //Данные отправлены успешно
                     //$('.callback-popup-body').html('<p style="text-align: center; font-weight: 700; padding: 20px;">Спасибо! Ваша заявка отправлена.</p>');
@@ -170,6 +176,7 @@
                 return;
             }
             let phone = $('.phoneN4-popup').val();
+            let url = $('#urlN4').val();
             $.ajax({
                 url:     "/callback_form",
                 type:     "POST", //метод отправки
@@ -177,6 +184,7 @@
 
                 data: {
                     'phone' : phone,
+                    'url': url,
                 },
                 success: function(response) { //Данные отправлены успешно
                     //$('.callback-popup-body').html('<p style="text-align: center; font-weight: 700; padding: 20px;">Спасибо! Ваша заявка отправлена.</p>');

@@ -82,6 +82,8 @@
                             <div class="form__item">
                                 <label for="phoneN3">Введите телефон</label>
                                 <input class="form__input phoneN1-popup" type="tel" id="phoneN3" name="phone" required="" inputmode="text">
+                                <input type="hidden" id="urlN1" name="url" value="{{ path(app.request.attributes.get('_route'),
+                                    app.request.attributes.get('_route_params')) }}">
                             </div>
 
                         </div>
@@ -107,6 +109,7 @@
                 return;
             }
             let phone = $('.phoneN1-popup').val();
+            let url = $('#urlN1').val();
             $.ajax({
                 url:     "/callback_form",
                 type:     "POST", //метод отправки
@@ -114,6 +117,7 @@
 
                 data: {
                     'phone' : phone,
+                    'url': url,
                 },
                 success: function(response) { //Данные отправлены успешно
                     //$('.callback-popup-body').html('<p style="text-align: center; font-weight: 700; padding: 20px;">Спасибо! Ваша заявка отправлена.</p>');

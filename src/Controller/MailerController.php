@@ -130,6 +130,7 @@ class MailerController extends AbstractController
         $arr = array(
             "Заявка с" => " с формы piksp.ru ",
             "Телефон" => $request->get('phone'),
+            "Со страницы: " => 'https://piksp.ru'.$request->get('url'),
         );
         /*Цикл по массиву (собираем сообщение) */
         $txt = '';
