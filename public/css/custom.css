@@ -828,6 +828,9 @@ section {
     margin-bottom: 0;
     font-weight: 700;
 }
+.subscribe__form .form__text span.phone-number{
+    display: block;
+}
 .form__text {
     margin-top: 10px;
     font-weight: 600;
