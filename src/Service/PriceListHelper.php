@@ -4,9 +4,12 @@ namespace App\Service;
 
 use App\Entity\Content;
 use App\Entity\Contracts\PageInterface;
+use App\Entity\PriceBrand;
 use App\Entity\PriceCategory;
+use App\Entity\RootService;
 use App\Entity\Service;
 use App\Entity\ServiceEntityReedInterface;
+use App\Repository\PriceModelRepository;
 
 class PriceListHelper
 {
@@ -14,10 +17,16 @@ class PriceListHelper
      * @var ConfigService
      */
     protected $config;
+
+    /**
+     * @var PriceModelRepository
+     */
+    protected $priceModelRepository;
     
-    public function __construct(ConfigService $config)
+    public function __construct(ConfigService $config, PriceModelRepository $priceModelRepository)
     {
         $this->config = $config;
+        $this->priceModelRepository = $priceModelRepository;
     }
     
     public function getRootCategory(PageInterface $page): ?PriceCategory
@@ -53,9 +62,9 @@ class PriceListHelper
     
     
     
-    public function getPrice(PageInterface $page):?int
+    public function getPrice(PageInterface $page, PriceModelRepository $priceModelRepository):?int
     {
-        if (! $page instanceof Service) {
+        if (! $page instanceof RootService) {
             return null;
         }
         $price_service = $page->getService();
@@ -63,7 +72,7 @@ class PriceListHelper
         if (!$price_service) {
             return null;
         }
-        $price_service->setPriceByContent($page);
+        $price_service->setPriceByContent($page, $priceModelRepository);
         return $price_service->getPrice();
     }
     
