@@ -74,7 +74,7 @@ $(document).ready(function () {
         autoplay: true,
         arrows: true,
         responsive: [
-            
+
             {
                 breakpoint: 1366,
                 settings: {
@@ -86,14 +86,14 @@ $(document).ready(function () {
             },
 
             {
-                breakpoint: 600,
+                breakpoint: 880,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 2
                 }
             },
             {
-                breakpoint: 480,
+                breakpoint: 600,
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1
