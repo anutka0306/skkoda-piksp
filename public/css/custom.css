@@ -1419,6 +1419,13 @@ label {
     text-overflow: ellipsis;
 }
 
+@media (max-width: 992px) {
+    .nashiraboty__item{
+        width: auto;
+        margin: 10px auto;
+    }
+}
+
 /* Nashi raboti block na stranitse*/
 .work-examples__section {
     background: url(/img/fface-bg-2.jpg);
