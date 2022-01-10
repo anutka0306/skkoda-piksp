@@ -340,25 +340,25 @@ class PageController extends AbstractController
         $services = $this->page_repository->findOneBy(['path' => '/' . $service->getPriceCategory()->getSlug() . '/']);
         $service->setName(str_replace([$brand_name . ' ' . $model_name, 'в Москве'], ['', ''], $service->getName()));
 
-        if ($brand_name == 'Land Rover' or $brand_name == 'Jaguar') {
-            $contactTitle = 'Японы';
-            if ($brand_name == 'Land Rover' or $brand_name == 'Jaguar') {
-                $phone['value'] = $this->phone2->getValue();
-                $phone['title'] = $this->phone2->getTitle();
-                $address = $this->configRepository->findOneBy(['name' => 'address2']);
-                $contactTitle = $brand_name;
-            } elseif ($brand_name == 'Porsche') {
-                $phone['value'] = $this->phone3->getValue();
-                $phone['title'] = $this->phone3->getTitle();
-                $address = $this->configRepository->findOneBy(['name' => 'address3']);
-                $contactTitle = $brand_name;
-            } else {
-                $phone['value'] = $this->phone->getValue();
-                $phone['title'] = $this->phone->getTitle();
-                $address = $this->configRepository->findOneBy(['name' => 'address']);
-            }
+        $contactTitle = 'Японы';
+        if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
+            $phone['value'] = $this->phone2->getValue();
+            $phone['title']  = $this->phone2->getTitle();
+            $address = $this->configRepository->findOneBy(['name'=>'address2']);
+            $contactTitle = $brand_name;
+        }elseif($brand_name == 'Porsche'){
+            $phone['value'] = $this->phone3->getValue();
+            $phone['title'] = $this->phone3->getTitle();
+            $address = $this->configRepository->findOneBy(['name'=>'address3']);
+            $contactTitle = $brand_name;
+        }else{
+            $phone['value'] = $this->phone->getValue();
+            $phone['title'] = $this->phone->getTitle();
+            $address = $this->configRepository->findOneBy(['name'=>'address']);
+        }
 
-            $map = $service->getPriceBrand()->getMap();
+
+        $map = $service->getPriceBrand()->getMap();
             if (empty($map)) {
                 $map = null;
             }
@@ -383,7 +383,6 @@ class PageController extends AbstractController
                 'map' => $map,
             ]);
         }
-    }
 
 
         private function rootService(RootService $rootService, PriceBrandRepository $priceBrandRepository, $topMenu, $leftMenu, NaschirabotyRepository $naschirabotyRepository)
