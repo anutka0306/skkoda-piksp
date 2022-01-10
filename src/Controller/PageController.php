@@ -203,7 +203,7 @@ class PageController extends AbstractController
         $models = $priceModelRepository->findBy(['priceBrand' => $brand->getBrandId()]);
         $work = $naschirabotyRepository->findBy(['model'=> $models], ['id' => 'DESC'], 1);
 
-        $contactTitle = 'Японы';
+        $contactTitle = 'Японцы';
         if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
             $phone['value'] = $this->phone2->getValue();
             $phone['title']  = $this->phone2->getTitle();
@@ -270,7 +270,7 @@ class PageController extends AbstractController
             $model_name = null;
         }
 
-        $contactTitle = 'Японы';
+        $contactTitle = 'Японцы';
         if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
             $phone['value'] = $this->phone2->getValue();
             $phone['title']  = $this->phone2->getTitle();
@@ -340,7 +340,7 @@ class PageController extends AbstractController
         $services = $this->page_repository->findOneBy(['path' => '/' . $service->getPriceCategory()->getSlug() . '/']);
         $service->setName(str_replace([$brand_name . ' ' . $model_name, 'в Москве'], ['', ''], $service->getName()));
 
-        $contactTitle = 'Японы';
+        $contactTitle = 'Японцы';
         if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
             $phone['value'] = $this->phone2->getValue();
             $phone['title']  = $this->phone2->getTitle();
