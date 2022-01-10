@@ -60,8 +60,10 @@ class ContactController extends AbstractController
 
         $this->phone = $this->configRepository->findOneBy(['name' =>'phone']);
         $this->phone2 = $this->configRepository->findOneBy(['name' => 'phone2']);
+        $this->phone3 = $this->configRepository->findOneBy(['name' => 'phone3']);
         $this->address = $this->configRepository->findOneBy(['name' => 'address']);
         $this->address2 = $this->configRepository->findOneBy(['name'=> 'address2']);
+        $this->address3 = $this->configRepository->findOneBy(['name'=> 'address3']);
 
         return $this->render('v2/pages/contact/index.html.twig', [
             'page' => $page,
@@ -70,8 +72,10 @@ class ContactController extends AbstractController
             'leftMenu' => $leftMenu,
             'phone' => $this->phone,
             'phone2' => $this->phone2,
-            'address' => $this->address->getValue(),
-            'address2' => $this->address2->getValue(),
+            'phone3' => $this->phone3,
+            'address' => $this->address,
+            'address2' => $this->address2,
+            'address3' => $this->address3,
         ]);
     }
 }

@@ -19,3 +19,7 @@
 /public/img_old
 /public/img
 /public/yml
+public/yml/index.xml
+sql/log_dev.sql
+migrations/Version20210915142313.php
+migrations/Version20210916162031.php

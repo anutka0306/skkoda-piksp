@@ -53,6 +53,8 @@ class NaschirabotyController extends AbstractController
         $this->phone2 = $this->configRepository->findOneBy(['name' => 'phone2']);
         $this->address = $this->configRepository->findOneBy(['name' => 'address']);
         $this->address2 = $this->configRepository->findOneBy(['name'=> 'address2']);
+        $this->phone3 = $this->configRepository->findOneBy(['name' =>'phone3']);
+        $this->address3 = $this->configRepository->findOneBy(['name'=> 'address3']);
 
         foreach ($works as $key => $value){
             $images = $value->getAttach();
@@ -78,8 +80,10 @@ class NaschirabotyController extends AbstractController
             'brands' => $brands,
             'phone' => $this->phone,
             'phone2' => $this->phone2,
-            'address' => $this->address->getValue(),
-            'address2' => $this->address2->getValue(),
+            'phone3' => $this->phone3,
+            'address' => $this->address,
+            'address2' => $this->address2,
+            'address3' => $this->address3,
         ]);
     }
 
@@ -100,6 +104,8 @@ class NaschirabotyController extends AbstractController
         $this->phone2 = $this->configRepository->findOneBy(['name' => 'phone2']);
         $this->address = $this->configRepository->findOneBy(['name' => 'address']);
         $this->address2 = $this->configRepository->findOneBy(['name'=> 'address2']);
+        $this->phone3 = $this->configRepository->findOneBy(['name' =>'phone3']);
+        $this->address3 = $this->configRepository->findOneBy(['name'=> 'address3']);
 
         $form = $this->createForm(
             SalonFilterType::class,
@@ -121,8 +127,10 @@ class NaschirabotyController extends AbstractController
             'brands' => $brands,
             'phone' => $this->phone,
             'phone2' => $this->phone2,
-            'address' => $this->address->getValue(),
-            'address2' => $this->address2->getValue(),
+            'phone3' => $this->phone3,
+            'address' => $this->address,
+            'address2' => $this->address2,
+            'address3' => $this->address3,
         ]);
     }
 }

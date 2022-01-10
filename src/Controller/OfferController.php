@@ -68,8 +68,10 @@ class OfferController extends AbstractController
 
         $this->phone = $this->configRepository->findOneBy(['name' =>'phone']);
         $this->phone2 = $this->configRepository->findOneBy(['name' => 'phone2']);
+        $this->phone3 = $this->configRepository->findOneBy(['name' => 'phone3']);
         $this->address = $this->configRepository->findOneBy(['name' => 'address']);
         $this->address2 = $this->configRepository->findOneBy(['name'=> 'address2']);
+        $this->address3 = $this->configRepository->findOneBy(['name'=> 'address3']);
 
         return $this->render('offer/index.html.twig', [
             'offers' => $offers,
@@ -79,8 +81,10 @@ class OfferController extends AbstractController
             'leftMenu' => $leftMenu,
             'phone' => $this->phone,
             'phone2' => $this->phone2,
-            'address' => $this->address->getValue(),
-            'address2' => $this->address2->getValue(),
+            'phone3' => $this->phone3,
+            'address' => $this->address,
+            'address2' => $this->address2,
+            'address3' => $this->address3,
         ]);
     }
 
@@ -93,8 +97,10 @@ class OfferController extends AbstractController
 
         $this->phone = $this->configRepository->findOneBy(['name' =>'phone']);
         $this->phone2 = $this->configRepository->findOneBy(['name' => 'phone2']);
+        $this->phone3 = $this->configRepository->findOneBy(['name' => 'phone3']);
         $this->address = $this->configRepository->findOneBy(['name' => 'address']);
         $this->address2 = $this->configRepository->findOneBy(['name'=> 'address2']);
+        $this->address3 = $this->configRepository->findOneBy(['name'=> 'address3']);
 
         if ( !$offer = $this->offer_repository->findOneBy(['published'=>1, 'slug'=>$token])) {
             throw $this->createNotFoundException(sprintf('Offer %s not found',$token));
@@ -106,8 +112,10 @@ class OfferController extends AbstractController
                'leftMenu' => $leftMenu,
                'phone' => $this->phone,
                'phone2' => $this->phone2,
-               'address' => $this->address->getValue(),
-               'address2' => $this->address2->getValue(),
+               'address' => $this->address,
+               'address2' => $this->address2,
+               'phone3' => $this->phone3,
+               'address3' => $this->address3,
                ]);
         }
     }
