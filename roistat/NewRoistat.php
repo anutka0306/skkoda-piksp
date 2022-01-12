@@ -3,8 +3,8 @@
 class Roistat
 {
     use Fields;
-
-    private $key            = '';
+ 
+    private $key            = 'ODUxOTY2ZGIxZTAzOWRlNGU0M2IwYTBlOTgzNDczYzI6MTE2MDU4';
 
     private $host           = 'https://cloud.roistat.com/api/proxy/1.0/leads/add?';
     private $title          = "Новая заявка с сайта {domain}";
