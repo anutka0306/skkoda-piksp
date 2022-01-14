@@ -26,6 +26,14 @@ if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || $_SERVER['HTTP_X_REQUESTED_WITH'
 } elseif (empty($_REQUEST['af_action'])) {
     echo $AjaxForm->error('af_err_action_ns');
 } else {
+
+    //Begin roistat
+    $roistatFilePath = "{$_SERVER['DOCUMENT_ROOT']}/roistat/RoistatEvents.php";
+    if(is_file($roistatFilePath)) {
+        (new RoistatEvents($_REQUEST))->execute();
+    }
+    //End roistat
+
     echo $AjaxForm->process($_REQUEST['af_action'], array_merge($_FILES, $_REQUEST));
 }
 
