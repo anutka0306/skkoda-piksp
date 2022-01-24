@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Dto\BreadcrumbsItemDTO;
+use App\Entity\Brand;
 use App\Entity\Content;
 use App\Entity\Contracts\PageInterface;
 use App\Repository\ContentRepository;
@@ -30,7 +31,9 @@ class BreadcrumbsService
         if ($current_name) {
             //Получаем не измененный объект страницы
             $items   = $this->getChainRecursive($this->content_repository->find($page->getId()));
-            $items[] = new BreadcrumbsItemDTO($current_name, $page->getPath());
+
+                $items[] = new BreadcrumbsItemDTO($current_name, $page->getPath());
+
         } else {
             $items = $this->getChainRecursive($page);
         }
@@ -46,6 +49,10 @@ class BreadcrumbsService
         if ($page instanceof Content && $page->getId() === 1) {
             $item->name = 'Главная';
         }
+        if($page instanceof Brand){
+            $item->name = 'Ремонт '.$page->getName();
+        }
+
         $chain[] = $item;
         $parent  = $page->getParent();
         if (null === $parent) {
