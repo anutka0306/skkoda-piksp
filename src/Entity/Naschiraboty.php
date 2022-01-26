@@ -16,6 +16,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\NaschirabotyRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\EntityListeners({"App\Doctrine\GenerateAliasByNashirabotyListener"})
  */
 class Naschiraboty implements PageInterface
 {
@@ -114,11 +115,20 @@ class Naschiraboty implements PageInterface
      */
     private $blog_img;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $alias;
+
+
+
     public function __construct()
     {
         $this->priceServices = new ArrayCollection();
         $this->attach = new ArrayCollection();
+
     }
+
 
     public function getId(): ?int
     {
@@ -408,4 +418,17 @@ class Naschiraboty implements PageInterface
 
         return $this;
     }
+
+    public function getAlias(): ?string
+    {
+        return $this->alias;
+    }
+
+    public function setAlias(string $alias): self
+    {
+        $this->alias = $alias;
+
+        return $this;
+    }
+
 }

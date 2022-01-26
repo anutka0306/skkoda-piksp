@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ConfigRepository;
+use App\Service\TranslateService;
 
 class NaschirabotyController extends AbstractController
 {
@@ -28,10 +29,16 @@ class NaschirabotyController extends AbstractController
      */
     protected $configRepository;
 
-    public function __construct(SalonManager $salon_manager, ConfigRepository $configRepository)
+    /**
+     * @var TranslateService
+     */
+    protected $translateService;
+
+    public function __construct(SalonManager $salon_manager, ConfigRepository $configRepository, TranslateService $translateService)
     {
         $this->salon_manager = $salon_manager;
         $this->configRepository = $configRepository;
+        $this->translateService = $translateService;
     }
 
     /**
@@ -59,6 +66,7 @@ class NaschirabotyController extends AbstractController
         foreach ($works as $key => $value){
             $images = $value->getAttach();
             $value->images = $images;
+            //$value->alias = $this->translateService->transliterate($value->getName());
         }
 
         $form = $this->createForm(
@@ -88,7 +96,7 @@ class NaschirabotyController extends AbstractController
     }
 
     /**
-     * @Route("/blog/{id}/", name="naschiraboty_item")
+     * @Route("/blog/{alias}/", name="naschiraboty_item")
      * @param Naschiraboty $work
      * @param Request $request
      * @return Response

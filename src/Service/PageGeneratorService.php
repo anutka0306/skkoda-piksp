@@ -11,6 +11,7 @@ use App\Entity\PriceModel;
 use App\Entity\PriceService;
 use App\Entity\RootService;
 use App\Entity\Service;
+use App\Entity\Naschiraboty;
 use App\Model\PageGeneratorModel;
 use App\Repository\BrandRepository;
 use App\Repository\ContentRepository;
@@ -20,6 +21,7 @@ use App\Repository\PriceModelRepository;
 use App\Repository\PriceServiceRepository;
 use App\Repository\ServiceRepository;
 use App\Repository\RootServiceRepository;
+use App\Repository\NaschirabotyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpProgrammist\FileSqlLoggerBundle\FileSqlLogger;
 use Psr\Log\LoggerInterface;
@@ -66,6 +68,12 @@ class PageGeneratorService
      * @var PriceModelRepository
      */
     protected $price_model_repository;
+
+    /**
+     * @var NaschirabotyRepository
+     */
+    protected $naschirabotyRepository;
+
     /**
      * @var LoggerInterface
      */
@@ -84,6 +92,7 @@ class PageGeneratorService
         PriceServiceRepository $price_service_repository,
         PriceBrandRepository $price_brand_repository,
         PriceModelRepository $price_model_repository,
+        NaschirabotyRepository $naschirabotyRepository,
         ConfigService $config_service,
         TranslateService $translate_service,
         EntityManagerInterface $em,
@@ -100,6 +109,7 @@ class PageGeneratorService
         $this->price_service_repository = $price_service_repository;
         $this->translate_service        = $translate_service;
         $this->price_brand_repository   = $price_brand_repository;
+        $this->naschirabotyRepository   = $naschirabotyRepository;
         $this->price_model_repository   = $price_model_repository;
         $this->logger                   = $logger;
     
@@ -415,5 +425,15 @@ class PageGeneratorService
         if ($page_generator_model->urlRegenerate === PageGeneratorModel::URL_REGENERATE_ALL || ($page_generator_model->urlRegenerate === PageGeneratorModel::URL_REGENERATE_UNPUBLISHED && !$page->getPublished())) {
             $page->setPath($this->getNewServicePath($page->getParent(), $page->getService()));
         }
+    }
+
+    public function generateNashiraboryAlias(Naschiraboty $naschiraboty){
+        if($this->naschirabotyRepository->findOneBy(['alias' => $this->translate_service->transliterate($naschiraboty->getName())])){
+            $itemPath = $naschiraboty->setAlias($this->translate_service->transliterate($naschiraboty->getName()).'-'.$naschiraboty->getId());
+        }else {
+            $itemPath = $naschiraboty->setAlias($this->translate_service->transliterate($naschiraboty->getName()));
+        }
+        $this->em->persist($itemPath);
+        $this->em->flush();
     }
 }

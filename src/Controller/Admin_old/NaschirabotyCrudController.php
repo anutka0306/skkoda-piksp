@@ -40,6 +40,7 @@ class NaschirabotyCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name', 'Название'),
+            TextField::new('alias', 'Алиас'),
             TextField::new('metaTitle'),
             TextField::new('metaDescription'),
             TextEditorField::new('text', 'Текст'),
