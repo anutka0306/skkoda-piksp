@@ -124,6 +124,17 @@ class MailerController extends AbstractController
      */
     public function callback_form(Request $request, MailerInterface $mailer){
 
+        //Begin roistat
+        $roistatFilePath = "{$_SERVER['DOCUMENT_ROOT']}/roistat/RoistatEvents.php";
+        if(is_file($roistatFilePath)) {
+            require_once $roistatFilePath;
+            try {
+                $event = new \RoistatEvents($_REQUEST, 'Заявка с формы piksp.ru');
+                $event->execute();
+            }catch (\Exception $exception) {}
+        }
+        //End roistat
+
         $token = "1737028189:AAEFd51Z6vSHslgX-CNMtItwWD6Iy5EIP74";
         $chat_id = "-1001408803296";# Заявки VAG-PIK
 
@@ -152,8 +163,6 @@ if (!$sendTextToTelegram){
             <p>Телефон отправителя: ' . $request->get('phone') . '</p>'
                 );
             $mailer->send($email);
-
-
         return new JsonResponse(['success'=>'<p>Спасибо! Ваша заявка отправлена.</p>']);
     }
 
