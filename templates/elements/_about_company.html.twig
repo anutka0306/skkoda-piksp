@@ -1,4 +1,4 @@
-<section id="about" class="numbers-section">
+<section id="about" class="numbers-section {% if green is defined and green == 'true' %}green__theme {% endif %}">
     <div class="numbers-section__inner">
         <div class="container">
             <div class="row row-numbers">
@@ -71,7 +71,7 @@
         <div class="container container_subscribe">
             <div class="row message-row">
                 <div class="col-lg-8 col-12 message-wrapper">
-                    <div class="message">
+                    <div class="message {% if green is defined and green == 'true' %}green__theme {% endif %}">
                         <h2 class="message__heading subscribe__message-heading">Доверьте <span class="highlighted"> свой {% if brandName is defined %}{{ brandName }}{% else %}авто{% endif%} </span> <br> профессионалам</h2>
                         <ul class="message__list">
                             <li class="message__item">Ремонт {% if brandName is defined %}{{ brandName }}{% endif %} любой сложности</li>
@@ -81,7 +81,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-10 border-col"></div>
+                <div class="col-10 border-col {% if green is defined and green == 'true' %}green__theme {% endif %}"></div>
                 <div class="col-lg-4 col-12">
                     <div class="subscribe__form form-wrapper">
                         <h3 class="form__heading subscribe__heading">Записаться на СТО</h3>

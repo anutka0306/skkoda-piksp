@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <div class="container-fluid container_nav">
+    <div class="container-fluid container_nav {% if green is defined and green == 'true' %}green__theme{% endif %}">
         <div class="col-1">
             <div class="btn-mobile-menu d-flex justify-content-start">
                 <a data-bs-toggle="offcanvas" class="offcanvas__burger" href="#offcanvasMenu" role="button" aria-controls="offcanvasMenu">

@@ -13,6 +13,7 @@
 {% block body %}
     {{ include('elements/_content.html.twig') }}
     {{ price_list(page) }}
+    {{ include('elements/zayavka_raschet_form.html.twig') }}
     {% if page.modelId is null %}
         {{ brand_models_service(page.priceBrand, page.priceBrand.path) }}
     {% endif %}
