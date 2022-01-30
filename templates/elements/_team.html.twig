@@ -1,4 +1,4 @@
-<section id="team" class="team-section">
+<section id="team" class="team-section {% if green is defined and green == 'true' %}green__theme {% endif %}">
     <div class="section__heading">
         <h2 class="section__h2">Команда ПИК</h2>
         <p class="section__heading-text">Только опытные диагносты, сертифицированные <br>
@@ -63,14 +63,19 @@
     <div class="container container_subscribe">
         <div class="row message-row">
             <div class="col-lg-8 col-12 message-wrapper">
-                <div class="message">
+                <div class="message {% if green is defined and green == 'true' %}green__theme {% endif %}">
                     <h2 class="message__heading subscribe__message-heading">Остались <span class="highlighted">вопросы?</span></h2>
-                    <p class="message__text">Оставьте заявку и наш специалист рассчитает стоимость ремонта
-                        вашего автомобиля
-                        в течении 10 минут</p>
+                    <p class="message__text">Получите БЕСПЛАТНУЮ консультацию специалиста прямо сейчас.</p>
+                    <div class="specialist_consult">
+                        <img src="{{ asset('img/specialist.png') }}" alt="Получить консультацию специалиста">
+                        <div class="specialist_description">
+                            <span class="specialist_description_name">Александр</span>
+                            <span class="specialist_description_role">Специалист ПИК</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-10 border-col"></div>
+            <div class="col-10 border-col {% if green is defined and green == 'true' %}green__theme {% endif %}"></div>
             <div class="col-lg-4 col-12">
                 <div class="subscribe__form form-wrapper">
                     <h3 class="form__heading subscribe__heading">Свяжитесь с нами</h3>

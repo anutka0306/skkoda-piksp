@@ -1,4 +1,4 @@
-<section id="offers" class="offers-section">
+<section id="offers" class="offers-section {% if green is defined and green == 'true' %}green__theme{% endif %}">
     <div class="section__heading">
         <h2 class="section__h2">Что мы предлагаем</h2>
         <p class="section__heading-text">Мы позаботились о том, чтобы каждый владелец
@@ -12,14 +12,14 @@
                 <div class="col-6 col-lg-3">
                     <div class="offer">
                         <div class="offer__icon">
-                            <img loading="lazy" src="{{ asset('img/offer-1.svg') }}" alt="">
+                            <img loading="lazy" src="{% if green is defined and green == 'true' %} {{ asset('img/offer-1-green.png') }} {% else %}{{ asset('img/offer-1.svg') }}{% endif %}" alt="">
                         </div>
                         <h4 class="offer__heading">Гарантия на все работы {% if brandName is defined %}{{ brandName}}{% endif%}{% if modelName is defined %} {{ modelName}}{% endif%}</h4>
                         <p class="offer__text">По завершению ремонта или профилактических работ {% if brandName is defined %}{{ brandName}}{% endif%}{% if modelName is defined %} {{ modelName}}{% endif%} Вы получаете гарантию.</p>
                     </div>
                     <div class="offer">
                         <div class="offer__icon">
-                            <img loading="lazy" src="{{ asset('img/offer-3.svg') }}" alt="">
+                            <img loading="lazy" src="{% if green is defined and green == 'true' %}{{ asset('img/offer-3-green.png') }}{% else %}{{ asset('img/offer-3.svg') }}{% endif %}" alt="">
                         </div>
                         <h4 class="offer__heading">Бонусная программа {% if brandName is defined %}{{ brandName}}{% endif%}{% if modelName is defined %} {{ modelName}}{% endif%}</h4>
                         <p class="offer__text">Для постоянных клиентов действуют накопительные скидки от 5 до 30%.</p>
@@ -30,21 +30,21 @@
                         {% if utpImg is defined and utpImg is not null %}
                             <img loading="lazy" class="offers__car" src="/img/brands/utp/{{ utpImg }}" alt="">
                         {% else %}
-                            <img loading="lazy" class="offers__car" src="{{ asset('img/advantages1/offer-car.png') }}" alt="">
+                            <img loading="lazy" class="offers__car" src="{% if green is defined and green == 'true' %}{{ asset('img/advantages1/offer-car-green.png') }}{% else %}{{ asset('img/advantages1/offer-car.png') }}{% endif %}" alt="">
                         {% endif %}
                     </div>
                 </div>
                 <div class="col-6 col-lg-3">
                     <div class="offer">
                         <div class="offer__icon">
-                            <img loading="lazy" src="{{ asset('img/offer-2.png') }}" alt="">
+                            <img loading="lazy" src="{% if green is defined and green == 'true' %}{{ asset('img/offer-2-green.png') }}{% else %}{{ asset('img/offer-2.png') }}{% endif %}" alt="">
                         </div>
                         <h4 class="offer__heading">Любые запчасти {% if brandName is defined %}{{ brandName}}{% if modelName is defined %} {{ modelName}}{% endif%}{% endif%} в наличии</h4>
                         <p class="offer__text">Имеем свой склад запчастей {% if brandName is defined %}{{ brandName}}{% endif%}{% if modelName is defined %} {{ modelName}}{% endif%}: оригинальные и аналоги. Найдём даже редкие детали</p>
                     </div>
                     <div class="offer">
                         <div class="offer__icon">
-                            <img loading="lazy" src="{{ asset('img/offer-4.svg') }}" alt="">
+                            <img loading="lazy" src="{% if green is defined and green == 'true' %}{{ asset('img/offer-4-green.png') }}{% else %}{{ asset('img/offer-4.svg') }}{% endif %}" alt="">
                         </div>
                         <h4 class="offer__heading">Комфортная зона ожидания</h4>
                         <p class="offer__text">Вас ждет клиентская зона с кофе и wi-fi, без очередей,<br> по предварительной записи.</p>

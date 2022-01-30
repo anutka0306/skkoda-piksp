@@ -202,9 +202,11 @@ class PageController extends AbstractController
         $brand_name = $brand->getBrandName();
         $models = $priceModelRepository->findBy(['priceBrand' => $brand->getBrandId()]);
         $work = $naschirabotyRepository->findBy(['model'=> $models], ['id' => 'DESC'], 1);
+        $green = false;
 
         $contactTitle = 'Японцы';
         if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
+            $green = true;
             $phone['value'] = $this->phone2->getValue();
             $phone['title']  = $this->phone2->getTitle();
             $address = $this->configRepository->findOneBy(['name'=>'address2']);
@@ -246,6 +248,7 @@ class PageController extends AbstractController
             'contactTitle' => $contactTitle,
             'diagnostic' => $diagnostic,
             'map'=> $map,
+            'green' => $green,
         ]);
     }
     
@@ -269,9 +272,10 @@ class PageController extends AbstractController
         }else{
             $model_name = null;
         }
-
+        $green = false;
         $contactTitle = 'Японцы';
         if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
+            $green = true;
             $phone['value'] = $this->phone2->getValue();
             $phone['title']  = $this->phone2->getTitle();
             $address = $this->configRepository->findOneBy(['name'=>'address2']);
@@ -306,6 +310,7 @@ class PageController extends AbstractController
             'contactTitle'=>$contactTitle,
             'diagnostic' => $diagnostic,
             'map' => $map,
+            'green' => $green,
         ]);
     }
     
@@ -340,8 +345,10 @@ class PageController extends AbstractController
         $services = $this->page_repository->findOneBy(['path' => '/' . $service->getPriceCategory()->getSlug() . '/']);
         $service->setName(str_replace([$brand_name . ' ' . $model_name, 'в Москве'], ['', ''], $service->getName()));
 
+        $green = false;
         $contactTitle = 'Японцы';
         if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
+            $green = true;
             $phone['value'] = $this->phone2->getValue();
             $phone['title']  = $this->phone2->getTitle();
             $address = $this->configRepository->findOneBy(['name'=>'address2']);
@@ -381,6 +388,7 @@ class PageController extends AbstractController
                 'contactTitle' => $contactTitle,
                 'diagnostic' => $diagnostic,
                 'map' => $map,
+                'green' => $green,
             ]);
         }
 

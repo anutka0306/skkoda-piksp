@@ -1,0 +1,126 @@
+<section class="rascher_stoimosty_wrapper">
+<div class="container container_subscribe">
+    <div class="row message-row">
+        <div class="col-lg-4 col-12 message-wrapper">
+            <div class="message message_raschet {% if green is defined and green == 'true' %}green__theme{% endif %}">
+                <h2 class="message__heading subscribe__message-heading">Расчет <br> стоимости <br><span class="highlighted"> ремонта</span> </h2>
+                <p style="color: #ffffff;">Оставьте заявку и наш специалист рассчитает стоимость ремонта
+                    вашего автомобиля
+                    в течении 10 минут</p>
+            </div>
+        </div>
+        <div class="col-10 border-col {% if green is defined and green == 'true' %}green__theme{% endif %}"></div>
+        <div class="col-lg-8 col-12">
+            <div class="subscribe__form form-wrapper">
+                <h3 class="form__heading subscribe__heading rascher_stoimosty__heading">Заявка на расчет</h3>
+                <form class="form {% if green is defined and green == 'true' %}green__theme{% endif %}" action="/" method="POST">
+
+                    <div class="form__inner">
+                        <div class="form__item">
+                            <label for="markaN4">Марка и модель автомобиля</label>
+                            <input class="form__input markaN4-popup" type="text" id="markaN4" name="marka" required="" inputmode="text">
+                            <input type="hidden" id="urlN4" name="url" value="{{ path(app.request.attributes.get('_route'),
+                                app.request.attributes.get('_route_params')) }}">
+                        </div>
+                        <div class="form__item">
+                            <label for="yearN4">Год выпуска</label>
+                            <input class="form__input yearN4-popup" type="text" id="yearN4" name="year" required="" inputmode="text">
+                        </div>
+                    </div>
+                    <div class="form__inner">
+                        <div class="form__item">
+                            <label for="evakuatorN4">Автомобиль на ходу?</label>
+                            <div class="evakuatorN4__wrapper">
+                                <div><input class="form__input evakuatorN4-popup" type="radio" checked  name="evakuator" value="yes">Да</div>
+                                <div><input class="form__input evakuatorN4-popup" type="radio"  name="evakuator" value="no">Нет, нужен эвакуатор</div>
+                            </div>
+                        </div>
+                        <div class="form__item">
+                            <label for="zapchastiN4">Вам требуются запчасти?</label>
+                            <div class="evakuatorN4__wrapper">
+                                <div><input class="form__input zapchastiN4-popup" type="radio" checked  name="zapchasti" value="yes">Да</div>
+                                <div><input class="form__input zapchastiN4-popup" type="radio"  name="zapchasti" value="no">Нет</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form__inner">
+                        <div class="form__item">
+                            <label for="problemN4">Какая у вас проблема?</label>
+                            <input class="form__input problemN4-popup" type="text" id="problemN4" name="problem" required="" inputmode="text">
+                        </div>
+                        <div class="form__item">
+                            <label for="phoneN4">Телефон для связи</label>
+                            <input class="form__input phoneN4-popup" type="tel" id="phoneN4" name="phone" required="" inputmode="text">
+                        </div>
+                    </div>
+                    <button class="button formN4Button">Получить расчет стоимости</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<script>
+    $(document).ready(function(){
+        //Скрыть PopUp при загрузке страницы
+        //PopUpHide();
+
+        $(".formN4Button").click(function (e){
+            e.preventDefault();
+            if($('.phoneN4-popup').val() == ''){
+                alert('Заполните поле телефон');
+                return;
+            }
+            if($('.phoneN4-popup').val().length < 17){
+                alert('Неверный формат номер телефона');
+                return;
+            }
+            if($('.markaN4-popup').val() == ''){
+                alert('Введите марку и модель авто');
+                return;
+            }
+            if($('.yearN4-popup').val() == ''){
+                alert('Введите год авто');
+                return;
+            }
+            if($('.problemN4-popup').val() == ''){
+                alert('Опишите проблему');
+                return;
+            }
+
+            let phone = $('.phoneN4-popup').val();
+            let mark = $('.markaN4-popup').val();
+            let year = $('.yearN4-popup').val();
+            let evakuator = document.querySelector('input[name="evakuator"]:checked').value;
+            let zapchasti = document.querySelector('input[name="zapchasti"]:checked').value;
+            let problem = $('.problemN4-popup').val();
+            let url  = $('#urlN4').val();
+            $.ajax({
+                url:     "/raschet_form",
+                type:     "POST", //метод отправки
+                dataType: "html", //формат данных
+
+                data: {
+                    'phone' : phone,
+                    'mark' : mark,
+                    'year' : year,
+                    'evakuator' : evakuator,
+                    'zapchasti' : zapchasti,
+                    'problem': problem,
+                    'url' : url,
+                },
+                success: function(response) { //Данные отправлены успешно
+                    //$('.callback-popup-body').html('<p style="text-align: center; font-weight: 700; padding: 20px;">Спасибо! Ваша заявка отправлена.</p>');
+                    console.log(response);
+                },
+                error: function(response) { // Данные не отправлены
+                    console.log('error');
+                }
+            });
+            ResultShow();
+
+        });
+    });
+
+</script>
