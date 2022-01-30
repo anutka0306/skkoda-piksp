@@ -210,6 +210,50 @@ if (!$sendTextToTelegram){
         return new JsonResponse(['success'=>'<p>Спасибо! Ваша заявка отправлена.</p>']);
     }
 
+
+    /**
+     * @Route("/raschet_form", name="callback_form")
+     */
+    public function raschet_form(Request $request, MailerInterface $mailer){
+
+        $token = "1737028189:AAEFd51Z6vSHslgX-CNMtItwWD6Iy5EIP74";
+        $chat_id = "-1001408803296";# Заявки VAG-PIK
+
+        $arr = array(
+            "Заявка с" => " с формы запроса расчета piksp.ru ",
+            "Телефон" => $request->get('phone'),
+            "Марка авто" => $request->get('mark'),
+            "Года авто" => $request->get('year'),
+            "Нужен ли эвакуатор" => $request->get('evakuator'),
+            "Нужны ли запчасти" => $request->get('zapchasti'),
+            "Описание проблемы" => $request->get('problem'),
+            "Со страницы: " => 'https://piksp.ru'.$request->get('url'),
+        );
+        /*Цикл по массиву (собираем сообщение) */
+        $txt = '';
+        foreach($arr as $key => $value) {
+            $txt .= "<b>".$key."</b>: ".htmlspecialchars($value)."\n";
+        }
+        $sendTextToTelegram = file_get_contents("https://api.telegram.org/bot$token/sendMessage?chat_id=$chat_id&parse_mode=html&text=".rawurlencode($txt))."\n";
+        if (!$sendTextToTelegram){
+            return new JsonResponse(['error'=>'<p>Ошибка при отправке в Telegram</p>']);
+        }
+
+        $to = 'info@piksp.ru';
+
+        $email = (new Email())
+            ->from('info@my-side.online')
+            ->to((string)$to)
+            ->subject('Новая заявка с сайта Piksp.ru')
+            ->html('<p>Новая заявка с сайта Piksp.ru</p>
+            <p>Телефон отправителя: ' . $request->get('phone') . '</p>'
+            );
+        $mailer->send($email);
+
+
+        return new JsonResponse(['success'=>'<p>Спасибо! Ваша заявка отправлена.</p>']);
+    }
+
     public function addEmail($email, ValidatorInterface $validator){
         $emailConstraint = array(
             new Assert\Email(),
