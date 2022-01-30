@@ -159,7 +159,7 @@ if (!$sendTextToTelegram){
 
 
     /**
-     * @Route("/raschet_form", name="raschet_form")
+     * @Route("/raschet_form", name="callback_form")
      */
     public function raschet_form(Request $request, MailerInterface $mailer){
 
