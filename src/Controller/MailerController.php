@@ -20,7 +20,7 @@ class MailerController extends AbstractController
 
     public function __construct(ValidatorInterface $validatorInterface)
     {
-       $this->validatorInterface = $validatorInterface;
+        $this->validatorInterface = $validatorInterface;
     }
 
     /**
@@ -61,8 +61,8 @@ class MailerController extends AbstractController
                     <p>Телефон отправителя: ' . $userPhone . '</p>
                     <p>Салон: ' . $request->get('salon_contact') . '</p>
                     <p>Сообщение: ' . $request->get('comment_contact') . '</p>'
-                            );
-                        $mailer->send($email);
+                    );
+                $mailer->send($email);
             }
 
 
@@ -138,20 +138,20 @@ class MailerController extends AbstractController
             $txt .= "<b>".$key."</b>: ".htmlspecialchars($value)."\n";
         }
         $sendTextToTelegram = file_get_contents("https://api.telegram.org/bot$token/sendMessage?chat_id=$chat_id&parse_mode=html&text=".rawurlencode($txt))."\n";
-if (!$sendTextToTelegram){
-    return new JsonResponse(['error'=>'<p>Ошибка при отправке в Telegram</p>']);
-}
+        if (!$sendTextToTelegram){
+            return new JsonResponse(['error'=>'<p>Ошибка при отправке в Telegram</p>']);
+        }
 
         $to = 'info@piksp.ru';
 
-            $email = (new Email())
-                ->from('info@my-side.online')
-                ->to((string)$to)
-                ->subject('Новая заявка с сайта Piksp.ru')
-                ->html('<p>Новая заявка с сайта Piksp.ru</p>
+        $email = (new Email())
+            ->from('info@my-side.online')
+            ->to((string)$to)
+            ->subject('Новая заявка с сайта Piksp.ru')
+            ->html('<p>Новая заявка с сайта Piksp.ru</p>
             <p>Телефон отправителя: ' . $request->get('phone') . '</p>'
-                );
-            $mailer->send($email);
+            );
+        $mailer->send($email);
 
 
         return new JsonResponse(['success'=>'<p>Спасибо! Ваша заявка отправлена.</p>']);
@@ -159,7 +159,7 @@ if (!$sendTextToTelegram){
 
 
     /**
-     * @Route("/raschet_form", name="raschet_form")
+     * @Route("/raschet_form", name="callback_form")
      */
     public function raschet_form(Request $request, MailerInterface $mailer){
 
@@ -207,8 +207,8 @@ if (!$sendTextToTelegram){
             new Assert\NotBlank(),
         );
         $errors = $validator->validate(
-          $email,
-          $emailConstraint
+            $email,
+            $emailConstraint
         );
 
         if(0 === count($errors)){
@@ -238,8 +238,8 @@ if (!$sendTextToTelegram){
 
     public function addPhone($phone, ValidatorInterface $validator){
         $phoneConstraint = array(
-          new Assert\NotBlank(),
-          new Assert\Regex(['pattern' => '/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/'])
+            new Assert\NotBlank(),
+            new Assert\Regex(['pattern' => '/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/'])
         );
         $errors = $validator->validate(
             $phone,
@@ -269,12 +269,12 @@ if (!$sendTextToTelegram){
         }
     }
 
-     public function getTo_salonWithout(){
-         return 'anya-programmist@qmotors.ru, Sav@styled.cc';
-     }
+    public function getTo_salonWithout(){
+        return 'anya-programmist@qmotors.ru, Sav@styled.cc';
+    }
 
-     public function sendToTelegramm(){
+    public function sendToTelegramm(){
 
-     }
+    }
 
 }
