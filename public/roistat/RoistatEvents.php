@@ -63,8 +63,8 @@ class RoistatEvents {
     {
         if(array_key_exists('roistat_phone_script_data', $_COOKIE)) {
             $callbackPhoneJson      = json_decode($_COOKIE['roistat_phone_script_data'], true);
-            $currentCallbackPhone   = current($callbackPhoneJson); 
-            return $currentCallbackPhone['phone'];
+            $currentCallbackPhone   = current($callbackPhoneJson);
+            return $currentCallbackPhone['replaceable_numbers'][1];
         }
         return null;
     }
@@ -85,7 +85,7 @@ class RoistatEvents {
                 'form_name' => $this->getFormName()
             ])
             ->execute()
-        ;
+            ;
     }
 
 }
