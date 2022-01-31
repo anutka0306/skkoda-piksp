@@ -1016,6 +1016,30 @@ label {
    /* background-position: right bottom;*/
     background-position: 20% 87%;
 }
+
+@media (max-width: 1500px) {
+    .akcii_akcii-left{
+        background-size: 230px;
+    }
+}
+@media (max-width: 1436px) {
+    .akcii_akcii-left{
+        background-size: 220px;
+        background-position: 10% 87%;
+    }
+}
+
+@media (max-width: 1308px) {
+    .akcii_akcii-left{
+        background-position: 3% 87%;
+    }
+}
+@media (max-width: 1232px) {
+    .akcii_akcii-left{
+        background-size: 190px;
+    }
+}
+
 .akcii_akcii-left .akcii_services-heading, .akcii_akcii-left .akcii_services-heading .link_heading span, .akcii_akcii-left .akcii_akcii_subhead, .akcii_akcii-right .akcii_services-heading, .akcii_akcii-right .akcii_services-heading .link_heading span, .akcii_akcii-right .akcii_akcii_subhead{
     color: #2a2e47 !important;
 }
