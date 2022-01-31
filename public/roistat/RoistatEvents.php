@@ -11,6 +11,8 @@ class RoistatEvents {
      */
     private $data;
 
+    private $formName = 'Неизвестная форма';
+
     private const FORM_TYPE = [
         'tpl.about_form'            => 'Записаться на СТО',
         'tpl.questionsform'         => 'Свяжитесь с нами',
@@ -25,8 +27,9 @@ class RoistatEvents {
         'text_problems'     => 'Какая у вас проблема?',
     ];
 
-    public function __construct(array $data)
+    public function __construct(array $data, string $formName = null)
     {
+        $this->formName = $formName;
         $this->data = $data;
     }
 
@@ -37,7 +40,7 @@ class RoistatEvents {
      */
     private function getFormName() : string
     {
-        return self::FORM_TYPE[$this->data['form-name']] ?? 'Неизвестная форма';
+        return self::FORM_TYPE[$this->data['form-name']] ?? $this->formName;
     }
 
     /**
@@ -56,6 +59,16 @@ class RoistatEvents {
         return $comment;
     }
 
+    public function getCallbackPhone()
+    {
+        if(array_key_exists('roistat_phone_script_data', $_COOKIE)) {
+            $callbackPhoneJson      = json_decode($_COOKIE['roistat_phone_script_data'], true);
+            $currentCallbackPhone   = current($callbackPhoneJson); 
+            return $currentCallbackPhone['phone'];
+        }
+        return null;
+    }
+
     /**
      * Отправить в ройстат
      * @return false|mixed
@@ -65,11 +78,12 @@ class RoistatEvents {
         return (new Roistat())
             ->setPhone($this->data['phone'])
             ->setForm( $this->getFormName() )
-            ->setComment( $this->getComment() )
+            ->setComment( $this->getComment() . "\r\nПодменный номер: " . $this->getCallbackPhone() )
             ->setIsNeedCallback(1)
-            ->setCallBackPhone(
-                array_key_exists('roistat_phone', $_COOKIE) ? $_COOKIE['roistat_phone'] : null
-            )
+            ->setCallBackPhone( $this->getCallbackPhone() )
+            ->setFields([
+                'form_name' => $this->getFormName()
+            ])
             ->execute()
         ;
     }

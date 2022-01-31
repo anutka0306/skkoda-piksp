@@ -680,7 +680,7 @@ trait Fields {
     }
 }
 
-function dump($str, $name = null)
+function r_dump($str, $name = null)
 {
     if(!empty($name)) {
         echo "<h3 style='padding: 0;'>{$name}</h3>";

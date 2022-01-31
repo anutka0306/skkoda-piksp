@@ -14,7 +14,7 @@
 {% block body %}
     {{ include('elements/_content.html.twig', {'page':page}) }}
     {{ price_list(page) }}
-    {{ include('elements/zayavka_raschet_form.html.twig') }}
+    {#{{ include('elements/zayavka_raschet_form.html.twig') }}#}
     {{ brands_service_block() }}
     {{ service_list(page) }}
     {{ include('elements/_advantages.html.twig') }}

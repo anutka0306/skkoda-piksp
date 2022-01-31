@@ -50,7 +50,7 @@
                         </div>
                         <div class="form__item">
                             <label for="phoneN4">Телефон для связи</label>
-                            <input class="form__input phoneN4-popup" type="tel" id="phoneN4" name="phone" required="" inputmode="text">
+                            <input class="form__input phoneN44-popup" type="tel" id="phoneN4" name="phone" required="" inputmode="text">
                         </div>
                     </div>
                     <button class="button formN4Button">Получить расчет стоимости</button>
@@ -68,11 +68,11 @@
 
         $(".formN4Button").click(function (e){
             e.preventDefault();
-            if($('.phoneN4-popup').val() == ''){
+            if($('.phoneN44-popup').val() == ''){
                 alert('Заполните поле телефон');
                 return;
             }
-            if($('.phoneN4-popup').val().length < 17){
+            if($('.phoneN44-popup').val().length < 17){
                 alert('Неверный формат номер телефона');
                 return;
             }
@@ -89,7 +89,7 @@
                 return;
             }
 
-            let phone = $('.phoneN4-popup').val();
+            let phone = $('.phoneN44-popup').val();
             let mark = $('.markaN4-popup').val();
             let year = $('.yearN4-popup').val();
             let evakuator = document.querySelector('input[name="evakuator"]:checked').value;
