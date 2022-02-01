@@ -50,9 +50,9 @@
         </div>
         <div class="header__logo">
             {% if logo is defined and logo is not null %}
-                <a href="/"><img src="/img/brands/logo/{{ logo }}" alt="ПИК" width="199" height="44"></a>
+                <a href="{{ brandPath }}"><img src="/img/brands/logo/{{ logo }}" alt="ПИК" width="199" height="44"></a>
             {% else %}
-                <a href="/"><img src="/img/lexus/logo.png" alt="ПИК" width="199" height="44"></a>
+                <a href="{{ brandPath }}"><img src="/img/lexus/logo.png" alt="ПИК" width="199" height="44"></a>
             {% endif %}
         </div>
         <span class="nav__description">Специализированный <br>
@@ -98,6 +98,6 @@
         </div>
     </div>
 
-   {{ include('v2/blocks/include/header_fixed.html.twig') }}
+   {{ include('v2/blocks/include/header_fixed.html.twig', {brandPath: brandPath}) }}
 </header>
 
