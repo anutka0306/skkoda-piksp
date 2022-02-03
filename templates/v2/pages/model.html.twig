@@ -12,6 +12,7 @@
 
 {% block body %}
     {{ include('elements/_content.html.twig') }}
+    {{ getBrandGallery(page.priceBrand.name) }}
     {{ price_list(page) }}
     {#{{ include('elements/zayavka_raschet_form.html.twig') }}#}
    {# {{ brand_models_service(page.priceBrand, page.priceBrand.path) }}#}
