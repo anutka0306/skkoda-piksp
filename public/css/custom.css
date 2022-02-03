@@ -1873,3 +1873,12 @@ color: #4b4f53;
 .footer.green__theme .nav__description{
     color: #ffffff;
 }
+
+/* Brands Gallery */
+.brand__gallery_slider{
+    margin: 0 50px;
+}
+.brand__gallery_slider_wrapper{
+    padding-top: 120px;
+    padding-bottom: 120px;
+}
