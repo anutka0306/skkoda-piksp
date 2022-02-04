@@ -60,6 +60,7 @@
         <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     {% endblock %}
     <meta name="yandex-verification" content="5440d1539bdcce3d"/>
+    {{ include('v2/scripts/_google_analitics.html.twig') }}
     {{ include('v2/scripts/_schema.html.twig') }}
     {{ schema_breadcrumbs(page ?? null) }}
 </head>
