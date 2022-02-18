@@ -204,24 +204,38 @@ class PageController extends AbstractController
         $work = $naschirabotyRepository->findBy(['model'=> $models], ['id' => 'DESC'], 1);
         $green = false;
 
-        $contactTitle = 'Японцы';
-        if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
+        if($brand_name == 'Land Rover' or $brand_name == 'Jaguar') {
             $green = true;
-            $phone['value'] = $this->phone2->getValue();
-            $phone['title']  = $this->phone2->getTitle();
-            $address = $this->configRepository->findOneBy(['name'=>'address2']);
-            $contactTitle = $brand_name;
-        }elseif($brand_name == 'Porsche'){
-            $phone['value'] = $this->phone3->getValue();
-            $phone['title'] = $this->phone3->getTitle();
-            $address = $this->configRepository->findOneBy(['name'=>'address3']);
-            $contactTitle = $brand_name;
+        }
+        $contactTitle = $brand_name;
+
+        if (!is_null($brand->getPriceBrand()->getPhone()) or !empty($brand->getPriceBrand()->getPhone())){
+            $phone['title'] = $brand->getPriceBrand()->getPhone();
+            $phone['value'] = str_replace(array('(', ')', '-', ' '), '', $brand->getPriceBrand()->getPhone());
         }else{
-            $phone['value'] = $this->phone->getValue();
-            $phone['title'] = $this->phone->getTitle();
-            $address = $this->configRepository->findOneBy(['name'=>'address']);
+            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
+                $phone['value'] = $this->phone2->getValue();
+                $phone['title']  = $this->phone2->getTitle();
+            }elseif($brand_name == 'Porsche'){
+                $phone['value'] = $this->phone3->getValue();
+                $phone['title'] = $this->phone3->getTitle();
+            }else{
+                $phone['value'] = $this->phone->getValue();
+                $phone['title'] = $this->phone->getTitle();
+            }
         }
 
+        if(!is_null($brand->getPriceBrand()->getAddress()) or !empty($brand->getPriceBrand()->getAddress())){
+            $address['value'] = $brand->getPriceBrand()->getAddress();
+        }else{
+            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
+                $address = $this->configRepository->findOneBy(['name'=>'address2']);
+            }elseif($brand_name == 'Porsche'){
+                $address = $this->configRepository->findOneBy(['name'=>'address3']);
+            }else{
+                $address = $this->configRepository->findOneBy(['name'=>'address']);
+            }
+        }
 
         $map = $brand->getPriceBrand()->getMap();
         if(empty($map)){
@@ -273,22 +287,38 @@ class PageController extends AbstractController
             $model_name = null;
         }
         $green = false;
-        $contactTitle = 'Японцы';
-        if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
+        if($brand_name == 'Land Rover' or $brand_name == 'Jaguar') {
             $green = true;
-            $phone['value'] = $this->phone2->getValue();
-            $phone['title']  = $this->phone2->getTitle();
-            $address = $this->configRepository->findOneBy(['name'=>'address2']);
-            $contactTitle = $brand_name;
-        }elseif($brand_name == 'Porsche'){
-            $phone['value'] = $this->phone3->getValue();
-            $phone['title'] = $this->phone3->getTitle();
-            $address = $this->configRepository->findOneBy(['name'=>'address3']);
-            $contactTitle = $brand_name;
+        }
+        $contactTitle = $model->getBrandName();
+
+        if (!is_null($model->getPriceBrand()->getPhone()) or !empty($model->getPriceBrand()->getPhone())){
+            $phone['title'] = $model->getPriceBrand()->getPhone();
+            $phone['value'] = str_replace(array('(', ')', '-', ' '), '', $model->getPriceBrand()->getPhone());
         }else{
-            $phone['value'] = $this->phone->getValue();
-            $phone['title'] = $this->phone->getTitle();
-            $address = $this->configRepository->findOneBy(['name'=>'address']);
+            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
+                $phone['value'] = $this->phone2->getValue();
+                $phone['title']  = $this->phone2->getTitle();
+            }
+            elseif($brand_name == 'Porsche'){
+                $phone['value'] = $this->phone3->getValue();
+                $phone['title'] = $this->phone3->getTitle();
+            }else{
+                $phone['value'] = $this->phone->getValue();
+                $phone['title'] = $this->phone->getTitle();
+            }
+        }
+
+        if(!is_null($model->getPriceBrand()->getAddress()) or !empty($model->getPriceBrand()->getAddress())){
+            $address['value'] = $model->getPriceBrand()->getAddress();
+        }else{
+            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
+                $address = $this->configRepository->findOneBy(['name'=>'address2']);
+            }elseif($brand_name == 'Porsche'){
+                $address = $this->configRepository->findOneBy(['name'=>'address3']);
+            }else{
+                $address = $this->configRepository->findOneBy(['name'=>'address']);
+            }
         }
 
         $map = $model->getPriceBrand()->getMap();
@@ -346,23 +376,39 @@ class PageController extends AbstractController
         $service->setName(str_replace([$brand_name . ' ' . $model_name, 'в Москве'], ['', ''], $service->getName()));
 
         $green = false;
-        $contactTitle = 'Японцы';
-        if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
+
+        if($brand_name == 'Land Rover' or $brand_name == 'Jaguar') {
             $green = true;
-            $phone['value'] = $this->phone2->getValue();
-            $phone['title']  = $this->phone2->getTitle();
-            $address = $this->configRepository->findOneBy(['name'=>'address2']);
-            $contactTitle = $brand_name;
-        }elseif($brand_name == 'Porsche'){
-            $phone['value'] = $this->phone3->getValue();
-            $phone['title'] = $this->phone3->getTitle();
-            $address = $this->configRepository->findOneBy(['name'=>'address3']);
-            $contactTitle = $brand_name;
-        }else{
-            $phone['value'] = $this->phone->getValue();
-            $phone['title'] = $this->phone->getTitle();
-            $address = $this->configRepository->findOneBy(['name'=>'address']);
         }
+        $contactTitle = $brand_name;
+        if (!is_null($service->getPriceBrand()->getPhone()) or !empty($service->getPriceBrand()->getPhone())){
+            $phone['title'] = $service->getPriceBrand()->getPhone();
+            $phone['value'] = str_replace(array('(', ')', '-', ' '), '', $service->getPriceBrand()->getPhone());
+        }else{
+            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
+                $phone['value'] = $this->phone2->getValue();
+                $phone['title']  = $this->phone2->getTitle();
+            }elseif($brand_name == 'Porsche'){
+                $phone['value'] = $this->phone3->getValue();
+                $phone['title'] = $this->phone3->getTitle();
+            }else{
+                $phone['value'] = $this->phone->getValue();
+                $phone['title'] = $this->phone->getTitle();
+            }
+        }
+
+        if(!is_null($service->getPriceBrand()->getAddress()) or !empty($service->getPriceBrand()->getAddress())){
+            $address['value'] = $service->getPriceBrand()->getAddress();
+        }else{
+            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
+                $address = $this->configRepository->findOneBy(['name'=>'address2']);
+            }elseif($brand_name == 'Porsche'){
+                $address = $this->configRepository->findOneBy(['name'=>'address3']);
+            }else{
+                $address = $this->configRepository->findOneBy(['name'=>'address']);
+            }
+        }
+
 
 
         $map = $service->getPriceBrand()->getMap();
