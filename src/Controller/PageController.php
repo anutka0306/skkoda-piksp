@@ -274,7 +274,7 @@ class PageController extends AbstractController
         $work = $naschirabotyRepository->findOneBy(['model'=> $model_id], ['id' => 'DESC']);
         $diagnostic = $diagnosticBrandRepository->findBy(['brand' => $model->getPriceBrand()],[], 4 );
         if(empty($work)){
-            $allBrandModels = $priceModelRepository->findBy(['priceBrand'=>$model->getBrandId()]);
+            $allBrandModels = $priceModelRepository->findBy(['priceBrand'=>$model->getPriceBrand()->getId()]);
             $work = $naschirabotyRepository->findBy(['model'=> $allBrandModels], ['id' => 'DESC'], 1);
         }
         if(empty($work)){
@@ -349,19 +349,30 @@ class PageController extends AbstractController
         $popular_services = $priceServiceRepository->findBy(['is_popular' => 1, 'published' => 1], [], 5);
         $brand_name = $service->getBrandName();
         $model_id = $service->getModelId();
+        $brand_id = $service->getPriceBrand()->getId();
         $diagnostic = $diagnosticBrandRepository->findBy(['brand' => $service->getPriceBrand()], [], 4);
-
-
+        
         if ($model_id) {
+            $allBrandModels = $priceModelRepository->findBy(['priceBrand'=>$service->getPriceModel()->getPriceBrand()->getId()]);
             $work = $naschirabotyRepository->findOneBy(['model' => $model_id, 'service' => $service->getId()]);
             if (empty($work)) {
-                $work = $naschirabotyRepository->findOneBy(['service' => $service->getId()]);
+                $work = $naschirabotyRepository->findBy(['model'=> $allBrandModels], ['id' => 'DESC'], 1);
+                //$work = $naschirabotyRepository->findOneBy(['service' => $service->getId()]);
                 if (empty($work)) {
                     $work = $naschirabotyRepository->findOneBy(['model' => $model_id]);
                 }
             }
             $model_name = $priceModelRepository->find($model_id)->getName();
-        } else {
+        }
+        elseif ($brand_id){
+            $allBrandModels = $priceModelRepository->findBy(['priceBrand'=>$service->getPriceBrand()->getId()]);
+            $work = $naschirabotyRepository->findBy(['model'=> $allBrandModels], ['id' => 'DESC'], 1);
+            if (empty($work)) {
+                $work = $naschirabotyRepository->findOneBy(['service' => $service->getId()]);
+            }
+            $model_name = null;
+        }
+        else {
             $work = $naschirabotyRepository->findOneBy(['service' => $service->getId()]);
             if (empty($work)) {
                 $models = $priceModelRepository->findBy(['priceBrand' => $service->getBrandId()]);
