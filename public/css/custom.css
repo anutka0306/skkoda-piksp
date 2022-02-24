@@ -1882,3 +1882,7 @@ color: #4b4f53;
     padding-top: 120px;
     padding-bottom: 120px;
 }
+
+.brand__gallery_slider_item img{
+    max-height: 230px;
+}
