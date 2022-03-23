@@ -351,7 +351,7 @@ class PageController extends AbstractController
         $model_id = $service->getModelId();
         $brand_id = $service->getPriceBrand()->getId();
         $diagnostic = $diagnosticBrandRepository->findBy(['brand' => $service->getPriceBrand()], [], 4);
-        
+
         if ($model_id) {
             $allBrandModels = $priceModelRepository->findBy(['priceBrand'=>$service->getPriceModel()->getPriceBrand()->getId()]);
             $work = $naschirabotyRepository->findOneBy(['model' => $model_id, 'service' => $service->getId()]);

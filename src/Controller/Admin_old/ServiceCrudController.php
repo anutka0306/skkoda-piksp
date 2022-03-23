@@ -11,7 +11,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CodeEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+/*use FOS\CKEditorBundle\Form\Type\CKEditorType;*/
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use App\Form\ServiceType;
 
 class ServiceCrudController extends AbstractCrudController
 {
@@ -25,7 +29,8 @@ class ServiceCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInPlural('Услуги')
             ->setEntityLabelInSingular('Услуга')
-            ->setPaginatorPageSize(250);
+            ->setPaginatorPageSize(250)
+            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig');
     }
 
 
@@ -43,7 +48,7 @@ class ServiceCrudController extends AbstractCrudController
             TextField::new('meta_title', 'Title')->hideOnIndex(),
             CodeEditorField::new('meta_description','Description')->hideOnIndex(),
             Field::new('model_id'),
-            CodeEditorField::new('text', 'Текст')->hideOnIndex(),
+            TextEditorField::new('text', 'Текст')->setFormType(ServiceType::class)->hideOnIndex(),
             BooleanField::new('published', 'Активно'),
             NumberField::new('rating_value', 'Рейтинг')->hideOnIndex(),
             NumberField::new('rating_count', 'Кол-во голосов')->hideOnIndex(),

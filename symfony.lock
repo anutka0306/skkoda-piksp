@@ -112,6 +112,15 @@
     "guzzlehttp/psr7": {
         "version": "2.0.0"
     },
+    "helios-ag/fm-elfinder-bundle": {
+        "version": "0.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "0.0",
+            "ref": ""
+        }
+    },
     "intervention/image": {
         "version": "2.6.0"
     },
@@ -186,6 +195,15 @@
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "studio-42/elfinder": {
+        "version": "0.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "0.0",
+            "ref": ""
+        }
     },
     "symfony/asset": {
         "version": "v5.2.7"
