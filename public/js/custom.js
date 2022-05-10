@@ -117,6 +117,7 @@ $(document).ready(function () {
         infinite: true,
         slidesToShow: 4,
         autoplay: true,
+        lazyLoad: 'ondemand',
         slidesToScroll: 1,
         responsive: [
             {
