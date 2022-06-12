@@ -47,6 +47,15 @@ class MailerController extends AbstractController
             $userName = $request->get('user_name_contact');
             $userPhone = $request->get('user_phone_contact');
 
+            //        $phone = '', $comment = '', $name = '', $email = ''
+            $this->getRoistat(
+                $userPhone,
+                $request->get('salon_contact') . ' - ' . $request->get('comment_contact'),
+                $userName,
+                $userEmail
+
+            );
+
         }
         if(0 === count($errors)) {
 
@@ -134,6 +143,8 @@ class MailerController extends AbstractController
         }
         //End roistat
 
+//        $this->getRoistat($request->get('phone'), 'https://pikms.ru'.$request->get('url'));
+
         $token = "1737028189:AAEFd51Z6vSHslgX-CNMtItwWD6Iy5EIP74";
         $chat_id = "-1001408803296";# Заявки VAG-PIK
 
@@ -172,6 +183,17 @@ class MailerController extends AbstractController
      * @Route("/raschet_form", name="raschet_form")
      */
     public function raschet_form(Request $request, MailerInterface $mailer){
+
+        //        $phone = '', $comment = '', $name = '', $email = ''
+        $this->getRoistat(
+            $request->get('phone'),
+            'Марка = ' . $request->get('mark') .
+            ' Год = ' . $request->get('year') .
+            ' Эвакуатор = ' . $request->get('evakuator') .
+            ' Запчасти = ' . $request->get('zapchasti') .
+            ' Проблема = ' . $request->get('problem') .
+            'URL = https://piksp.ru'.$request->get('url')
+        );
 
         $token = "1737028189:AAEFd51Z6vSHslgX-CNMtItwWD6Iy5EIP74";
         $chat_id = "-1001408803296";# Заявки VAG-PIK
@@ -285,6 +307,29 @@ class MailerController extends AbstractController
 
     public function sendToTelegramm(){
 
+    }
+
+    private function getRoistat($phone = '', $comment = '', $name = '', $email = ''){
+        $roistatData = array(
+            'roistat' => isset($_COOKIE['roistat_visit']) ? $_COOKIE['roistat_visit'] : 'nocookie',
+            'key'     => 'ODUxOTY2ZGIxZTAzOWRlNGU0M2IwYTBlOTgzNDczYzI6MTE2MDU4', // Ключ для интеграции с CRM, указывается в настройках интеграции с CRM.
+            'title'   => 'Заявка с формы сайта Piksp.ru', // Название сделки
+            'comment' => $comment, // Комментарий к сделке
+            'name'    => $name, // Имя клиента
+            'email'   => $email, // Email клиента
+            'phone'   => $phone, // Номер телефона клиента
+            'is_need_callback' => '0', // Если указано значение '1', на номер клиента будет инициироваться обратный звонок после создания заявки в Roistat (независимо от того, включен ли обратный звонок в Ловце лидов). Если указано значение '0', для данной формы обратный звонок инициироваться не будет (даже если в Ловце лидов включен обратный звонок).
+            'callback_phone' => '<Номер для переопределения>', // Переопределяет номер, указанный в настройках обратного звонка.
+            'sync'    => '0', //
+            'fields'  => array(
+                'Адрес'   => 'И31АС4',
+                'Марка'   => '',
+                'Модель'  => '',
+                'Сайт'    => 'Piksp.ru',
+            ),
+        );
+
+        file_get_contents("https://cloud.roistat.com/api/proxy/1.0/leads/add?" . http_build_query($roistatData));
     }
 
 }
