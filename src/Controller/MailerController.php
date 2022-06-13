@@ -133,17 +133,17 @@ class MailerController extends AbstractController
      */
     public function callback_form(Request $request, MailerInterface $mailer){
         //Begin roistat
-        $roistatFilePath = "{$_SERVER['DOCUMENT_ROOT']}/roistat/RoistatEvents.php";
-        if(is_file($roistatFilePath)) {
-            require_once $roistatFilePath;
-            try {
-                $event = new \RoistatEvents($_REQUEST, 'Заявка с формы piksp.ru');
-                $event->execute();
-            }catch (\Exception $exception) {}
-        }
+//        $roistatFilePath = "{$_SERVER['DOCUMENT_ROOT']}/roistat/RoistatEvents.php";
+//        if(is_file($roistatFilePath)) {
+//            require_once $roistatFilePath;
+//            try {
+//                $event = new \RoistatEvents($_REQUEST, 'Заявка с формы piksp.ru');
+//                $event->execute();
+//            }catch (\Exception $exception) {}
+//        }
         //End roistat
 
-//        $this->getRoistat($request->get('phone'), 'https://pikms.ru'.$request->get('url'));
+        $this->getRoistat($request->get('phone'), 'https://piksp.ru'.$request->get('url'));
 
         $token = "1737028189:AAEFd51Z6vSHslgX-CNMtItwWD6Iy5EIP74";
         $chat_id = "-1001408803296";# Заявки VAG-PIK
