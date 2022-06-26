@@ -64,6 +64,10 @@
         box-shadow: 0px 0px 10px #000;
         position: relative;
     }
+    .custom_grid {
+        grid-template-columns: 100%;
+
+    }
 </style>
 <div class="b-popup" id="popup2">
 <div class="white-popup">
@@ -83,7 +87,7 @@
 
                 <form class="form" action="/" method="POST">
 
-                    <div class="form__inner">
+                    <div class="form__inner custom_grid">
                         <div class="form__item">
                             <label for="phoneN3">Введите телефон</label>
                             <input class="form__input phoneN3-popup" type="tel" id="phoneN3" name="phone" required="" inputmode="text">
@@ -94,6 +98,29 @@
                             <input type="hidden" id="urlN3" name="url" value="{{ path(app.request.attributes.get('_route'),
                                 app.request.attributes.get('_route_params')) }}">
                             {% endif %}
+                        </div>
+                        <div class="form__item markN3">
+                            <label for="markN3">Выберете марку</label>
+                            <select id="markN3" class="form__input">
+                                <option value="Другое">Другое</option>
+                                <option value="Volkswagen">Volkswagen</option>
+                                <option value="Skoda">Skoda</option>
+                                <option value="Porsche">Porsche</option>
+                                <option value="Seat">Seat</option>
+                                <option value="Bently">Bently</option>
+                                <option value="Audi">Audi</option>
+                                <option value="Mercedes-Benz">Mercedes-Benz</option>
+                                <option value="Lexus">Lexus</option>
+                                <option value="Toyota">Toyota</option>
+                            </select>
+                        </div>
+                        <div class="form__item addressN3">
+                            <label for="addressN3">Выберете адрес</label>
+                            <select id="addressN3" class="form__input">
+                                <option value="В2АЕ">Ворошилова 2АЕ</option>
+                                <option value="К20">Кушелевская дорога 20</option>
+                                <option value="Б116">Боровая 116</option>
+                            </select>
                         </div>
 
                     </div>
@@ -139,6 +166,14 @@
         PopUpHide();
         PopUp2Hide();
 
+        var path = location.pathname.split('/')[1];
+        console.log(path);
+
+        if(path.length > 0 && path != 'blog' && path != 'offers' && path != 'contacts'){
+            $('.markN3').remove();
+            $('.addressN3').remove();
+        }
+
         $(".popup-send-button").click(function (e){
             e.preventDefault();
             if($('.phoneN3-popup').val() == ''){
@@ -149,8 +184,36 @@
                 alert('Неверный формат номер телефона');
                 return;
             }
-                let phone = $('.phoneN3-popup').val();
-                let url = $('#urlN3').val();
+
+            let phone = $('.phoneN3-popup').val();
+            let url = $('#urlN3').val();
+            let mark = '';
+            let address = '';
+
+            if(path.length == 0 || path == 'blog' || path == 'offers' || path == 'contacts'){
+                mark = $('#markN3').val();
+                address = $('#addressN3').val();
+            } else {
+                mark = path;
+                if (path == 'bmw' || path == 'mercedes') {
+                    console.log('bmw - mercedes');
+                    address = "Б116";
+                } else {
+                    if (path == 'lexus' || path == 'infinity') {
+                        console.log('lexus - infinity');
+                        address = "В2АЕ";
+                    } else {
+                        console.log('все остальное');
+                        address = "K20";
+                    }
+                }
+            }
+
+            console.log(phone);
+            console.log(mark);
+            console.log(address);
+
+
             $.ajax({
                 url:     "/callback_form",
                 type:     "POST", //метод отправки
@@ -159,6 +222,8 @@
                 data: {
                     'phone' : phone,
                     'url': url,
+                    'mark' : mark,
+                    'address' : address,
                 },
                 success: function(response) { //Данные отправлены успешно
                     //$('.callback-popup-body').html('<p style="text-align: center; font-weight: 700; padding: 20px;">Спасибо! Ваша заявка отправлена.</p>');

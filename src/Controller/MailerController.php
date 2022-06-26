@@ -143,7 +143,7 @@ class MailerController extends AbstractController
 //        }
         //End roistat
 
-        $this->getRoistat($request->get('phone'), 'https://piksp.ru'.$request->get('url'));
+        $this->getRoistat($request->get('phone'), 'https://piksp.ru'.$request->get('url'), '' , '', $request->get('mark'), $request->get('address'));
 
         $token = "1737028189:AAEFd51Z6vSHslgX-CNMtItwWD6Iy5EIP74";
         $chat_id = "-1001408803296";# Заявки VAG-PIK
@@ -152,6 +152,8 @@ class MailerController extends AbstractController
             "Заявка с" => " с формы piksp.ru ",
             "Телефон" => $request->get('phone'),
             "Со страницы: " => 'https://piksp.ru'.$request->get('url'),
+            "Марка" => $request->get('mark'),
+            "Адрес" => $request->get('address'),
         );
         /*Цикл по массиву (собираем сообщение) */
         $txt = '';
@@ -309,7 +311,7 @@ class MailerController extends AbstractController
 
     }
 
-    private function getRoistat($phone = '', $comment = '', $name = '', $email = ''){
+    private function getRoistat($phone = '', $comment = '', $name = '', $email = '' , $mark = '', $addres = ''){
         $roistatData = array(
             'roistat' => isset($_COOKIE['roistat_visit']) ? $_COOKIE['roistat_visit'] : 'nocookie',
             'key'     => 'ODUxOTY2ZGIxZTAzOWRlNGU0M2IwYTBlOTgzNDczYzI6MTE2MDU4', // Ключ для интеграции с CRM, указывается в настройках интеграции с CRM.
@@ -322,8 +324,8 @@ class MailerController extends AbstractController
             'callback_phone' => '<Номер для переопределения>', // Переопределяет номер, указанный в настройках обратного звонка.
             'sync'    => '0', //
             'fields'  => array(
-                'Адрес'   => 'И31АС4',
-                'Марка'   => '',
+                'Адрес'   => $addres,
+                'Марка'   => $mark,
                 'Модель'  => '',
                 'Сайт'    => 'Piksp.ru',
             ),
