@@ -113,9 +113,9 @@
                                 <div class="form__item addressN2">
                                     <label for="addressN2">Выберете адрес</label>
                                     <select id="addressN2" class="form__input">
-                                        <option value="В2АЕ">Ворошилова 2АЕ</option>
-                                        <option value="К20">Кушелевская дорога 20</option>
-                                        <option value="Б116">Боровая 116</option>
+                                        <option id="addressN2_В2АЕ" value="В2АЕ">Ворошилова 2АЕ</option>
+                                        <option id="addressN2_К20" value="К20">Кушелевская дорога 20</option>
+                                        {#                                <option id="addressN3_Б116" value="Б116">Боровая 116</option>#}
                                     </select>
                                 </div>
 
@@ -140,6 +140,30 @@
             $('.markN2').remove();
             $('.addressN2').remove();
         }
+
+        let vor = [
+            'Lexus',
+            'Infinity',
+        ];
+
+        $('#markN2').on('change', function() {
+
+            if(vor.indexOf( this.value ) != -1 ) {
+                $('#addressN2_К20').attr("disabled", true);
+                $('#addressN2_К20').removeAttr('selected');
+
+                $('#addressN2_В2АЕ').removeAttr('disabled');
+                $('#addressN2_В2АЕ').attr('selected', 'true');
+
+            } else {
+                $('#addressN2_В2АЕ').attr("disabled", true);
+                $('#addressN2_В2АЕ').removeAttr("selected");
+
+                $('#addressN2_К20').removeAttr('disabled');
+                $('#addressN2_К20').attr('selected', 'true');
+
+            }
+        });
 
         $(".sto-send-button").click(function (e){
             e.preventDefault();
