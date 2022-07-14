@@ -29,7 +29,7 @@ class DiagnosticBrandCrudController extends AbstractCrudController
         return [
             Field::new('id')->onlyOnIndex(),
             AssociationField::new('brand'),
-            AssociationField::new('article')->renderAsNativeWidget()->autocomplete(),
+            AssociationField::new('article')->renderAsNativeWidget(),
             ImageField::new('image')->setUploadDir('/public/img/diagnostics/')->setBasePath('/img/diagnostics'),
         ];
     }
