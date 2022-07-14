@@ -28,7 +28,7 @@ class DiagnosticBrandCrudController extends AbstractCrudController
     {
         return [
             Field::new('id')->onlyOnIndex(),
-            AssociationField::new('brand'),
+            AssociationField::new('brand')->autocomplete(),
             AssociationField::new('article'),
             ImageField::new('image')->setUploadDir('/public/img/diagnostics/')->setBasePath('/img/diagnostics'),
         ];
