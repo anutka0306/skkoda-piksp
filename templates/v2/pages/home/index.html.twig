@@ -1,7 +1,7 @@
 {% extends 'v2/base.html.twig' %}
 
 {% block header_line %}
-    {{ include('v2/blocks/include/header.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
+    {{ include('v2/blocks/include/header_models.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
 {% endblock %}
 
 {% block header_banner %}
@@ -16,7 +16,7 @@
     {{ getBrandGallery() }}
     {{ price_list(page) }}
     {#{{ include('elements/zayavka_raschet_form.html.twig') }}#}
-    {{ brands_service_block() }}
+    {#{{ brands_service_block() }}#}
     {{ service_list(page) }}
     {{ include('elements/_advantages.html.twig') }}
     {{ include('elements/_advantages2.html.twig') }}
@@ -25,5 +25,6 @@
     {{ include('elements/examples.html.twig', {'pageWork' : pageWork}) }}
     {{ include('elements/_quote.html.twig') }}
     {{ include('elements/_team.html.twig') }}
+    {{ include('elements/_save_page.html.twig') }}
 {% endblock %}
 

@@ -1,8 +1,17 @@
 <section id="offers" class="offers-section {% if green is defined and green == 'true' %}green__theme{% endif %}">
     <div class="section__heading">
         <h2 class="section__h2">Что мы предлагаем</h2>
-        <p class="section__heading-text">Мы позаботились о том, чтобы каждый владелец
-            <br>{% if brandName is defined %}{{ brandName|upper}} {% if modelName is defined %} {{ modelName|upper}}{% endif%} {% else %}авто{% endif%} нашел у нас то, что нужно именно ему.
+        <p class="section__heading-text text-center">
+            Мы позаботились о том, чтобы каждый владелец<br>
+            {% if brandName is defined %}
+                {{ brandName|upper }}
+                {% if modelName is defined %}
+                    {{ modelName|upper }}
+                {% endif %}
+            {% else %}
+                авто
+            {% endif %}
+            нашел у нас то, что нужно именно ему.
         </p>
     </div>
 
@@ -25,15 +34,33 @@
                         <p class="offer__text">Для постоянных клиентов действуют накопительные скидки от 5 до 30%.</p>
                     </div>
                 </div>
+
                 <div class="col-6 d-none d-lg-block">
                     <div class="offers__car-wrapper">
+                        {% if (page.priceModel.photoBig) is defined  %}
+                            <img loading="lazy" class="offers__car" src="/img/models/big/{{ page.priceModel.photoBig }}" alt="">
+                            <img loading="lazy" class="offers__car offers__car-bg-brand-model" src="{{ asset('img/advantages1/offer-car-bg.png') }}" alt="">
+                        {% elseif page.priceBrand is defined and page.priceBrand is not null and page.priceBrand.photoBig is defined %}
+                            {% if page.priceBrand is defined and page.priceBrand is not null and page.priceBrand.photoBig is defined and page.priceBrand.photoBig is not null %}
+                            <img loading="lazy" class="offers__car" src="/img/brands/big/{{ page.priceBrand.photoBig }}" alt="">
+                            <img loading="lazy" class="offers__car offers__car-bg-brand-model" src="{{ asset('img/advantages1/offer-car-bg.png') }}" alt="">
+                            {% else %}
+                            <img loading="lazy" class="offers__car" src="{% if green is defined and green == 'true' %}{{ asset('img/advantages1/offer-car-green.png') }}{% else %}{{ asset('img/advantages1/offer-car.png') }}{% endif %}" alt="" style="position: initial;margin: -44px auto;transition: none;min-width: auto;">
+                            {% endif %}
+                        {% else %}
+
+                        
+                        
                         {% if utpImg is defined and utpImg is not null %}
                             <img loading="lazy" class="offers__car" src="/img/brands/utp/{{ utpImg }}" alt="">
                         {% else %}
-                            <img loading="lazy" class="offers__car" src="{% if green is defined and green == 'true' %}{{ asset('img/advantages1/offer-car-green.png') }}{% else %}{{ asset('img/advantages1/offer-car.png') }}{% endif %}" alt="">
+                            <img loading="lazy" class="offers__car" style="margin-top: -100px;" src="{% if green is defined and green == 'true' %}{{ asset('img/advantages1/offer-car-green.png') }}{% else %}{{ asset('img/advantages1/offer-car.png') }}{% endif %}" alt="">
                         {% endif %}
+                        {% endif %}
+
                     </div>
                 </div>
+
                 <div class="col-6 col-lg-3">
                     <div class="offer">
                         <div class="offer__icon">
@@ -44,7 +71,11 @@
                     </div>
                     <div class="offer">
                         <div class="offer__icon">
-                            <img loading="lazy" src="{% if green is defined and green == 'true' %}{{ asset('img/offer-4-green.png') }}{% else %}{{ asset('img/offer-4.svg') }}{% endif %}" alt="">
+                            {% if green is defined and green == 'true' %}
+                                <img loading="lazy" src="{{ asset('img/offer-4-green.png') }}" alt="">
+                            {% else %}
+                                <img loading="lazy" src="{{ asset('img/offer-4.svg') }}" alt="">
+                            {% endif %}
                         </div>
                         <h4 class="offer__heading">Комфортная зона ожидания</h4>
                         <p class="offer__text">Вас ждет клиентская зона с кофе и wi-fi, без очередей,<br> по предварительной записи.</p>

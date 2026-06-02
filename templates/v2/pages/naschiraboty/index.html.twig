@@ -1,57 +1,69 @@
 {% extends 'v2/base.html.twig' %}
-{#{% block title %} #}{#{{ page.metaTitle }}#}{# {% endblock %}
-{% block description %} #}{#{{ page.metaDescription}}#}{# {% endblock %}#}
-{#{% block last_modified %}{% endblock %}#}
+
+{# 
+    /* From old programmer */
+    {% block title %}{{ page.metaTitle }}{% endblock %}
+    {% block description %}{{ page.metaDescription }}{% endblock %}
+    {% block last_modified %}{% endblock %}
+    
+    /* block body */
+    {{ naschiraboty_slider(page) }}
+    {% for image in work.images %}
+        {{ dump(image) }}
+    {% endfor %}
+#}
+
 {% block header_line %}
     {{ include('v2/blocks/include/header.html.twig', {'brands' : brands, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
 {% endblock %}
+
 {% block header_banner %}
     {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, 'customH1': page.h1 }) }}
 {% endblock %}
+
 {% block breadcrumbs %}
     <section id="breadcrumbs" style="margin-top: 100px;">
         <div class="breadcrumbs_wrapper">
-                <span class="navigation_item">
-                    <a href="/">Главная</a>
-                    <span>&#8646;</span>
-                </span>
-
             <span class="navigation_item">
-                    <a href="#">{{ page.h1 }}</a>
-                </span>
-
-
+                <a href="/">Главная</a><span>&#8646;</span>
+            </span>
+            <span class="navigation_item">
+                <a href="#">{{ page.h1 }}</a>
+            </span>
         </div>
     </section>
 {% endblock %}
 
 {% block body %}
-
-            <div class="container nashiraboty__wrapper">
-                <div class="h1__inner-page">
-                    <div class="uk-section uk-container">
-                        <h1>Наши работы</h1>
+    <div class="container nashiraboty__wrapper">
+        <div class="h1__inner-page">
+            <div class="uk-section uk-container">
+                <h1>Наши работы</h1>
+            </div>
+        </div>
+        <div class="row">
+            {% for work in pagination %}
+            
+            <div class="col-12 col-sm-12 col-md-6 col-xl-6 col-xxl-6 nashiraboty__item_new m-0 p-0">
+                <div class="wrap_content_item">
+                    <div class="left_side_item">
+                        <a href="/blog/{{ work.alias }}/">
+                            {% if work.blogImg is not empty and work.blogImg is not null %}
+                            <img src="/img/nashiraboty_small/{{ work.blogImg }}">
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="right_side_item">
+                        <a class="nashiraboty__item_title" href="/blog/{{ work.alias }}/">{{ work.name }}</a>
+                        {#<div class="item_content">{{ work.text|striptags|slice(0, 100) ~ '...' }}</div>#}
+                        <a href="/blog/{{ work.alias }}/" class="nashiraboty__item_more">Подробнее</a>
                     </div>
                 </div>
-                <div class="row">
-
-            {#{{ naschiraboty_slider(page) }}#}
-            {% for work in works %}
-                {#{% for image in work.images %}
-                        {{ dump(image) }}
-                {% endfor %}#}
-                <div class="col-md-3 col-sm-6 col-12 nashiraboty__item">
-                    <a href="/blog/{{ work.alias }}/">
-                        {% if work.blogImg is not empty and work.blogImg is not null %}
-                        <img src="/img/nashiraboty_small/{{ work.blogImg }}">
-                        {% endif %}
-                    </a>
-                    <a class="nashiraboty__item_title" href="/blog/{{ work.alias }}/">{{ work.name }}</a>
-                    <a href="/blog/{{ work.alias }}/" class="nashiraboty__item_more">Подробнее</a>
-                </div>
-            {% endfor %}
-                </div>
             </div>
-
+            {% endfor %}
+        </div>
+        <div class="navigation container">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
 {% endblock %}
-

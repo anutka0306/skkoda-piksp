@@ -64,10 +64,17 @@ class ContactController extends AbstractController
         $this->address = $this->configRepository->findOneBy(['name' => 'address']);
         $this->address2 = $this->configRepository->findOneBy(['name'=> 'address2']);
         $this->address3 = $this->configRepository->findOneBy(['name'=> 'address3']);
+        $this->phone4 = $this->configRepository->findOneBy(['name' =>'phone4']);
+        $this->address4 = $this->configRepository->findOneBy(['name'=> 'address4']);
 
         return $this->render('v2/pages/contact/index.html.twig', [
             'page' => $page,
             'brands' => $brands,
+            'markServiceImgs' => [
+                'japan' => ['Toyota','Infiniti','Lexus','Nissan','Mazda','Mitsubishi'],
+                'china' => ['Chery','Geely','Haval'],
+                'vag' => ['Audi','Bentley','Jaguar','Lamborghini','Land Rover','Porsche','Seat','Skoda','Volkswagen']
+            ], // TODO надо из бд подтягивать
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
             'phone' => $this->phone,
@@ -76,6 +83,8 @@ class ContactController extends AbstractController
             'address' => $this->address,
             'address2' => $this->address2,
             'address3' => $this->address3,
+            'phone4' => $this->phone4,
+            'address4' => $this->address4,
         ]);
     }
 }

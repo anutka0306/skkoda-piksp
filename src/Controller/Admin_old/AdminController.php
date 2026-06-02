@@ -30,6 +30,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use App\Controller\Admin_old\ModelCrudController;
 
 
 class AdminController extends AbstractDashboardController
@@ -61,7 +62,9 @@ class AdminController extends AbstractDashboardController
             MenuItem::subMenu('Редактор страниц', 'fa fa-fw fa-file-alt')->setSubItems([
                 MenuItem::linkToCrud('Инфо страницы', 'fa fa-fw fa-file', Simple::class),
                 MenuItem::linkToCrud('Стр. Марок', 'fas fa-car', Brand::class),
-                MenuItem::linkToCrud('Стр. Моделей', 'fas fa-car', Model::class),
+                /*MenuItem::linkToCrud('Стр. Моделей', 'fas fa-car', Model::class),*/
+                MenuItem::linkToCrud('Стр. Моделей', 'fas fa-car', Model::class)
+                    ->setController(ModelCrudController::class),
                 MenuItem::linkToCrud('Услуги общие','fa fa-fw fa-wrench', RootService::class),
                 MenuItem::linkToCrud('Услуги марок и моделей','fa fa-fw fa-wrench', Service::class),
             ]),

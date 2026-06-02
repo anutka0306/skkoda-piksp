@@ -3,6 +3,8 @@
 namespace App\Widget;
 
 use App\Entity\Content;
+use App\Entity\PriceBrand;
+
 use App\Entity\Naschiraboty;
 use App\Entity\RootService;
 use App\Entity\Service;
@@ -43,9 +45,18 @@ class PriceListExtension extends AbstractExtension
                 ['needs_environment' => true, 'is_safe' => ['html']]),
             new TwigFunction('service_list', [$this, 'service_list'],
                 ['needs_environment' => true, 'is_safe' => ['html']]),
+            
+            new TwigFunction('brands_block', [$this, 'brands_block'],
+                ['needs_environment' => true, 'is_safe' => ['html']]),
+            // new TwigFunction('brand_models', [$this, 'brand_models'],
+            //     ['needs_environment' => true, 'is_safe' => ['html']]),
+            // new TwigFunction('brand_models_service', [$this, 'brand_models_service'],
+            //     ['needs_environment' => true, 'is_safe' => ['html']]),
         ];
     }
     
+    
+
     public function price_list(Environment $twig, Content $page)
     {
 
@@ -60,6 +71,10 @@ class PriceListExtension extends AbstractExtension
         $price_list_title = str_replace('в Москве','- цены:',$page->getName());
         if($page instanceof Service){
             return $twig->render('v2/widget/price_list_service.html.twig', compact('sections', 'price_list_title','page'));
+        }
+        if($page instanceof PriceBrand){
+            //return $twig->render('v2/widget/price_list_service.html.twig', compact('sections', 'price_list_brandName','page'));
+            return $twig->render('v2/widget/brands.html.twig', compact('sections', 'price_list_brandName','page'));
         }
         if($page instanceof RootService or $page instanceof Simple or $page instanceof SpecialOffer or $page instanceof Naschiraboty) {
             $withoutLinks = false;
@@ -131,4 +146,21 @@ class PriceListExtension extends AbstractExtension
         
         return $item->get();
     }
+    
+    
+    
+    
+    
+    public function brands_block(Environment $twig): string
+    {
+        $item = $this->cache->getItem('brands_block');
+        if (!$item->isHit()) {//если данное значение не закешировано
+            $items = $this->brand_repository->findBy([], ['name' => 'asc']);
+            $html = $twig->render('v2/widget/brands.html.twig', compact('items'));
+            $item->set($html);
+            $this->cache->save($item);
+        }
+        return $item->get();
+    }
+
 }

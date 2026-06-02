@@ -3,7 +3,7 @@
         .header__inner::after{
             content: '';
             background: url(/img/models/big/{{ photoModelBig }}) no-repeat;
-            width: 640px;
+            width: 660px;
             height: 310px;
             background-size: cover;
             position: absolute;
@@ -60,7 +60,7 @@
     </style>
 {% endif %}
 
-<div class="header__inner {% if green is defined and green == 'true' %}green__theme{% endif %}">
+<div class="header__inner {% if green is defined and green == 'true' %}green__theme{% elseif haval is defined and haval == 'true' %}hero_haval__theme{% endif %}">
     <div class="container">
         <div class="row">
             <div class="col-12 col-sm-6">
@@ -73,14 +73,15 @@
                                     {% else %}
                                 Ремонт
                             {% endif %}
-                                {% if brandName is defined %}
-                                {{ brandName }}
-                                    {% if modelName is defined %}
-                                         {{ modelName }}
-                                        {% endif %}
-                                    {% else %}
+                                
+                            {% if brandName is defined %}
+                            {{ brandName }}
+                                {% if modelName is defined %}
+                                    {{ modelName }}
                                 {% endif %}
+                            {% else %}
 
+                            {% endif %}
                         </span><br>
                         в Санкт-Петербурге</h1>
                     <p class="header__text">Выполняем ТО, диагностику, чип тюнинг, <br>

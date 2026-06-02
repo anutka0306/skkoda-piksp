@@ -39,9 +39,10 @@ class NaschirabotyCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('name', 'Название'),
-            TextField::new('alias', 'Алиас'),
+            TextField::new('name', 'Название')->addCssClass('name__field'),
+            TextField::new('alias', 'Алиас')->addJsFiles('https://code.jquery.com/jquery-3.7.0.min.js')->addJsFiles('js/admin.js')->addCssClass('alias__field'),
             TextField::new('metaTitle'),
+            //NumberField::new('hitspage', 'Просмотры'),
             TextField::new('metaDescription'),
             TextEditorField::new('text', 'Текст'),
             NumberField::new('sum', 'Стоимость'),
@@ -49,8 +50,16 @@ class NaschirabotyCrudController extends AbstractCrudController
             TextEditorField::new('shortText', 'Короткое описание'),
             AssociationField::new('model'),
             AssociationField::new('service'),
-            ImageField::new('main_img', 'Картинка, которая отображается в блоке на разных страницах')->setHelp('.png, прозрачный фон, 640Х340')->setUploadDir('/public/img/nashiraboty_main/')->setBasePath('/img/nashiraboty_main/'),
-            ImageField::new('blog_img', 'Картика, которая отображется на странице блога')->setBasePath('/img/nashiraboty_small/')->setUploadDir('/public/img/nashiraboty_small/')->setHelp('Предпочтительные размеры: 235 Х 140 px'),
+            ImageField::new('main_img', 'Картинка, которая отображается в блоке на разных страницах')
+                ->setHelp('.png, прозрачный фон, 640Х340')
+                ->setUploadDir('/public/img/nashiraboty_main/')
+                ->setBasePath('/img/nashiraboty_main/')
+                ->setUploadedFileNamePattern('[year]-[month]-[day]-[contenthash].[extension]'),
+            ImageField::new('blog_img', 'Картика, которая отображется на странице блога')
+                ->setBasePath('/img/nashiraboty_small/')
+                ->setUploadDir('/public/img/nashiraboty_small/')
+                ->setUploadedFileNamePattern('[year]-[month]-[day]-[contenthash].[extension]')
+                ->setHelp('Предпочтительные размеры: 235 Х 140 px'),
             TextField::new('kuzov'),
             TextField::new('year'),
             Field::new('clientName', 'Имя клиента'),

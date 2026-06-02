@@ -255,13 +255,17 @@ class PriceCategory
         }
     }
     
-    public function __toString()
+    /*public function __toString()
     {
         $name = (string)$this->name;
         if ($this->getParent()) {
             $name = ' - '.$name;
         }
         return $name;
+    }*/
+    public function __toString(): string
+    {
+        return ($this->getParent() ? '↳ ' : '') . (string) $this->name;
     }
 
     public function getMetaDescriptionTemplate(): ?string

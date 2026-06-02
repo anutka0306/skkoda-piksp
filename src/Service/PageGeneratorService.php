@@ -427,13 +427,25 @@ class PageGeneratorService
         }
     }
 
-    public function generateNashiraboryAlias(Naschiraboty $naschiraboty){
-        if($this->naschirabotyRepository->findOneBy(['alias' => $this->translate_service->transliterate($naschiraboty->getName())])){
-            $itemPath = $naschiraboty->setAlias($this->translate_service->transliterate($naschiraboty->getName()).'-'.$naschiraboty->getId());
-        }else {
-            $itemPath = $naschiraboty->setAlias($this->translate_service->transliterate($naschiraboty->getName()));
+    public function generateNashiraboryAlias(Naschiraboty $naschiraboty)
+    {
+        /* If alias was empty */
+        if (empty($naschiraboty->getAlias()) || is_null($naschiraboty->getAlias())) {
+            if ($this->naschirabotyRepository->findOneBy(['alias' => $this->translate_service->transliterate($naschiraboty->getName())])) {
+                $itemPath = $naschiraboty->setAlias($this->translate_service->transliterate($naschiraboty->getName()) . '-' . $naschiraboty->getId());
+            } else {
+                $itemPath = $naschiraboty->setAlias($this->translate_service->transliterate($naschiraboty->getName()));
+            }
+            $this->em->persist($itemPath);
+            $this->em->flush();
         }
-        $this->em->persist($itemPath);
-        $this->em->flush();
+        /* If alias wasn't empty*/
+        else {
+            if (count($this->naschirabotyRepository->findBy(['alias' => $naschiraboty->getAlias()])) > 1) {
+                $itemPath = $naschiraboty->setAlias($naschiraboty->getAlias() . '-' . $naschiraboty->getId());
+                $this->em->persist($itemPath);
+                $this->em->flush();
+            }
+        }
     }
 }

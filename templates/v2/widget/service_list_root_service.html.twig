@@ -30,7 +30,9 @@
 
                     <a itemprop="url" {% if service.path is not null %} href="{{ service.path }}" {% else %} href="/{{ section.slug }}/{{ service.slug }}/"{% endif %}>
                         {#<img itemprop="image" style="width: 60px; height: auto;" data-src="/images/category_images/{{ service.image }}" src="/images/category_images/{{ service.image }}" alt="{{ service.name }}" class=" lazyloaded">#}
-                        <div itemprop="name" title="{{ service.name }}" style="margin-top: 5px; font-size: 16px; text-align: center;" class="h3"><span class="link">{{ service.name }}</span></div>
+                        <div itemprop="name" title="{{ service.name }}" style="margin-top: 5px; font-size: 16px; text-align: center;" class="h3">
+							<span class="link">{{ service.name }} {{ page.brandAndModelName }}</span>
+						</div>
                     </a>
                 </div>
                 <meta itemprop="description" content="{{ service.name }}">

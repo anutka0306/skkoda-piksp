@@ -72,19 +72,28 @@ class OfferController extends AbstractController
         $this->address = $this->configRepository->findOneBy(['name' => 'address']);
         $this->address2 = $this->configRepository->findOneBy(['name'=> 'address2']);
         $this->address3 = $this->configRepository->findOneBy(['name'=> 'address3']);
+        $this->phone4 = $this->configRepository->findOneBy(['name' =>'phone4']);
+        $this->address4 = $this->configRepository->findOneBy(['name'=> 'address4']);
 
         return $this->render('offer/index.html.twig', [
             'offers' => $offers,
             'page' => $page,
             'brands' => $brands,
+            'markServiceImgs' => [
+                'japan' => ['Toyota','Infiniti','Lexus','Nissan','Mazda','Mitsubishi'],
+                'china' => ['Chery','Geely','Haval'],
+                'vag' => ['Audi','Bentley','Jaguar','Lamborghini','Land Rover','Porsche','Seat','Skoda','Volkswagen']
+            ], // TODO надо из бд подтягивать
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
             'phone' => $this->phone,
             'phone2' => $this->phone2,
             'phone3' => $this->phone3,
+            'phone4' => $this->phone4,
             'address' => $this->address,
             'address2' => $this->address2,
             'address3' => $this->address3,
+            'address4' => $this->address4,
         ]);
     }
 
@@ -101,6 +110,8 @@ class OfferController extends AbstractController
         $this->address = $this->configRepository->findOneBy(['name' => 'address']);
         $this->address2 = $this->configRepository->findOneBy(['name'=> 'address2']);
         $this->address3 = $this->configRepository->findOneBy(['name'=> 'address3']);
+        $this->phone4 = $this->configRepository->findOneBy(['name' =>'phone4']);
+        $this->address4 = $this->configRepository->findOneBy(['name'=> 'address4']);
 
         if ( !$offer = $this->offer_repository->findOneBy(['published'=>1, 'slug'=>$token])) {
             throw $this->createNotFoundException(sprintf('Offer %s not found',$token));
@@ -116,6 +127,8 @@ class OfferController extends AbstractController
                'address2' => $this->address2,
                'phone3' => $this->phone3,
                'address3' => $this->address3,
+               'phone4' => $this->phone4,
+               'address4' => $this->address4,
                ]);
         }
     }

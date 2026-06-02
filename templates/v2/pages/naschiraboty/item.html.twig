@@ -47,6 +47,16 @@
 
         <div class="nashiraboty__text">
             {{ page.text|raw }}
+            
+            {# <p>Мы помогли разобраться {{ page.hitspage }} раз нашим клиентам с этой проблемой.</p> #}
+            <div class="rate">
+              <div class="hit-star"></div>
+              <div class="hit-star"></div>
+              <div class="hit-star"></div>
+              <div class="hit-star"></div>
+              <div class="hit-star"></div>
+            </div>
+            <p class="hitspage">Эту статью оценили {{ page.hitspage }} раз.</p>
         </div>
 
         {% if page.gallery is not null and page.gallery is not empty %}

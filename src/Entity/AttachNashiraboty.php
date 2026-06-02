@@ -56,7 +56,7 @@ class AttachNashiraboty
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
-
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -143,4 +143,5 @@ class AttachNashiraboty
             $this->updated_at = new \DateTime();
         }
     }
+    
 }

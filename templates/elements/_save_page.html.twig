@@ -1,0 +1,53 @@
+<section id="save_page" class="wrap_save_page">
+	<h4 class="save_page_title">Не спешите уходить!</h4>
+	<div class="save_page_block">
+		<div class="left_side col-12 col-md-6">
+			<div class="wrap_left_side_content">
+				<div class="content_txt">Автосервис ПИК - качественный ремонт автомобиля</div>
+				<div class="wrap-form">
+				    <div class="form-header">
+						Запишитесь на бесплатную диагностику:
+					</div>
+					<form class="save_page_form" action="/">
+						<div class="wrap-field">
+							<input type="tel" id="phoneSP" name="phone" required="" inputmode="text" maxlength="17" autocomplete="off" placeholder="">
+						</div>
+						<div class="wrap-field">
+							<select name="address">
+							    <option disabled selected>Выберите адрес</option>
+		                        <option value="В2АЕ">Ворошилова 2АЕ</option>
+		                        <option value="СПБ4">Турухтанные Острова, 12</option>
+								<option value="К20">Любой адрес</option>
+		                    </select>
+						</div>
+                        <div class="wrap-field politics">
+							<input id='politics' name="politics" type='checkbox' checked />
+							<label for='politics'>
+							    <span></span>
+								<div>Я даю согласие на обработку персональных данных.</div>
+								<ins><i>Я даю согласие на обработку персональных данных.</i></ins>
+							</label>
+						</div>
+						<input type="text" id="b_control" name="b_control" style="display:none" tabindex="-1" autocomplete="off">
+						<div class="wrap-field wrap-btn">
+						    <input type="submit" value="Отправить заявку" onclick="ym(75371857, 'reachGoal', 'roistat')" />
+						</div>
+						<div class="__status"></div>
+					</form>
+				</div>
+				<div class="content_notice">
+					<div class="notice_marker"><img src="{{ asset('img/notice_marker.png') }}" /></div>
+					<div class="notice_txt">Сохраните наш сайт,<br/>чтобы не потерять <span class="notice_small_txt">(нажмите сочетвние клавиш)</span></div>
+					<div class="notice_btn">Ctrl+D</div>
+				</div>
+			</div>
+		</div>
+		<div class="right_side col-12 col-md-6">
+		    {% if haval is defined and haval == 'true' %}
+    		    <img src="{{ asset('img/right_side_bg_red.png') }}">
+		    {% else %}
+    			<img src="{{ asset('img/right_side_bg.png') }}">
+			{% endif %}
+		</div>				
+	</div>
+</section>

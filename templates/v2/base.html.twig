@@ -8,7 +8,7 @@
     <meta name="description" content="{% block description %}{% if phone is defined %}{{ (page.h1 ~ '  в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ Ремонт в день  обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис «ПИК» - ☎ '~phone.value) }}{% else %}{{ (page.h1 ~ '  в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ Ремонт в день  обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис «ПИК» - ☎ ') }}{% endif %}{% endblock %}"/>
     <meta name="keywords" content="{% block keywords %}{% endblock %}"/>
     <meta http-equiv="Last-Modified" content="{% block last_modified %}{{ page.modifyDate|date('D, d M Y H:i:s') }}{% endblock%} GMT">
-    <link rel="canonical" href="{% block canonical %}{{ app.request.schemeAndHttpHost~page.path }}{% endblock %}"/>
+    <link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}"/>
 
     <meta property="og:title" content="{{ block('title') }}"/>
     <meta property="og:keywords" content="{{ block('keywords') }}"/>
@@ -21,6 +21,11 @@
     <meta name="format-detection" content="telephone=no">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    
+    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
     <link rel="preload" href="{{ asset('assets/fonts/Montserrat-SemiBold.woff') }}" as="font" type="font/woff" crossorigin>
     <link rel="preload" href="{{ asset('assets/fonts/Montserrat-Bold.woff') }}" as="font" type="font/woff" crossorigin>
@@ -41,7 +46,6 @@
     <meta property="schema:name" content="{{ block('title') }}"/>
     <meta property="schema:description" content="{{ block('description') }}"/>
     {% block stylesheets %}
-        {#{{ encore_entry_link_tags('app2') }}#}
         <link rel="stylesheet" type="text/css" href="{{ asset('build/vendors~app2.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('build/app2.css') }}">
         <link href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" rel="stylesheet">
@@ -49,18 +53,31 @@
         <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/uikit.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/hover-min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css?v=1') }}.{{ '' | date('U') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/animations.css') }}">
         <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
         <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+        <link rel="stylesheet" href="{{ asset('css/video-widget.css') }}">
+        <style>
+            /* popup1.html.twig */
+            .b-container{width:200px;height:150px;background-color:#ccc;margin:0 auto;padding:10px;font-size:30px;color:#fff;}
+            .b-popup{width:100%;min-height:100%;background-color:rgba(0,0,0,0.5);overflow:hidden;position:fixed;top:0;z-index:1000;}
+            .b-popup .b-popup-content{margin:40px auto 0 auto;width:320px;height:auto;padding:10px;background-color:#f0f0f0;border-radius:5px;box-shadow:0 0 10px #000;position:relative;}
+            .b-popup-content .form-wrapper{padding:10px 0 10px 10px;}
+            .b-popup-content .subscribe__form{max-width:97%;}
+            .b-popup-content .form__heading.subscribe__heading{font-size:18px!important;}
+            .b-popup-content .close-popup_perezvon{top:2px;right:-2px;}
+            .white-popup .close-popup_perezvon{top:0;right:-3px;}
+            #popup1{display:none;}
+            #popup2{display:none;}
+            #popup4{display:none;}
+            #popup_save_page{display:none;}
+            .white-popup{margin:40px auto 0 auto;width:320px;height:auto;padding:10px;background-color:#f0f0f0;border-radius:5px;box-shadow:0 0 10px #000;position:relative;}
+            .custom_grid{grid-template-columns:100%;}
+        </style>
 
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-        {#<script src="{{ asset('js/bootstrap.min.js') }}"></script>#}
-        <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     {% endblock %}
     <meta name="yandex-verification" content="5440d1539bdcce3d"/>
-    {{ include('v2/scripts/_google_analitics.html.twig') }}
     {{ include('v2/scripts/_schema.html.twig') }}
     {{ schema_breadcrumbs(page ?? null) }}
 </head>
@@ -92,13 +109,22 @@
 
         {% endblock %}
 
-       {# {{ render_map(page) }}#}
     </main>
     {{ include('v2/blocks/include/contacts.html.twig') }}
     {{ include('v2/blocks/include/footer.html.twig') }}
     {{ include('elements/popup/popup1.html.twig') }}
+
 </div>
+
 {% block javascripts %}
+
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
+
+
+    <script type="text/javascript" src="{{ asset('js/popup1.js?v=2') }}.{{ '' | date('U') }}"></script>
+
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/uikit.js') }}"></script>
     <script src="{{ asset('js/uikit-icons.js') }}"></script>
@@ -108,13 +134,15 @@
     <script type="text/javascript" src="{{ asset('build/app2.js') }}"></script>
     <script src="{{ asset('js/roistat.js') }}"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/custom.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/custom.js?v=1') }}.{{ '' | date('U') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.magnific-popup.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.cookie.js') }}"></script>
+    
+
     <script>
         $(".form__item input[name=phone]").mask("+7(999) 999-99-99");
-        /*$("#modal_2 input[name=user_phone]").mask("+7(999) 999-99-99");*/
-        //Старый вызов magnific-popup
-        /*$('.image-link').magnificPopup({type:'image'});*/
+        $(".wrap-field input[name=phone]").mask("+7(999) 999-99-99");
+
 
         //Новый вызов magnific-popup
         $('.nashiraboty__gallery').magnificPopup({
@@ -139,8 +167,39 @@
             }
 
         });
+
+        function goToAnchor() {
+            var loc = document.location.toString().split('#')[0];
+            document.location = loc + '#phoneN3';
+            return false;
+        }
     </script>
-    {#{{ encore_entry_script_tags('app2') }}#}
+    
+    <script>
+        window.addEventListener('mousemove', function(e) {
+			let y = e.clientY;
+			if(y<=10){
+			    let sp_cookie = getCookie('sp_notice');
+			    if(sp_cookie !== undefined) return false;
+			    let sp_block = document.querySelector('#popup_save_page');
+                if(sp_block !== null){
+                    $("#popup_save_page").show();
+                    document.cookie = "sp_notice=true;max-age=86400";
+                }
+            }
+		})
+        
+        function close_popup(el){
+            var parent = el.closest(".b-popup");
+            $(parent).hide();
+        }
+        function getCookie(name) {
+        	var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
+        	return matches ? decodeURIComponent(matches[1]) : undefined;
+        }
+    </script>
+    
+
 {% endblock %}
 </body>
 </html>

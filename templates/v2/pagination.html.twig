@@ -1,0 +1,10 @@
+{# templates/pagination.html.twig #} 
+{% if pagination.hasPreviousPage %} Пред. {% endif %} 
+{% for page in pagination.pagesInRange %} 
+    {% if page != pagination.currentPage %} 
+        {{ page }} 
+    {% else %} 
+        {{ page }} 
+    {% endif %} 
+{% endfor %} 
+{% if pagination.hasNextPage %} След. {% endif %}

@@ -107,6 +107,11 @@ class PriceBrand
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $img_logo;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $mark_img_logo;
 
     /**
      * @ORM\OneToMany(targetEntity=DiagnosticBrand::class, mappedBy="brand")
@@ -454,6 +459,42 @@ class PriceBrand
         $this->img_logo = $img_logo;
 
         return $this;
+    }
+    public function getMarkImgLogo(): ?string
+    {
+        return $this->mark_img_logo;
+    }
+
+    public function setMarkImgLogo(?string $mark_img_logo): self
+    {
+        //$this->mark_img_logo = $this->transliterate($mark_img_logo); // Транслит не срабатывает Рус в Англ, а также в сохранённое фото
+        $this->mark_img_logo = $mark_img_logo;
+        return $this;
+    }
+    // Функция конвертации в базу. На рус текст не реагирует, а должна(
+    public function transliterate($mark_img_logo)
+    {
+        $converter = array(
+    		'а' => 'a',    'б' => 'b',    'в' => 'v',    'г' => 'g',    'д' => 'd',
+    		'е' => 'e',    'ё' => 'e',    'ж' => 'zh',   'з' => 'z',    'и' => 'i',
+    		'й' => 'y',    'к' => 'k',    'л' => 'l',    'м' => 'm',    'н' => 'n',
+    		'о' => 'o',    'п' => 'p',    'р' => 'r',    'с' => 's',    'т' => 't',
+    		'у' => 'u',    'ф' => 'f',    'х' => 'h',    'ц' => 'c',    'ч' => 'ch',
+    		'ш' => 'sh',   'щ' => 'sch',  'ь' => '',     'ы' => 'y',    'ъ' => '',
+    		'э' => 'e',    'ю' => 'yu',   'я' => 'ya',
+     
+    		'А' => 'A',    'Б' => 'B',    'В' => 'V',    'Г' => 'G',    'Д' => 'D',
+    		'Е' => 'E',    'Ё' => 'E',    'Ж' => 'Zh',   'З' => 'Z',    'И' => 'I',
+    		'Й' => 'Y',    'К' => 'K',    'Л' => 'L',    'М' => 'M',    'Н' => 'N',
+    		'О' => 'O',    'П' => 'P',    'Р' => 'R',    'С' => 'S',    'Т' => 'T',
+    		'У' => 'U',    'Ф' => 'F',    'Х' => 'H',    'Ц' => 'C',    'Ч' => 'Ch',
+    		'Ш' => 'Sh',   'Щ' => 'Sch',  'Ь' => '',     'Ы' => 'Y',    'Ъ' => '',
+    		'Э' => 'E',    'Ю' => 'Yu',   'Я' => 'Ya',
+    	);
+        $mark_img_logo = strtr($mark_img_logo, $converter);
+        $mark_img_logo = str_replace([' ','(',')'], ['-','',''], $mark_img_logo);
+        $mark_img_logo = strtolower($mark_img_logo);
+        return $mark_img_logo;
     }
 
     /**

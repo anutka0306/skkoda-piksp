@@ -76,19 +76,67 @@ class PageController extends AbstractController
      */
     protected $configRepository;
 
+    /**
+     * @var \App\Entity\Config|null
+     */
     protected $phone;
+    /**
+     * @var \App\Entity\Config|null
+     */
     protected  $phone2;
+    /**
+     * @var \App\Entity\Config|null
+     */
     protected $address;
+    /**
+     * @var \App\Entity\Config|null
+     */
     protected $address2;
+    /**
+     * @var \App\Entity\Config|null
+     */
     protected  $phone3;
+    /**
+     * @var \App\Entity\Config|null
+     */
     protected $address3;
+    /**
+     * @var \App\Entity\Config|null
+     */
+    protected $phone4;
+    /**
+     * @var \App\Entity\Config|null
+     */
+    protected $address4;
 
     /**
      * @var DiagnosticBrandRepository
      */
     protected $diagnosticBrandRepository;
 
-    public function __construct(ContentRepository $repository, EntityManagerInterface $em, PaginatorInterface $paginator, PriceModelRepository $price_model_repository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, NaschirabotyRepository $naschirabotyRepository, ConfigRepository $configRepository, DiagnosticBrandRepository $diagnosticBrandRepository)
+    /**
+     * PageController constructor.
+     * @param ContentRepository $repository
+     * @param EntityManagerInterface $em
+     * @param PaginatorInterface $paginator
+     * @param PriceModelRepository $price_model_repository
+     * @param PriceBrandRepository $priceBrandRepository
+     * @param MenuTopRepository $menuTopRepository
+     * @param MenuLeftRepository $menuLeftRepository
+     * @param NaschirabotyRepository $naschirabotyRepository
+     * @param ConfigRepository $configRepository
+     * @param DiagnosticBrandRepository $diagnosticBrandRepository
+     */
+    public function __construct(ContentRepository $repository,
+                                EntityManagerInterface $em,
+                                PaginatorInterface $paginator,
+                                PriceModelRepository $price_model_repository,
+                                PriceBrandRepository $priceBrandRepository,
+                                MenuTopRepository $menuTopRepository,
+                                MenuLeftRepository $menuLeftRepository,
+                                NaschirabotyRepository $naschirabotyRepository,
+                                ConfigRepository $configRepository,
+                                DiagnosticBrandRepository $diagnosticBrandRepository)
     {
         $this->page_repository = $repository;
         $this->em = $em;
@@ -105,11 +153,14 @@ class PageController extends AbstractController
         $this->address = $configRepository->findOneBy(['name' =>'address']);
         $this->address2 = $configRepository->findOneBy(['name' =>'address2']);
         $this->address3 = $configRepository->findOneBy(['name' =>'address3']);
+        $this->phone4 = $configRepository->findOneBy(['name'=> 'phone4']);
+        $this->address4 = $configRepository->findOneBy(['name' =>'address4']);
         $this->diagnosticBrandRepository = $diagnosticBrandRepository;
 
     }
 
 
+    
     /**
      * @Route("/vakancies/{vakancy}", name="vakancy", requirements={"token"= "\/.+\/$"})
      */
@@ -126,7 +177,18 @@ class PageController extends AbstractController
     /**
      * @Route("/{token}", name="dynamic_pages",requirements={"token"= ".+\/$"})
      */
-    public function index($token, EntityManagerInterface $em, PaginatorInterface $paginator, Request $request, PriceModelRepository $priceModelRepository, PriceServiceRepository $priceServiceRepository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, NaschirabotyRepository $naschirabotyRepository, DiagnosticBrandRepository $diagnosticBrandRepository)
+    public function index($token,
+                          EntityManagerInterface $em,
+                          PaginatorInterface $paginator,
+                          Request $request,
+                          PriceModelRepository $priceModelRepository,
+                          PriceServiceRepository $priceServiceRepository,
+                          PriceBrandRepository $priceBrandRepository,
+                          MenuTopRepository $menuTopRepository,
+                          MenuLeftRepository $menuLeftRepository,
+                          NaschirabotyRepository $naschirabotyRepository,
+                          DiagnosticBrandRepository $diagnosticBrandRepository
+    )
     {
         $topMenu = $menuTopRepository->findBy([], ['ordering'=>'ASC']);
         $leftMenu = $menuLeftRepository->findBy([], ['ordering'=>'ASC']);
@@ -134,28 +196,42 @@ class PageController extends AbstractController
             throw $this->createNotFoundException(sprintf('Page %s not found',$token));
         }
 
-        if ($page instanceof Brand) {
-            return $this->brand($page, $priceModelRepository, $topMenu, $leftMenu, $naschirabotyRepository, $diagnosticBrandRepository);
-        }
 
         if ($page instanceof Model) {
-            return $this->model($page, $priceModelRepository, $priceServiceRepository, $topMenu, $leftMenu, $naschirabotyRepository, $diagnosticBrandRepository);
+            return $this->model($page,
+                $priceModelRepository,
+                $priceServiceRepository,
+                $topMenu,
+                $leftMenu,
+                $naschirabotyRepository,
+                $diagnosticBrandRepository);
         }
 
         if ($page instanceof Service) {
-            /* echo 'Page is '.$page;
-            exit();*/
-            return $this->service($page, $priceModelRepository, $topMenu, $leftMenu, $naschirabotyRepository, $priceServiceRepository, $diagnosticBrandRepository);
+
+            return $this->service($page,
+                $priceModelRepository,
+                $topMenu,
+                $leftMenu,
+                $naschirabotyRepository,
+                $priceServiceRepository,
+                $diagnosticBrandRepository);
         }
 
         if ($page instanceof RootService) {
-           /* echo 'Page is '.$page;
-            exit();*/
-            return $this->rootService($page, $priceBrandRepository, $topMenu, $leftMenu, $naschirabotyRepository);
+
+            return $this->rootService($page,
+                $priceBrandRepository,
+                $topMenu,
+                $leftMenu,
+                $naschirabotyRepository,
+                $priceModelRepository);
         }
 
         if ($page instanceof Simple) {
-            return $this->simple($page, $topMenu, $leftMenu);
+            return $this->simple($page,
+                $topMenu,
+                $leftMenu);
         }
 
         if ($page instanceof Vacancy) {
@@ -181,92 +257,29 @@ class PageController extends AbstractController
         throw $this->createNotFoundException('Page is instance of '.get_class($page));
     }
 
+
     /**
-     * @param Sitemap $sitemap
-     * @param EntityManagerInterface $em
-     * @param PaginatorInterface $paginator
-     * @param Request $request
+     * @param ServiceWithout $service_without
      * @return Response
      */
-
-
     private function service_without(ServiceWithout $service_without)
     {
         return $this->render('v2/pages/service_without.html.twig',[
            'page' => $service_without,
         ]);
     }
-    
-    private function brand(Brand $brand, PriceModelRepository $priceModelRepository, $topMenu, $leftMenu, NaschirabotyRepository $naschirabotyRepository, DiagnosticBrandRepository $diagnosticBrandRepository)
-    {
-        $brand_name = $brand->getBrandName();
-        $models = $priceModelRepository->findBy(['priceBrand' => $brand->getBrandId()]);
-        $work = $naschirabotyRepository->findBy(['model'=> $models], ['id' => 'DESC'], 1);
-        $green = false;
 
-        if($brand_name == 'Land Rover' or $brand_name == 'Jaguar') {
-            $green = true;
-        }
-        $contactTitle = $brand_name;
 
-        if (!is_null($brand->getPriceBrand()->getPhone()) or !empty($brand->getPriceBrand()->getPhone())){
-            $phone['title'] = $brand->getPriceBrand()->getPhone();
-            $phone['value'] = str_replace(array('(', ')', '-', ' '), '', $brand->getPriceBrand()->getPhone());
-        }else{
-            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
-                $phone['value'] = $this->phone2->getValue();
-                $phone['title']  = $this->phone2->getTitle();
-            }elseif($brand_name == 'Porsche'){
-                $phone['value'] = $this->phone3->getValue();
-                $phone['title'] = $this->phone3->getTitle();
-            }else{
-                $phone['value'] = $this->phone->getValue();
-                $phone['title'] = $this->phone->getTitle();
-            }
-        }
-
-        if(!is_null($brand->getPriceBrand()->getAddress()) or !empty($brand->getPriceBrand()->getAddress())){
-            $address['value'] = $brand->getPriceBrand()->getAddress();
-        }else{
-            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
-                $address = $this->configRepository->findOneBy(['name'=>'address2']);
-            }elseif($brand_name == 'Porsche'){
-                $address = $this->configRepository->findOneBy(['name'=>'address3']);
-            }else{
-                $address = $this->configRepository->findOneBy(['name'=>'address']);
-            }
-        }
-
-        $map = $brand->getPriceBrand()->getMap();
-        if(empty($map)){
-            $map = null;
-        }
-
-        $diagnostic = $diagnosticBrandRepository->findBy(['brand' => $brand->getPriceBrand()],[], 4 );
-        if(empty($work)){
-            $work = $naschirabotyRepository->findOneBy([],['id' =>'DESC']);
-        }
-        /*if($brand_name == 'Land Rover'){
-            $this->phone = array('value'=>'+78129195913', 'title'=>'+7(812) 919-59-13');
-        }*/
-        return $this->render('v2/pages/brand.html.twig', [
-            'page' => $brand,
-            'brandName' => $brand_name,
-            'models' => $models,
-            'brandPath' => $brand->getPath(),
-            'topMenu' => $topMenu,
-            'leftMenu' => $leftMenu,
-            'pageWork' => $work,
-            'phone' => $phone,
-            'address' => $address,
-            'contactTitle' => $contactTitle,
-            'diagnostic' => $diagnostic,
-            'map'=> $map,
-            'green' => $green,
-        ]);
-    }
-    
-    
+    /**
+     * @param Model $model
+     * @param PriceModelRepository $priceModelRepository
+     * @param PriceServiceRepository $priceServiceRepository
+     * @param $topMenu
+     * @param $leftMenu
+     * @param NaschirabotyRepository $naschirabotyRepository
+     * @param DiagnosticBrandRepository $diagnosticBrandRepository
+     * @return Response
+     */
     private function model(Model $model, PriceModelRepository $priceModelRepository, PriceServiceRepository $priceServiceRepository, $topMenu, $leftMenu, NaschirabotyRepository $naschirabotyRepository, DiagnosticBrandRepository $diagnosticBrandRepository)
     {
         $brand_name = $model->getBrandName();
@@ -286,17 +299,14 @@ class PageController extends AbstractController
         }else{
             $model_name = null;
         }
-        $green = false;
-        if($brand_name == 'Land Rover' or $brand_name == 'Jaguar') {
-            $green = true;
-        }
+
         $contactTitle = $model->getBrandName();
 
         if (!is_null($model->getPriceBrand()->getPhone()) or !empty($model->getPriceBrand()->getPhone())){
             $phone['title'] = $model->getPriceBrand()->getPhone();
             $phone['value'] = str_replace(array('(', ')', '-', ' '), '', $model->getPriceBrand()->getPhone());
         }else{
-            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
+            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar' or $brand_name == 'Volvo'){
                 $phone['value'] = $this->phone2->getValue();
                 $phone['title']  = $this->phone2->getTitle();
             }
@@ -312,7 +322,7 @@ class PageController extends AbstractController
         if(!is_null($model->getPriceBrand()->getAddress()) or !empty($model->getPriceBrand()->getAddress())){
             $address['value'] = $model->getPriceBrand()->getAddress();
         }else{
-            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
+            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar' or $brand_name == 'Volvo'){
                 $address = $this->configRepository->findOneBy(['name'=>'address2']);
             }elseif($brand_name == 'Porsche'){
                 $address = $this->configRepository->findOneBy(['name'=>'address3']);
@@ -327,7 +337,7 @@ class PageController extends AbstractController
         }
 
 
-        return $this->render('v2/pages/model.html.twig', [
+        $context = [
             'page' => $model,
             'brandName' => $brand_name,
             'modelName' => $model_name,
@@ -340,16 +350,39 @@ class PageController extends AbstractController
             'contactTitle'=>$contactTitle,
             'diagnostic' => $diagnostic,
             'map' => $map,
-            'green' => $green,
-        ]);
+
+        ];
+
+        return $this->render('v2/pages/model.html.twig', $context);
+
     }
-    
-    private function service(Service $service, PriceModelRepository $priceModelRepository, $topMenu, $leftMenu, NaschirabotyRepository $naschirabotyRepository, PriceServiceRepository $priceServiceRepository, DiagnosticBrandRepository $diagnosticBrandRepository)
+
+
+    /**
+     * @param Service $service
+     * @param PriceModelRepository $priceModelRepository
+     * @param $topMenu
+     * @param $leftMenu
+     * @param NaschirabotyRepository $naschirabotyRepository
+     * @param PriceServiceRepository $priceServiceRepository
+     * @param DiagnosticBrandRepository $diagnosticBrandRepository
+     * @return Response
+     */
+        private function service(Service $service,
+                                 PriceModelRepository $priceModelRepository,
+                                 $topMenu,
+                                 $leftMenu,
+                                 NaschirabotyRepository $naschirabotyRepository,
+                                 PriceServiceRepository $priceServiceRepository,
+                                 DiagnosticBrandRepository $diagnosticBrandRepository
+        )
     {
         $popular_services = $priceServiceRepository->findBy(['is_popular' => 1, 'published' => 1], [], 5);
         $brand_name = $service->getBrandName();
         $model_id = $service->getModelId();
-        $brand_id = $service->getPriceBrand()->getId();
+        $brand_id = $service->getPriceBrand()
+            ? $service->getPriceBrand()->getId()
+            : null;
         $diagnostic = $diagnosticBrandRepository->findBy(['brand' => $service->getPriceBrand()], [], 4);
 
         if ($model_id) {
@@ -357,13 +390,13 @@ class PageController extends AbstractController
             $work = $naschirabotyRepository->findOneBy(['model' => $model_id, 'service' => $service->getId()]);
             if (empty($work)) {
                 $work = $naschirabotyRepository->findBy(['model'=> $allBrandModels], ['id' => 'DESC'], 1);
-                //$work = $naschirabotyRepository->findOneBy(['service' => $service->getId()]);
                 if (empty($work)) {
                     $work = $naschirabotyRepository->findOneBy(['model' => $model_id]);
                 }
             }
             $model_name = $priceModelRepository->find($model_id)->getName();
         }
+
         elseif ($brand_id){
             $allBrandModels = $priceModelRepository->findBy(['priceBrand'=>$service->getPriceBrand()->getId()]);
             $work = $naschirabotyRepository->findBy(['model'=> $allBrandModels], ['id' => 'DESC'], 1);
@@ -384,73 +417,52 @@ class PageController extends AbstractController
             $model_name = null;
         }
         $services = $this->page_repository->findOneBy(['path' => '/' . $service->getPriceCategory()->getSlug() . '/']);
-        $service->setName(str_replace([$brand_name . ' ' . $model_name, 'в Москве'], ['', ''], $service->getName()));
 
-        $green = false;
-
-        if($brand_name == 'Land Rover' or $brand_name == 'Jaguar') {
-            $green = true;
-        }
         $contactTitle = $brand_name;
-        if (!is_null($service->getPriceBrand()->getPhone()) or !empty($service->getPriceBrand()->getPhone())){
-            $phone['title'] = $service->getPriceBrand()->getPhone();
-            $phone['value'] = str_replace(array('(', ')', '-', ' '), '', $service->getPriceBrand()->getPhone());
-        }else{
-            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
-                $phone['value'] = $this->phone2->getValue();
-                $phone['title']  = $this->phone2->getTitle();
-            }elseif($brand_name == 'Porsche'){
-                $phone['value'] = $this->phone3->getValue();
-                $phone['title'] = $this->phone3->getTitle();
-            }else{
-                $phone['value'] = $this->phone->getValue();
-                $phone['title'] = $this->phone->getTitle();
-            }
-        }
 
-        if(!is_null($service->getPriceBrand()->getAddress()) or !empty($service->getPriceBrand()->getAddress())){
-            $address['value'] = $service->getPriceBrand()->getAddress();
-        }else{
-            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar'){
-                $address = $this->configRepository->findOneBy(['name'=>'address2']);
-            }elseif($brand_name == 'Porsche'){
-                $address = $this->configRepository->findOneBy(['name'=>'address3']);
-            }else{
-                $address = $this->configRepository->findOneBy(['name'=>'address']);
-            }
-        }
+        $phone['value'] = $this->phone->getValue();
+        $phone['title'] = $this->phone->getTitle();
+        $address = $this->configRepository->findOneBy(['name'=>'address']);
+
+        $map = null;
+
+        $context = [
+            'page' => $service,
+            'brandName' => $brand_name,
+            'modelName' => $model_name,
+            'parentService' => $services,
+            'topMenu' => $topMenu,
+            'leftMenu' => $leftMenu,
+            'pageWork' => $work,
+            'popularServices' => $popular_services,
+            'phone' => $phone,
+            'address' => $address,
+            'contactTitle' => $contactTitle,
+            'diagnostic' => $diagnostic,
+            'map' => $map,
+        ];
 
 
+        return $this->render('v2/pages/service.html.twig', $context);
 
-        $map = $service->getPriceBrand()->getMap();
-            if (empty($map)) {
-                $map = null;
-            }
-
-            /* if($brand_name == 'Land Rover'){
-                 $this->phone = array('value'=>'+78129195913', 'title'=>'+7(812) 919-59-13');
-             }*/
-
-            return $this->render('v2/pages/service.html.twig', [
-                'page' => $service,
-                'brandName' => $brand_name,
-                'modelName' => $model_name,
-                'parentService' => $services,
-                'topMenu' => $topMenu,
-                'leftMenu' => $leftMenu,
-                'pageWork' => $work,
-                'popularServices' => $popular_services,
-                'phone' => $phone,
-                'address' => $address,
-                'contactTitle' => $contactTitle,
-                'diagnostic' => $diagnostic,
-                'map' => $map,
-                'green' => $green,
-            ]);
         }
 
 
-        private function rootService(RootService $rootService, PriceBrandRepository $priceBrandRepository, $topMenu, $leftMenu, NaschirabotyRepository $naschirabotyRepository)
+    /**
+     * @param RootService $rootService
+     * @param PriceBrandRepository $priceBrandRepository
+     * @param $topMenu
+     * @param $leftMenu
+     * @param NaschirabotyRepository $naschirabotyRepository
+     * @param PriceModelRepository $priceModelRepository
+     * @return Response
+     */
+        private function rootService(RootService $rootService,
+                                     PriceBrandRepository $priceBrandRepository,
+                                     $topMenu, $leftMenu,
+                                     NaschirabotyRepository $naschirabotyRepository,
+                                     PriceModelRepository $priceModelRepository
+        )
         {
             if (is_null($rootService->getAdvIcon1())) {
                 if ($rootService->getParent() !== null && $rootService->getParent()->getAdvIcon1() !== null) {
@@ -497,11 +509,14 @@ class PageController extends AbstractController
             $work = $naschirabotyRepository->findOneBy([], ['id' => 'DESC']);
 
 
-            $brands = $priceBrandRepository->findAll();
+            $models = $priceModelRepository->findAll();
+
+            $brand = $priceBrandRepository->findOneBy(['name' => 'Skoda']);
 
             return $this->render('v2/pages/root-service.html.twig', [
                 'page' => $rootService,
-                'brands' => $brands,
+                'models' => $models,
+                'brand' => $brand,
                 'topMenu' => $topMenu,
                 'leftMenu' => $leftMenu,
                 'pageWork' => $work,
@@ -511,11 +526,21 @@ class PageController extends AbstractController
                 'address' => $this->address,
                 'address2' => $this->address2,
                 'address3' => $this->address3,
+                'phone4' => $this->phone4,
+                'address4' => $this->address4,
             ]);
         }
 
-    
-    private function simple(Simple $simple, $topMenu, $leftMenu)
+    /**
+     * @param Simple $simple
+     * @param $topMenu
+     * @param $leftMenu
+     * @return Response
+     */
+    private function simple(Simple $simple,
+                            $topMenu,
+                            $leftMenu
+    )
     {
         return $this->render('v2/pages/simple.html.twig', [
             'page' => $simple,
@@ -527,10 +552,16 @@ class PageController extends AbstractController
             'address' => $this->address,
             'address2' => $this->address2,
             'address3' => $this->address3,
+            'phone4' => $this->phone4,
+            'address4' => $this->address4,
 
         ]);
     }
-    
+
+    /**
+     * @param Vacancy $vacancy
+     * @return Response
+     */
     private function vacancy(Vacancy $vacancy)
     {
         return $this->render('v2/pages/vacansy/index.html.twig', [

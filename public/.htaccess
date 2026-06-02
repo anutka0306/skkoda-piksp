@@ -58,6 +58,8 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
     # Rewrite all other queries to the front controller.
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ %{ENV:BASE}/index.php [L]
+    
+    Redirect 301 /blog/replacement-of-automatic-transmission-Infiniti/ https://piksp.ru/blog/zamena-akpp-infiniti/
 </IfModule>
 
 <IfModule !mod_rewrite.c>

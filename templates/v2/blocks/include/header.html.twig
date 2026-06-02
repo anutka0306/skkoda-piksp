@@ -1,29 +1,26 @@
 <header class="container-fluid">
     <div class="container">
         <div class="row header__top-line">
+
             <div class="col-xs-12 col-sm-12 col-md-3">
                 <ul class="header__top-line_left">
                     {% if topMenu is defined and topMenu is not empty %}
                         {% for menuItem in topMenu %}
                             <li><a href="{{ menuItem.link.path }}">{{ menuItem.name }}</a></li>
                         {% endfor %}
+                        <li><a href="https://rabota.acpik.ru/" target="_blank">Вакансии</a></li>
                     {% endif %}
                 </ul>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-9">
-                <ul class="header__top-line_right">
-                    {% if brands is not null %}
-                        {% for brand in brands %}
-                            <li><a href="/{{ brand.code }}">{{ brand.name }}</a></li>
-                        {% endfor %}
-                    {%  endif %}
-                </ul>
+
+
             </div>
         </div>
     </div>
 
-    <div class="container-fluid container_nav {% if green is defined and green == 'true' %}green__theme{% endif %}">
+    <div class="container-fluid container_nav">
         <div class="col-1">
             <div class="btn-mobile-menu d-flex justify-content-start">
                 <a data-bs-toggle="offcanvas" class="offcanvas__burger" href="#offcanvasMenu" role="button" aria-controls="offcanvasMenu">
@@ -53,43 +50,69 @@
         <span class="nav__description">Специализированный <br>
             автосервис</span>
 
+
         {% if (phone is defined and phone is not null) and (address is defined and address is not null) %}
             <div class="nav__address">
-                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                 <div>
-                    {{ address.value }}<br>
-                    <a style="display: block" href="tel:{{ phone.value }}">
-                        {{ phone.title }}
-                    </a>
+                    <div style="display: inline-flex;">
+                        {% if (address.metro is defined and address.metro is not null) %}
+                            <div style="display: flex; align-items: center; padding-right: 15px;">
+                                <img src="/img/metro-icon-32x32.png" width="16" height="16" style="height: fit-content;height: max-content;">
+                                <span class="metro-header-text">{{ address.metro }}</span>
+                            </div>
+                        {% endif %}
+                        <a style="display: block" href="tel:{{ phone.value }}">
+                            {{ phone.title }}
+                        </a>
+                    </div>
+                    <br>
+                    <div>
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        {{ address.value }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if (phone4 is defined and phone4 is not null) and (address4 is defined and address4 is not null) %}
+            <div class="nav__address">
+                <div>
+                    <div style="display: inline-flex;">
+                        {% if (address4.metro is defined and address4.metro is not null) %}
+                            <div style="display: flex; align-items: center; padding-right: 15px;">
+                                <img src="/img/metro-icon-32x32.png" width="16" height="16" style="height: fit-content;height: max-content;">
+                                <span class="metro-header-text">{{ address4.metro }}</span>
+                            </div>
+                        {% endif %}
+                        <a style="display: block" href="tel:{{ phone4.value }}">
+                            {{ phone4.title }}
+                        </a>
+                    </div>
+                    <br>
+                    <div>
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        {{ address4.value }}
+                    </div>
                 </div>
             </div>
         {% endif %}
 
-        {% if (phone2 is defined and phone2 is not null) and (address2 is defined and address2 is not null) %}
-            <div class="nav__address">
-                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-                <div>
-                    {{ address2.value }}<br>
-                    <a style="display: block" href="tel:{{ phone2.value }}">
-                        {{ phone2.title }}
-                    </a>
-                </div>
-            </div>
-        {% endif %}
 
         <div class="nav__contacts">
-            <i class="fas fa-phone" aria-hidden="true"></i>
-            <div class="nav__phone">
-                <span class="phone-number"><a href="{% if phone is defined %}tel:{{ phone.value }}{% endif %}">{% if phone is defined %}{{ phone.title }}{% endif %}</a></span>
-                <a class="phone-message" href="javascript:PopUpShow();">Заказать обратный звонок</a>
+            <div class="repair-box">
+                <div class="repair-icon-text">
+                    <span class="repair-icon"><img src="/images/kuzov-icon.png" width="18"></span>
+                    <span class="repair-icon-title">Детейлинг</span>
+                </div>
+                <div class="repair-icon-phone"><a href="tel:+78129517130">+7 (812) 951-71-30</a></div>
             </div>
         </div>
+
         <div class="nav__contacts trubka">
             <a href="tel:+78129159153"><span>
                         <i class="fas fa-phone" aria-hidden="true" style="font-size:40px"></i></span></a>
         </div>
     </div>
 
-   {{ include('v2/blocks/include/header_fixed.html.twig') }}
+    {{ include('v2/blocks/include/header_fixed.html.twig') }}
 </header>
 

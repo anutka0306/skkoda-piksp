@@ -40,6 +40,7 @@ class ContentRepository extends ServiceEntityRepository
         }
         return $this->findOneBy(['path'=>$path,'published'=>true]);
     }
+    
 
     // /**
     //  * @return Content[] Returns an array of Content objects

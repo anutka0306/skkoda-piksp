@@ -117,11 +117,15 @@ class Naschiraboty implements PageInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OrderBy({"id"="DESC"})
      */
     private $alias;
 
-
-
+    /**
+     * @ORM\Column(type="integer")
+     */
+    public $hitspage;
+    
     public function __construct()
     {
         $this->priceServices = new ArrayCollection();
@@ -210,6 +214,10 @@ class Naschiraboty implements PageInterface
     public function getClientName(): ?string
     {
         return $this->client_name;
+    }
+    public function getModifyDate(): ?\DateTimeInterface
+    {
+        return $this->modifyDate;
     }
 
     public function setClientName(string $client_name): self
@@ -431,4 +439,14 @@ class Naschiraboty implements PageInterface
         return $this;
     }
 
+    public function getHitsPage(): ?int
+    {
+        return $this->hitspage;
+    }
+
+    public function setHitsPage(?int $hitspage): self
+    {
+        $this->hitspage = $hitspage;
+        return $this;
+    }
 }

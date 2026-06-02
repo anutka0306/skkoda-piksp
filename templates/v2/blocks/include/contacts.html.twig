@@ -1,5 +1,6 @@
+{% set brandsThemeArr = ['Land Rover','Haval','Geely','Chery'] %}
 <a id="footer_contacts"></a>
-<section id="contacts" class="contacts-section" {% if phone is defined and phone2 is defined and phone3 is defined and address is defined and address2 is defined and address3 is defined %} style="height: 710px;" {% endif %}>
+<section id="contacts" class="contacts-section" {% if phone is defined and phone2 is defined and phone3 is defined and address is defined and address2 is defined and address3 is defined %} style="height: 840px;" {% endif %}>
     <div class="contacts__inner">
         <div class="container">
             <div class="row">
@@ -7,45 +8,104 @@
                     <div class="contacts">
                         <h2 class="contacts__heading">Контакты</h2>
                         <ul class="contacts">
-                            {% if (phone is defined and phone is not null) and (address is defined and address is not null) %}
-                            <li class="contacts__item">
-                                <div class="contacts__icon">
-                                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-                                </div>
-                                <div class="contacts__info">
-                                    <h6 class="contact__heading">{% if contactTitle is defined %}{{ contactTitle }} {% else %} {{ address.title }}{% endif %}</h6>
+                            
+                            {% if haval is defined and haval == 'true' %}
+                            {% if brandName == 'GAC' %}
+                                <li class="contacts__item haval_theme_contacts__item">
+                                    <div class="contacts__icon">
+                                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="contacts__info">
+                                        <h6 class="contact__heading">{{ brandName }}<!--brandName--></h6>
+                                        <div style="display: inline-flex;">
+                                    	<span class="phone-number">
+                                    		<a href="tel:+79213518553">+7(921) 351-85-53</a>
+                                    	</span>
+                                            <div style="left: 20px;position: relative;display: flex;flex-direction: row;">
+                                                <div class="contacts__icon" style="width: 24px;height: 24px;top: -3px;position: relative;margin-right: 8px;">
+                                                    <img src="/img/metro-icon-32x32.png" width="16" height="16" style="height: fit-content;height: max-content;">
+                                                </div>
+                                                <span style="padding-left:4px;">Ладожская</span>
+                                            </div>
+                                        </div>
+                                        <p style="line-height: .5;margin-top: 10px;">ул. Ворошилова д. 2АЕ</p>
+                                    </div>
+                                </li>
+                            {% elseif brandName == 'Haval' or brandName == 'Chery' or brandName == 'Geely' %}
+                                <li class="contacts__item haval_theme_contacts__item">
+                                    <div class="contacts__icon">
+                                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="contacts__info">
+                                        <h6 class="contact__heading">{{ brandName }}<!--brandName--></h6>
+                                        <div style="display: inline-flex;">
+                                    	<span class="phone-number">
+                                    		<a href="tel:+79213518553">+7(921) 351-85-53</a>
+                                    	</span>
+                                            <div style="left: 20px;position: relative;display: flex;flex-direction: row;">
+                                                <div class="contacts__icon" style="width: 24px;height: 24px;top: -3px;position: relative;margin-right: 8px;">
+                                                    <img src="/img/metro-icon-32x32.png" width="16" height="16" style="height: fit-content;height: max-content;">
+                                                </div>
+                                                <span style="padding-left:4px;">Ладожская</span>
+                                            </div>
+                                        </div>
+                                        <p style="line-height: .5;margin-top: 10px;">ул. Ворошилова д. 2АЕ</p>
+                                    </div>
+                                </li>
 
-                                        <p style="line-height: .5">{{ address.value }}</p>
-                                        <p style="line-height: .5"> <span class="phone-number"><a href="tel:{{ phone.value }}">{{ phone.title }}</a></span></p>
-                                </div>
-                            </li>
+                            {% else %}
+
+                            {% endif %}
                             {% endif %}
 
-                            {% if (phone2 is defined and phone2 is not null) and (address2 is defined and address2 is not null) %}
-                            <li class="contacts__item">
-                                <div class="contacts__icon">
-                                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-                                </div>
-                                <div class="contacts__info">
-                                    <h6 class="contact__heading">Land Rover / Jaguar</h6>
-                                        <p style="line-height: .5">{{ address2.value }}</p>
-                                        <p style="line-height: .5"> <span class="phone-number"><a href="tel:{{ phone2.value }}">{{ phone2.title }}</a></span></p>
-                                </div>
-                            </li>
+                            {# New #}
+                            {% if brandName is defined and (brandName == 'Hyundai' or brandName == 'Kia') %}
+                                <li class="contacts__item">
+                                    <div class="contacts__icon">
+                                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="contacts__info">
+                                        <h6 class="contact__heading"></h6>
+                                        <div style="display: inline-flex;">
+                                        	<span class="phone-number">
+                                        		<a href="tel:+79213518553">+7(921) 351-85-53</a>
+                                        	</span>
+                                                <div style="left: 20px;position: relative;display: flex;flex-direction: row;">
+                                                    <div class="contacts__icon" style="width: 24px;height: 24px;top: -3px;position: relative;margin-right: 8px;">
+                                                        <img src="/img/metro-icon-32x32.png" width="16" height="16" style="height: fit-content;height: max-content;">
+                                                    </div>
+                                                    <span style="padding-left:4px;">Ладожская</span>
+                                                </div>
+                                        </div>
+                                        <p style="line-height: .5;margin-top: 10px;">ул. Ворошилова д. 2АЕ</p>
+                                    </div>
+                                </li>
                             {% endif %}
 
-                            {% if (phone3 is defined and phone3 is not null) and (address3 is defined and address3 is not null) %}
-                            <li class="contacts__item">
-                                <div class="contacts__icon">
-                                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-                                </div>
-                                <div class="contacts__info">
-                                    <h6 class="contact__heading">Porsche</h6>
-                                        <p style="line-height: .5">{{ address3.value }}</p>
-                                        <p style="line-height: .5"> <span class="phone-number"><a href="tel:{{ phone3.value }}">{{ phone3.title }}</a></span></p>
-                                </div>
-                            </li>
+                            {% if brandName is defined and (brandName == 'Toyota' or brandName == 'Lexus') %}
+                                {#<li class="contacts__item">
+                                    <div class="contacts__icon">
+                                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="contacts__info">
+                                        <h6 class="contact__heading"></h6>
+                                        <div style="display: inline-flex;">
+                                        	<span class="phone-number">
+                                        		<a href="tel:+79310018553">+7 (931) 001-85-53</a>
+                                        	</span>
+                                            <div style="left: 20px;position: relative;display: flex;flex-direction: row;">
+                                                <div class="contacts__icon" style="width: 24px;height: 24px;top: -3px;position: relative;margin-right: 8px;">
+                                                    <img src="/img/metro-icon-32x32.png" width="16" height="16" style="height: fit-content;height: max-content;">
+                                                </div>
+                                                <span style="padding-left:4px;">Лесная</span>
+                                            </div>
+                                        </div>
+                                        <p style="line-height: .5;margin-top: 10px;">Кушелевская дорога, 20</p>
+                                    </div>
+                                </li>#}
                             {% endif %}
+
+
                             <li class="contacts__item">
                                 <div class="contacts__icon">
                                     <i class="fas fa-envelope" aria-hidden="true"></i>
@@ -65,6 +125,18 @@
                                         с 09:00 до 21:00</p>
                                 </div>
                             </li>
+
+                            <li class="contacts__item">
+                                <div class="repair-box d-flex justify-content-around align-items-center px-3 py-2">
+                                    <div class="repair-icon-text">
+                                        <span class="repair-icon"><img src="/images/kuzov-icon.png" width="24"></span>
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center align-items-center">
+                                        <span class="repair-icon-title d-block pb-1">Детейлинг</span>
+                                        <div class="repair-icon-phone"><a href="tel:+79991989452">+7 (999) 198-94-52</a></div>
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -75,20 +147,25 @@
 
         {% if (phone is defined and phone is not null) and (address is defined and address is not null) and (phone2 is defined and phone2 is not null) and (address2 is defined and address2 is not null) %}
             {% if phone is defined and phone2 is defined and phone3 is defined and address is defined and address2 is defined and address3 is defined %}
-                <div id="picsp_map" class="contacts__map">
-                    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A3fc6af8d1a63b00664dd65611e1e20063ad1a1af4d71f3c8f21d03a8d36953e9&amp;width=100%25&amp;height=710&amp;lang=ru_RU&amp;scroll=true"></script>
+                <div id="picsp_map" class="contacts__map" data-id-map="1">
+                    {# С новым адресом - раскомментировать, когда снова включим!!! #}
+                    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A6fea9ea9fcda30864cca8832dc4ba94a28396573ab7cb1956d717f9e90697df6&amp;width=100%25&amp;height=720&amp;lang=ru_RU&amp;scroll=true"></script>
+                    {#<script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A3fc6af8d1a63b00664dd65611e1e20063ad1a1af4d71f3c8f21d03a8d36953e9&amp;width=100%25&amp;height=710&amp;lang=ru_RU&amp;scroll=true"></script>#}
                 </div>
+
             {% else %}
-                <div id="picsp_map" class="contacts__map">
+                <div id="picsp_map" class="contacts__map" data-id-map="2">
                     <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A3fc6af8d1a63b00664dd65611e1e20063ad1a1af4d71f3c8f21d03a8d36953e9&amp;width=100%25&amp;height=577&amp;lang=ru_RU&amp;scroll=true"></script>
                 </div>
                 {% endif %}
         {% elseif map is defined and map is not null %}
-            <div id="picsp_map" class="contacts__map">
-                {{ map|raw }}
-            </div>
+
+        {% elseif(brandName is defined and (brandName in ['Hyundai','Kia','Lexus','Toyota'])) %}
+        <div id="picsp_map" class="contacts__map" data-id-map="5">
+            <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A680bdc78926725fcaac7adf816a680411ee198eabe8039866bbc59ed2fd0454c&amp;width=100%25&amp;height=720&amp;lang=ru_RU&amp;scroll=true"></script>
+        </div>
         {% else %}
-            <div id="picsp_map" class="contacts__map">
+            <div id="picsp_map" class="contacts__map" data-id-map="4">
                 <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A8b5f437fbde1ed0224ea38576af81791b2fb3229105e9289d29a24bae02dad6c&amp;width=100%25&amp;height=577&amp;lang=ru_RU&amp;scroll=true"></script>
             </div>
         {% endif %}

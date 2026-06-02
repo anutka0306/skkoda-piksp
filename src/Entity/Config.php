@@ -32,6 +32,11 @@ class Config
      */
     private $title;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $metro;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +75,17 @@ class Config
     {
         $this->title = $title;
 
+        return $this;
+    }
+
+    public function getMetro(): ?string
+    {
+        return $this->metro;
+    }
+
+    public function setMetro(string $metro): self
+    {
+        $this->metro = $metro;
         return $this;
     }
 }

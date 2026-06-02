@@ -2,7 +2,11 @@
     <div class="container">
         <div class="row footer-row">
             <div class="col-6 col-lg-2">
+                {% if haval is defined and haval == 'true' %}
+                <img loading="lazy" src="{{ asset('img/logo-' ~ brandName|lower ~ '-footer.png') }}" alt="">
+                {% else %}
                 <img loading="lazy" src="{{ asset('img/lexus/logo.png') }}" alt="">
+                {% endif %}
             </div>
             <div class="col-lg-3 d-none d-lg-block">
                 <span class="nav__description">Специализированный <br>

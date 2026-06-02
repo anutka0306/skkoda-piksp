@@ -31,15 +31,33 @@ $(document).ready(function () {
         function (){
             $(this).attr('placeholder', '');
         });
-
+    $('input#phoneSP').hover(function (){
+            $(this).attr('placeholder', '+7-___-___-__-__');
+        },
+        function (){
+            $(this).attr('placeholder', 'Введите телефон');
+        });
+    $('input#phonePSP').hover(function (){
+            $(this).attr('placeholder', '+7-___-___-__-__');
+        },
+        function (){
+            $(this).attr('placeholder', 'Введите телефон');
+        });
     $('.brands__list_slider').slick({
+        rows: 4,
+        slidesPerRow: 2,
+        
         infinite: true,
-        slidesToShow: 4,
+        //slidesToShow: 4,
         slidesToScroll: 1,
         responsive: [
             {
                 breakpoint: 1366,
                 settings: {
+                  	rows: 4,
+                    slidesPerRow: 2,
+                    //centerMode: true,
+                    
                     slidesToShow: 3,
                     slidesToScroll: 1,
                     infinite: true,
@@ -50,13 +68,18 @@ $(document).ready(function () {
             {
                 breakpoint: 600,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2
+                  	rows: 1,
+                    slidesPerRow: 2,
+                    //centerMode: true,
+                    
+                    // slidesToShow: 2,
+                    // slidesToScroll: 2
                 }
             },
             {
                 breakpoint: 480,
                 settings: {
+rows: 1,
                     slidesToShow: 1,
                     slidesToScroll: 1
                 }
@@ -173,4 +196,17 @@ $(document).ready(function () {
 
     });
 
+
+
+    // nav
+    $('.header-mark-service').click(function(e) {
+        // $('.header-mark-service').removeClass('active');
+        // $(this).addClass('active');
+
+        $('.header-mark-service.active').not($(this)).removeClass('active');
+        $(this).toggleClass('active');
+        e.stopPropagation();
+        
+
+    });
 });

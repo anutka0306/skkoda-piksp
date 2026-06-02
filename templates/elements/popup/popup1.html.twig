@@ -1,81 +1,11 @@
-<style>
-
-    .b-container{
-        width:200px;
-        height:150px;
-        background-color: #ccc;
-        margin:0px auto;
-        padding:10px;
-        font-size:30px;
-        color: #fff;
-    }
-    .b-popup{
-        width:100%;
-        min-height:100%;
-        background-color: rgba(0,0,0,0.5);
-        overflow:hidden;
-        position:fixed;
-        top:0px;
-        z-index: 1000;
-    }
-    .b-popup .b-popup-content{
-        margin:40px auto 0px auto;
-        width:320px;
-        height: auto;
-        padding:10px;
-        background-color: #f0f0f0;
-        border-radius:5px;
-        box-shadow: 0px 0px 10px #000;
-        position: relative;
-    }
-    .b-popup-content .form-wrapper{
-        padding: 10px 0 10px 10px;
-    }
-    .b-popup-content .subscribe__form{
-        max-width: 97%;
-    }
-    .b-popup-content .form__heading.subscribe__heading{
-        font-size: 18px !important;
-    }
-    .b-popup-content .close-popup_perezvon{
-        top: 2px;
-        right: -2px;
-    }
-    .white-popup .close-popup_perezvon{
-        top: 0;
-        right: -3px;
-    }
-    #popup1{
-        display: none;
-    }
-    #popup2{
-        display: none;
-    }
-    #popup4{
-        display: none;
-    }
-    .white-popup{
-        margin:40px auto 0px auto;
-        width:320px;
-        height: auto;
-        padding:10px;
-        background-color: #f0f0f0;
-        border-radius:5px;
-        box-shadow: 0px 0px 10px #000;
-        position: relative;
-    }
-    .custom_grid {
-        grid-template-columns: 100%;
-
-    }
-</style>
+<!-- Уведомление об успешной ajax-отправке -->
 <div class="b-popup" id="popup2">
-<div class="white-popup">
-    <a class="close-popup_perezvon" href="javascript:ResultHide()">X</a>
-    <div class="message-wrapper"><br>
-        <big>Спасибо за заявку!<br><br>Наш мастер свяжется с<br>Вами в ближайшее время.</big>
+    <div class="white-popup">
+        <a class="close-popup_perezvon" href="javascript:ResultHide()">X</a>
+        <div class="message-wrapper"><br>
+            <big>Спасибо за заявку!<br><br>Наш мастер свяжется с<br>Вами в ближайшее время.</big>
+        </div>
     </div>
-</div>
 </div>
 
 <div class="b-popup" id="popup1">
@@ -85,7 +15,7 @@
             <div class="subscribe__form form-wrapper">
                 <h3 class="form__heading subscribe__heading">Заявка на обратный звонок</h3>
 
-                <form class="form" action="/" method="POST">
+                <form class="form" action="{{ page.path }}" method="POST">
 
                     <div class="form__inner custom_grid">
                         <div class="form__item">
@@ -101,30 +31,23 @@
                         </div>
                         <div class="form__item markN3">
                             <label for="markN3">Выберете марку</label>
-                            <select id="markN3" class="form__input">
-                                <option value="Другое">Другое</option>
-                                <option value="Lexus">Lexus</option>
-                                <option value="Infinity">Infinity</option>
-                                <option value="Nissan">Nissan</option>
-                                <option value="Toyota">Toyota</option>
-                                <option value="Land Rover">Land Rover</option>
-                                <option value="Jaguar">Jaguar</option>
-                                <option value="Porsche">Porsche</option>
-                                <option value="Mazda">Mazda</option>
-                                <option value="Mitsubishi">Mitsubishi</option>
+                            <select id="markN3" name="marka" class="form__input">
+                                {{ include('v2/blocks/chunks/marks_option.html.twig') }}
                             </select>
                         </div>
                         <div class="form__item addressN3">
                             <label for="addressN3">Выберете адрес</label>
-                            <select id="addressN3" class="form__input">
+                            <select id="addressN3" class="form__input" name="address">
                                 <option id="addressN3_В2АЕ" value="В2АЕ">Ворошилова 2АЕ</option>
-                                <option id="addressN3_К20" value="К20">Кушелевская дорога 20</option>
+                                {% if brandName is defined and brandName == 'Land Rover' %}{% else %}
+                                <option id="addressN3_СПБ4" value="СПБ4">Турухтанные Острова, 12</option>{% endif %}
 {#                                <option id="addressN3_Б116" value="Б116">Боровая 116</option>#}
+                                <option id="addressN3_К20" value="К20">Любой адрес</option>
                             </select>
                         </div>
 
                     </div>
-                    <button class="button popup-send-button">Отправить заявку</button>
+                    <button class="button popup-send-button" onclick="ym(75371857, 'reachGoal', 'roistat')">Отправить заявку</button>
                 </form>
             </div>
         </div>
@@ -150,175 +73,80 @@
                             <input type="hidden" id="urlN4" name="url" value="{{ path(app.request.attributes.get('_route'),
                                 app.request.attributes.get('_route_params')) }}">
                             {% endif %}
+                            <div class="form__item addressN3">
+                                <label for="addressN4">Выберете адрес</label>
+                                <select id="addressN4" class="form__input" name="address">
+                                    <option id="addressN4_В2АЕ" value="В2АЕ">Ворошилова 2АЕ</option>
+                                    <option id="addressN4_СПБ4" value="СПБ4">Турухтанные Острова, 12</option>
+                                    <option id="addressN4_К20" value="К20">Любой адрес</option>
+                                </select>
+                            </div>
                         </div>
 
                     </div>
-                    <button class="button popup-send-button4">Отправить заявку</button>
+                    <button class="button popup-send-button4" onclick="ym(75371857, 'reachGoal', 'roistat')">Отправить заявку</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    $(document).ready(function(){
-        //Скрыть PopUp при загрузке страницы
-        PopUpHide();
-        PopUp2Hide();
+<div class="b-popup" id="popup_save_page">
+    <div class="b-popup-content">
+    <a class="close-popup_perezvon" onclick="close_popup(this)" href="javascript:void(0)">X</a>
+        <div class="wrap_save_page">
+        	<h4 class="save_page_title">Не спешите уходить!</h4>
+        	<div class="save_page_block">
+        		<div class="left_side col-12 col-md-6">
+        			<div class="wrap_left_side_content">
+        				<div class="content_txt">Автосервис ПИК - качественный ремонт автомобиля</div>
+        				<div class="wrap-form">
+							<div class="form-header">
+								Запишитесь на бесплатную диагностику:
+							</div>
+							<form class="save_page_form" action="/">
+								<div class="wrap-field">
+									<input type="tel" id="phonePSP" name="phone" required="" inputmode="text" maxlength="17" autocomplete="off" placeholder="">
+								</div>
+								<div class="wrap-field">
+									<select name="address">
+		                                <option disabled selected>Выберите адрес</option>
+		                                <option value="В2АЕ">Ворошилова 2АЕ</option>
+		                                <option value="СПБ4">Турухтанные Острова, 12</option>
+                                        <option value="К20">Любой адрес</option>
+		                            </select>
+								</div>
 
-        var path = location.pathname.split('/')[1];
-        // console.log(path);
-
-        if(path.length > 0 && path != 'blog' && path != 'offers' && path != 'contacts'){
-            $('.markN3').remove();
-            $('.addressN3').remove();
-        }
-
-        let vor = [
-            'Lexus',
-            'Infinity',
-        ];
-
-        $('#markN3').on('change', function() {
-
-            if(vor.indexOf( this.value ) != -1 ) {
-                $('#addressN3_К20').attr("disabled", true);
-                $('#addressN3_К20').removeAttr('selected');
-
-                $('#addressN3_В2АЕ').removeAttr('disabled');
-                $('#addressN3_В2АЕ').attr('selected', 'true');
-
-            } else {
-                $('#addressN3_В2АЕ').attr("disabled", true);
-                $('#addressN3_В2АЕ').removeAttr("selected");
-
-                $('#addressN3_К20').removeAttr('disabled');
-                $('#addressN3_К20').attr('selected', 'true');
-
-            }
-        });
-
-        $(".popup-send-button").click(function (e){
-            e.preventDefault();
-            if($('.phoneN3-popup').val() == ''){
-                alert('Заполните поле телефон');
-                return;
-            }
-            if($('.phoneN3-popup').val().length < 17){
-                alert('Неверный формат номер телефона');
-                return;
-            }
-
-            let phone = $('.phoneN3-popup').val();
-            let url = $('#urlN3').val();
-            let mark = '';
-            let address = '';
-
-            if(path.length == 0 || path == 'blog' || path == 'offers' || path == 'contacts'){
-                mark = $('#markN3').val();
-                address = $('#addressN3').val();
-            } else {
-                mark = path;
-                if (path == 'bmw' || path == 'mercedes') {
-                    // console.log('bmw - mercedes');
-                    address = "Б116";
-                } else {
-                    if (path == 'lexus' || path == 'infinity') {
-                        // console.log('lexus - infinity');
-                        address = "В2АЕ";
-                    } else {
-                        // console.log('все остальное');
-                        address = "K20";
-                    }
-                }
-            }
-
-            console.log(phone);
-            console.log(mark);
-            console.log(address);
-
-
-            $.ajax({
-                url:     "/callback_form",
-                type:     "POST", //метод отправки
-                dataType: "html", //формат данных
-
-                data: {
-                    'phone' : phone,
-                    'url': url,
-                    'mark' : mark,
-                    'address' : address,
-                },
-                success: function(response) { //Данные отправлены успешно
-                    //$('.callback-popup-body').html('<p style="text-align: center; font-weight: 700; padding: 20px;">Спасибо! Ваша заявка отправлена.</p>');
-                     console.log(response);
-                },
-                error: function(response) { // Данные не отправлены
-                    console.log('error');
-                }
-            });
-
-
-           PopUpHide();
-           ResultShow();
-        });
-
-        $(".popup-send-button4").click(function (e){
-            e.preventDefault();
-            if($('.phoneN4-popup').val() == ''){
-                alert('Заполните поле телефон');
-                return;
-            }
-            if($('.phoneN4-popup').val().length < 17){
-                alert('Неверный формат номер телефона');
-                return;
-            }
-            let phone = $('.phoneN4-popup').val();
-            let url = $('#urlN4').val();
-            $.ajax({
-                url:     "/callback_form",
-                type:     "POST", //метод отправки
-                dataType: "html", //формат данных
-
-                data: {
-                    'phone' : phone,
-                    'url': url,
-                },
-                success: function(response) { //Данные отправлены успешно
-                    //$('.callback-popup-body').html('<p style="text-align: center; font-weight: 700; padding: 20px;">Спасибо! Ваша заявка отправлена.</p>');
-                    console.log(response);
-                },
-                error: function(response) { // Данные не отправлены
-                    console.log('error');
-                }
-            });
-
-
-            PopUp2Hide();
-            ResultShow();
-        });
-    });
-    //Функция отображения PopUp
-    function PopUpShow(){
-        $("#popup1").show();
-    }
-    //Функция скрытия PopUp
-    function PopUpHide(){
-        $("#popup1").hide();
-    }
-
-    function PopUp2Show(){
-        $("#popup4").show();
-    }
-    //Функция скрытия PopUp
-    function PopUp2Hide(){
-        $("#popup4").hide();
-    }
-
-    function ResultShow(){
-        $("#popup2").show();
-    }
-    function ResultHide(){
-        $("#popup2").hide();
-    }
-</script>
+								<div class="wrap-field politics">
+									<input id='politicsP' name="politics" type='checkbox' checked />
+									<label for='politicsP'>
+										<span></span>
+										<div>Я даю согласие на обработку персональных данных.</div>
+										<ins><i>Я даю согласие на обработку персональных данных.</i></ins>
+									</label>
+								</div>
+							
+								<div class="wrap-field wrap-btn">
+									<input type="submit" value="Отправить заявку" onclick="ym(75371857, 'reachGoal', 'roistat')" />
+								</div>
+								<div class="__status"></div>
+							</form>
+						</div>
+						<div class="content_notice">
+							<div class="notice_marker"><img src="{{ asset('img/notice_marker.png') }}" /></div>
+							<div class="notice_txt">Сохраните наш сайт,<br/>чтобы не потерять <span class="notice_small_txt">(нажмите сочетвние клавиш)</span></div>
+							<div class="notice_btn">Ctrl+D</div>
+						</div>
+        			</div>
+        		</div>
+        		<div class="right_side col-12 col-md-6">
+        		    {% if haval is defined and haval == 'true' %}
+            		    <img src="{{ asset('img/right_side_bg_red.png') }}">
+        		    {% else %}
+            			<img src="{{ asset('img/right_side_bg.png') }}">
+        			{% endif %}
+        		</div>				
+        	</div>
+        </div>
+    </div>
+</div>

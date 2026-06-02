@@ -8,21 +8,34 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use App\Repository\PriceBrandRepository;
+// use App\Repository\BrandRepository;
+// use App\Entity\PriceBrand;
 use App\Entity\MenuTop;
 use App\Repository\MenuTopRepository;
 use App\Repository\MenuLeftRepository;
 use App\Repository\NaschirabotyRepository;
 use App\Repository\ConfigRepository;
+use App\Repository\PriceModelRepository;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(ContentRepository $repository, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, NaschirabotyRepository $naschirabotyRepository, ConfigRepository $configRepository)
+    public function index(
+        ContentRepository $repository,
+        PriceBrandRepository $priceBrandRepository,
+        MenuTopRepository $menuTopRepository,
+        MenuLeftRepository $menuLeftRepository,
+        NaschirabotyRepository $naschirabotyRepository,
+        ConfigRepository $configRepository,
+        PriceModelRepository $priceModelRepository
+    )
     {
         $page = $repository->findOneBy(['path'=>'/']);
-        $brands = $priceBrandRepository->findAll();
+        $brand = $priceBrandRepository->findOneBy(['name' => 'Skoda']);
+
+        $models = $priceModelRepository->findAll();
         $gallery = $this->getGalleryImages();
         $topMenu = $menuTopRepository->findBy([], ['ordering'=>'ASC']);
         $leftMenu = $menuLeftRepository->findBy([], ['ordering'=>'ASC']);
@@ -33,11 +46,13 @@ class HomeController extends AbstractController
         $this->address2 = $configRepository->findOneBy(['name'=> 'address2']);
         $this->phone3 = $configRepository->findOneBy(['name' => 'phone3']);
         $this->address3 = $configRepository->findOneBy(['name'=> 'address3']);
+        $this->phone4 = $configRepository->findOneBy(['name' => 'phone4']);
+        $this->address4 = $configRepository->findOneBy(['name'=> 'address4']);
         
         return $this->render('v2/pages/home/index.html.twig', [
             'page' => $page,
             'gallery'=> $gallery,
-            'brands' => $brands,
+            'models' => $models,
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
             'pageWork' => $work,
@@ -47,8 +62,11 @@ class HomeController extends AbstractController
             'address2' => $this->address2,
             'phone3' => $this->phone3,
             'address3' => $this->address3,
+            'phone4' => $this->phone4,
+            'address4' => $this->address4,
         ]);
     }
+
 
     private function getGalleryImages(){
         $finder = new Finder();

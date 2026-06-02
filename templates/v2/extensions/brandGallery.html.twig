@@ -1,4 +1,13 @@
-{#{{ dump(files) }}#}
+{# СТОП! просто в папке 'img/brandGalleries/skoda/' например размещаем и они автоматически подтягиваются в слайдер! #}
+{#% if (path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) starts with '/porsche/') %}
+{% elseif (path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) starts with '/skoda/') %}
+    {% set imgs = ({'0':'1.jpg','1':'2.jpg','2':'3.jpg','3':'4.jpg'}) %}
+    {% set imgs = imgs|merge({'0':'5.jpg'}) %}
+    {% for img in imgs %}
+        {{ img }}
+    {% endfor %}
+{% else %}
+{% endif %#}
 <section class="brand__gallery_slider_wrapper">
     <div class="brand__gallery_slider">
         {% for file in files %}

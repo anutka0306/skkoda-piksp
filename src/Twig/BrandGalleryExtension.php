@@ -32,18 +32,18 @@ class BrandGalleryExtension extends AbstractExtension
     {
         $finder = new Finder();
         $filesystem = new Filesystem();
-        if (is_null($brand)){
+        if (is_null($brand)) {
             $files = $this->getImagesFromGeneral();
-            if(!is_null($files) and !empty($files)){
+            if (!is_null($files) and !empty($files)){
                 return $twig->render('v2/extensions/brandGallery.html.twig', compact('files'));
-            }else{
+            } else {
                 return '';
             }
         }else {
-            if($brand == 'Land Rover'){
+            if ($brand == 'Land Rover') {
                 return  '';
             }
-
+            
             if ($filesystem->exists($_SERVER['DOCUMENT_ROOT'] . '/img/brandGalleries/' . strtolower($brand))) {
                 $finder->files()->name(['*.jpeg', '*.jpg', '*.png'])->in($_SERVER['DOCUMENT_ROOT'] . '/img/brandGalleries/' . strtolower($brand));
                 $files = array();
