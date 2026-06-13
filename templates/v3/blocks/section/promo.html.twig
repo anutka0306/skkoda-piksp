@@ -1,0 +1,23 @@
+<section class="customers" id="akcii">
+    <div class="container">
+        <div class="title">Действующие <strong>акции и скидки</strong></div>
+        <div class="customers_subtitle">Акции и скидки не суммируются в один визит</div>
+        <div class="customers_slider">
+            {% for offer in offers %}
+            <div class="customers_slide">
+                <div class="shares__img">
+                    <img src="/v3/assets/cache_image/design_img/sale_img_0x0_6f7.webp" alt="">
+                </div>
+                <div class="body">
+                    <div class="shares_name">{{ offer.name }}</div>
+                    <div class="shares_content">
+                        {{ offer.text|raw }}
+                    </div>
+                    <div class="shares_price"></div>
+                    <div class="shares_sub_price"><sup>{{ offer.description }}</sup></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

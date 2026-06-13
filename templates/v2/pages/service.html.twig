@@ -3,11 +3,21 @@
 {% block title %}{% if page.priceBrand.name is defined and page.priceModel.name is defined%} {{ page.name~' '~page.priceBrand.name~' '~ page.priceModel.name~' в Санкт-Петербурге. Автосервис '~  page.priceBrand.name|upper~' '~ page.priceModel.name|upper~' ПИК' }} {% elseif page.priceBrand.name is defined %}{{ page.name~' '~page.priceBrand.name~' в Санкт-Петербурге. Автосервис '~  page.priceBrand.name|upper~' ПИК' }} {% else %} {{ page.name~' в Санкт-Петербурге. Автосервис ПИК' }}{% endif%} {% endblock %}
 {% block description %} {% if phone is defined %}{% if page.priceBrand.name is defined and page.priceModel.name is defined%}{{page.name~' '~ page.priceBrand.name~' '~ page.priceModel.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ '~page.name~' '~page.priceBrand.nameRus~' '~page.priceModel.nameRus~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис '~page.priceBrand.name|upper~' '~ page.priceModel.name|upper~ ' «ПИК» - ☎ '~phone.value }} {% elseif page.priceBrand.name is defined%} {{page.name~' '~ page.priceBrand.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ '~page.name~' '~page.priceBrand.nameRus~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис '~page.priceBrand.name|upper~ ' «ПИК» - ☎ '~phone.value }} {% else%}{{page.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ '~page.name~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис  «ПИК» - ☎ '~phone.value }} {% endif%} {% else%} {% if page.priceBrand.name is defined and page.priceModel.name is defined%}{{page.name~' '~ page.priceBrand.name~' '~ page.priceModel.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ '~page.name~' '~page.priceBrand.nameRus~' '~page.priceModel.nameRus~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис '~page.priceBrand.name|upper~' '~ page.priceModel.name|upper~ ' «ПИК» - ☎ '}}{% elseif page.priceBrand.name is defined %}{{page.name~' '~ page.priceBrand.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ '~page.name~' '~page.priceBrand.nameRus~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис '~page.priceBrand.name|upper~ ' «ПИК» - ☎ '}}{% else %}{{page.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ '~page.name~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис  «ПИК» - ☎ '}}{% endif %}{% endif %}{% endblock %}
 
+{#
 {% block header_line %}
     {{ include('v2/blocks/include/header_services.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu, 'popularServices': popularServices}) }}
 {% endblock %}
 {% block header_banner %}
     {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, 'serviceName':page.name, 'photoBig':page.priceBrand.photoBig }) }}
+{% endblock %}
+#}
+
+{% block header_line %}
+    {{ include('v3/blocks/include/header.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
+{% endblock %}
+
+{% block header_banner %}
+    {{ include('v3/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1 }) }}
 {% endblock %}
 
 {% block body %}

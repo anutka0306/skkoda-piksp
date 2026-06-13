@@ -29,6 +29,7 @@ use App\Repository\MenuLeftRepository;
 use App\Repository\NaschirabotyRepository;
 use App\Repository\ConfigRepository;
 use App\Repository\DiagnosticBrandRepository;
+use App\Repository\PriceCategoryRepository;
 
 
 class PageController extends AbstractController
@@ -115,6 +116,11 @@ class PageController extends AbstractController
     protected $diagnosticBrandRepository;
 
     /**
+     * @var PriceCategoryRepository
+     */
+    protected $priceCategoryRepository;
+
+    /**
      * PageController constructor.
      * @param ContentRepository $repository
      * @param EntityManagerInterface $em
@@ -136,7 +142,9 @@ class PageController extends AbstractController
                                 MenuLeftRepository $menuLeftRepository,
                                 NaschirabotyRepository $naschirabotyRepository,
                                 ConfigRepository $configRepository,
-                                DiagnosticBrandRepository $diagnosticBrandRepository)
+                                DiagnosticBrandRepository $diagnosticBrandRepository,
+                                PriceCategoryRepository $priceCategoryRepository
+    )
     {
         $this->page_repository = $repository;
         $this->em = $em;
@@ -156,23 +164,11 @@ class PageController extends AbstractController
         $this->phone4 = $configRepository->findOneBy(['name'=> 'phone4']);
         $this->address4 = $configRepository->findOneBy(['name' =>'address4']);
         $this->diagnosticBrandRepository = $diagnosticBrandRepository;
+        $this->priceCategoryRepository = $priceCategoryRepository;
 
     }
 
 
-    
-    /**
-     * @Route("/vakancies/{vakancy}", name="vakancy", requirements={"token"= "\/.+\/$"})
-     */
-    public function vakancy($vakancy, ContentRepository $repository):Response{
-        $vakancy = '/vakancies/'.$vakancy.'/';
-        if ( ! $page = $this->page_repository->findOnePublishedByToken($vakancy)) {
-            throw $this->createNotFoundException(sprintf('Page %s not found',$vakancy));
-        }
-        return $this->render('v2/pages/vacansy/item.html.twig', [
-            'page' => $page,
-        ]);
-    }
     
     /**
      * @Route("/{token}", name="dynamic_pages",requirements={"token"= ".+\/$"})
@@ -187,7 +183,8 @@ class PageController extends AbstractController
                           MenuTopRepository $menuTopRepository,
                           MenuLeftRepository $menuLeftRepository,
                           NaschirabotyRepository $naschirabotyRepository,
-                          DiagnosticBrandRepository $diagnosticBrandRepository
+                          DiagnosticBrandRepository $diagnosticBrandRepository,
+                          PriceCategoryRepository $priceCategoryRepository
     )
     {
         $topMenu = $menuTopRepository->findBy([], ['ordering'=>'ASC']);
@@ -204,7 +201,9 @@ class PageController extends AbstractController
                 $topMenu,
                 $leftMenu,
                 $naschirabotyRepository,
-                $diagnosticBrandRepository);
+                $diagnosticBrandRepository,
+                $priceCategoryRepository
+            );
         }
 
         if ($page instanceof Service) {
@@ -215,7 +214,9 @@ class PageController extends AbstractController
                 $leftMenu,
                 $naschirabotyRepository,
                 $priceServiceRepository,
-                $diagnosticBrandRepository);
+                $diagnosticBrandRepository,
+                $priceCategoryRepository
+            );
         }
 
         if ($page instanceof RootService) {
@@ -225,7 +226,9 @@ class PageController extends AbstractController
                 $topMenu,
                 $leftMenu,
                 $naschirabotyRepository,
-                $priceModelRepository);
+                $priceModelRepository,
+                $priceCategoryRepository
+            );
         }
 
         if ($page instanceof Simple) {
@@ -234,9 +237,6 @@ class PageController extends AbstractController
                 $leftMenu);
         }
 
-        if ($page instanceof Vacancy) {
-            return $this->vacancy($page);
-        }
 
         if($page instanceof ServiceWithout){
             return $this->service_without($page);
@@ -280,7 +280,15 @@ class PageController extends AbstractController
      * @param DiagnosticBrandRepository $diagnosticBrandRepository
      * @return Response
      */
-    private function model(Model $model, PriceModelRepository $priceModelRepository, PriceServiceRepository $priceServiceRepository, $topMenu, $leftMenu, NaschirabotyRepository $naschirabotyRepository, DiagnosticBrandRepository $diagnosticBrandRepository)
+    private function model(Model $model,
+                           PriceModelRepository $priceModelRepository,
+                           PriceServiceRepository $priceServiceRepository,
+                           $topMenu,
+                           $leftMenu,
+                           NaschirabotyRepository $naschirabotyRepository,
+                           DiagnosticBrandRepository $diagnosticBrandRepository,
+                           PriceCategoryRepository $priceCategoryRepository
+    )
     {
         $brand_name = $model->getBrandName();
         $model_id = $model->getModelId();
@@ -335,6 +343,7 @@ class PageController extends AbstractController
         if(empty($map)){
             $map = null;
         }
+        $categories = $priceCategoryRepository->findAll();
 
 
         $context = [
@@ -350,6 +359,7 @@ class PageController extends AbstractController
             'contactTitle'=>$contactTitle,
             'diagnostic' => $diagnostic,
             'map' => $map,
+            'categories' => $categories,
 
         ];
 
@@ -374,7 +384,8 @@ class PageController extends AbstractController
                                  $leftMenu,
                                  NaschirabotyRepository $naschirabotyRepository,
                                  PriceServiceRepository $priceServiceRepository,
-                                 DiagnosticBrandRepository $diagnosticBrandRepository
+                                 DiagnosticBrandRepository $diagnosticBrandRepository,
+                                 PriceCategoryRepository $priceCategoryRepository
         )
     {
         $popular_services = $priceServiceRepository->findBy(['is_popular' => 1, 'published' => 1], [], 5);
@@ -425,6 +436,7 @@ class PageController extends AbstractController
         $address = $this->configRepository->findOneBy(['name'=>'address']);
 
         $map = null;
+        $categories = $priceCategoryRepository->findAll();
 
         $context = [
             'page' => $service,
@@ -440,6 +452,7 @@ class PageController extends AbstractController
             'contactTitle' => $contactTitle,
             'diagnostic' => $diagnostic,
             'map' => $map,
+            'categories' => $categories,
         ];
 
 
@@ -461,7 +474,8 @@ class PageController extends AbstractController
                                      PriceBrandRepository $priceBrandRepository,
                                      $topMenu, $leftMenu,
                                      NaschirabotyRepository $naschirabotyRepository,
-                                     PriceModelRepository $priceModelRepository
+                                     PriceModelRepository $priceModelRepository,
+                                     PriceCategoryRepository $priceCategoryRepository
         )
         {
             if (is_null($rootService->getAdvIcon1())) {
@@ -513,6 +527,8 @@ class PageController extends AbstractController
 
             $brand = $priceBrandRepository->findOneBy(['name' => 'Skoda']);
 
+            $categories = $priceCategoryRepository->findAll();
+
             return $this->render('v2/pages/root-service.html.twig', [
                 'page' => $rootService,
                 'models' => $models,
@@ -528,6 +544,8 @@ class PageController extends AbstractController
                 'address3' => $this->address3,
                 'phone4' => $this->phone4,
                 'address4' => $this->address4,
+                'categories' => $categories,
+                'serviceName' => $rootService->getName()
             ]);
         }
 
@@ -558,16 +576,7 @@ class PageController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Vacancy $vacancy
-     * @return Response
-     */
-    private function vacancy(Vacancy $vacancy)
-    {
-        return $this->render('v2/pages/vacansy/index.html.twig', [
-            'page' => $vacancy,
-        ]);
-    }
+
 
 
 }

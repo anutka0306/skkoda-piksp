@@ -1,0 +1,23 @@
+<section class="cycle">
+    <div class="container">
+        <p class="title">«КарОк» - <strong>сертифицированный SKODA сервис</strong></p>
+        <p class="cycle_text">Проводим ремонт и обслуживание с сохранением гарантии производителя</p>
+        <div class="cycle_items">
+            {% for model in models %}
+                <div class="cycle_item">
+                <a href="/{{ model.code }}" title="Ремонт и сервис SKODA {{ model.name|upper }}">
+                    <div class="cycle_item-img">
+                        <img src="/v3/assets/images/design_img/skoda-main-img.png.webp" alt="Ремонт и сервис SKODA OCTAVIA">
+                    </div>
+                    <div class="cycle_item-inner">
+                        <div class="cycle_item-title">
+                            <img src="/v3/assets/images/design_img/car-pic-skoda.svg" alt="SKODA {{ model.name|upper }}">{{ model.name|upper }}
+                            {{ include('components/icons/model.html.twig') }}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

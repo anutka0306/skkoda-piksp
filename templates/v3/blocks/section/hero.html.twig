@@ -1,0 +1,63 @@
+<section class="main">
+    <div class="yandex-map-bar">
+        <div class="yandex-map-bar__wrapper"><span class="flare_btn"></span>
+            <a href="#" target="blank_" title="КарОк на карте">
+            <span>Ни одного плохого отзыва с 2014! Проверьте на
+            {{ include('components/icons/yandex_map_icon.html.twig') }}
+            </a>
+        </div>
+    </div>
+    <div class="main_wrapper">
+        <div class="main_slider">
+            <div class="main_slide">
+                <div class="hero"></div>
+                <div class="main_slide-number">СТО SKODA №1</div>
+                <div class="main_slide-wrapper container">
+                    <h1 class="main_slide-title">
+                        {% if customH1 is defined %}
+                            {{ customH1 }}
+                        {% elseif serviceName is defined %}
+                            {{ serviceName }} Skoda
+                        {% else %}
+                            Профессиональный ремонт и обслуживание Skoda
+                        {% endif %}
+
+                            {% if modelName is defined %}
+                                {{ modelName }}
+                            {% endif %}
+                    </h1>
+                    <div class="main_slide-text">Качество дилера, цены ниже на 40%. Более 280 видов работ</div>
+                    <div class="hero-advantages__items container">
+                        <div class="hero-advantages__item">
+                            <div class="hero-advantages__body">
+                                <i class="hero-advantages__icon">
+                                    {{ include('components/icons/advantages_icon3.html.twig') }}
+                                </i>
+                                <p>Специализируемся на Skoda с 2014 года</p>
+                            </div>
+                        </div>
+                        <div class="hero-advantages__item">
+                            <div class="hero-advantages__body">
+                                <i class="hero-advantages__icon">
+                                    {{ include('components/icons/advantages_icon1.html.twig') }}
+                                </i>
+                                <p>Скидка 10% новым клиентам</p>
+                            </div>
+                        </div>
+                        <div class="hero-advantages__item">
+                            <div class="hero-advantages__body">
+                                <i class="hero-advantages__icon">
+                                    {{ include('components/icons/advantages_icon2.html.twig') }}
+                                </i>
+                                <p>Гарантия на все работы до 2-х лет</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</section>

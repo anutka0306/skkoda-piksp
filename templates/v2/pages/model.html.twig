@@ -3,11 +3,19 @@
 {% block title %} {{ 'Ремонт '~page.priceBrand.name~' '~ page.priceModel.name~' в Санкт-Петербурге. Автосервис '~  page.priceBrand.name|upper~' '~ page.priceModel.name|upper~' ПИК' }} {% endblock %}
 {% block description %} {% if phone is defined %}{{'Ремонт '~ page.priceBrand.name~' '~ page.priceModel.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ Ремонт '~page.priceBrand.nameRus~' '~ page.priceModel.name~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис '~page.priceBrand.name|upper~' '~ page.priceModel.name|upper~ ' «ПИК» - ☎ '~phone.value }} {% else%} {{'Ремонт '~ page.priceBrand.name~' '~ page.priceModel.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ Ремонт '~page.priceBrand.nameRus~' '~ page.priceModel.name~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис '~page.priceBrand.name|upper~' '~ page.priceModel.name|upper~ ' «ПИК» - ☎ '}}{% endif %}{% endblock %}
 
-{% block header_line %}
+{#{% block header_line %}
     {{ include('v2/blocks/include/header_services.html.twig', {'popularServices': popularServices, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
 {% endblock %}
 {% block header_banner %}
     {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, photoBig : page.priceBrand.photoBig, photoModelBig: page.priceModel.photoBig, brandName : page.priceBrand.name, modelName: page.priceModel.name }) }}
+{% endblock %}#}
+
+{% block header_line %}
+    {{ include('v3/blocks/include/header.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
+{% endblock %}
+
+{% block header_banner %}
+    {{ include('v3/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1 }) }}
 {% endblock %}
 
 {% block body %}

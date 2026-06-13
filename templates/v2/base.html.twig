@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
+{#<head>
     <meta charset="utf-8">
     <title>{% block title %}{{ page.metaTitle ?? (page.h1~' в Санкт-Петербурге. «Автосервис ПИК»') }}{% endblock %}</title>
     <meta name="author">
@@ -80,6 +80,63 @@
     <meta name="yandex-verification" content="5440d1539bdcce3d"/>
     {{ include('v2/scripts/_schema.html.twig') }}
     {{ schema_breadcrumbs(page ?? null) }}
+</head>#}
+
+
+<head>
+    <base href="" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+
+    <meta name="yandex-verification" content="c385e9ee71f7b681" />
+    <meta name="google-site-verification" content="gs3z8Lf5jo6HRVL_CGPym9ZpbXDV5CZGP6-MKOydevs" />
+
+
+    <title>Специализированный сервис SKODA рядом с вами! Ремонт, обслуживание и диагностика!</title>
+    <meta name="description" content="Автосервис по ремонту и диагностике Skoda! Народные цены! Специалисты с опытом от 10 лет! Весь спектр услуг! Гарантия на работы и запчасти!"/>
+    <meta name="keywords" content="skoda сервис, ремонт skoda, автосервис skoda, skoda сервис в спб, сто skoda, ремонт двигателей skoda, замена двигателя skoda, ремонт турбин skoda, замена ступичного подшипника skoda, замена тормозных колодок skoda, плановое ТО SKODA" />
+
+
+    <link rel="icon" type="image/png" href="/v3/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/v3/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="180x180"  href="/v3/favicon/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/v3/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="144x144"  href="/v3/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="120x120"  href="/v3/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/v3/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/v3/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="/v3/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="/v3/favicon/apple-touch-icon.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="/v3/favicon/apple-touch-icon.png" />
+    <link rel="mask-icon" href="/v3/favicon/apple-touch-icon.png" >
+    <link rel="manifest" href="/v3/favicon/manifest.json">
+
+
+
+    <link rel="stylesheet" href="/v3/assets/css/slider.css">
+    <link rel="stylesheet" href="/v3/assets/css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/v3/assets/css/style.css">
+
+
+    <meta property="og:title" content="Специализированный сервис SKODA рядом с вами! Ремонт, обслуживание и диагностика!" />
+    <meta property="og:site_name" content="«CAR-OK»" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="./index/" />
+    <meta property="og:description" content="Автосервис по ремонту и диагностике Skoda! Народные цены! Специалисты с опытом от 10 лет! Весь спектр услуг! Гарантия на работы и запчасти!" />
+    <meta property="og:image" content="/v3/assets/images/products/landing_bg.jpg"/>
+
+
+    <link rel="canonical" href=".//" />
+
+
+    <link href="/v3/assets/js/animation/fm.revealator.jquery.min.css" rel="stylesheet" type="text/css" defer/>
+
+
+
+    <link rel="stylesheet" href="/v3/assets/components/gallery/css/web.css" type="text/css" />
+    <link rel="stylesheet" href="/v3/assets/components/ajaxform/css/default.css" type="text/css" />
 </head>
 
 <body itemscope="itemscope" itemtype="https://schema.org/Product">
@@ -90,115 +147,177 @@
 {# Yandex Метрика #}
 {{ include('v2/scripts/_yandex_metrics.html.twig') }}
 
-<div class="page-wrapper">
+
     {% block header_line %}
-
     {% endblock %}
-    <main class="page-main">
-        {% block header_banner %}
-        {% endblock %}
 
-        {% block breadcrumbs %}
-            {{ breadcrumbs(page ?? null) }}
-        {% endblock %}
-        <div id="content">
-            {% block body %}{% endblock %}
+    {% block header_banner %}
+    {% endblock %}
+
+    {% block breadcrumbs %}
+        {{ breadcrumbs(page ?? null) }}
+    {% endblock %}
+
+    {#<div id="content">#}
+        {% block body %}{% endblock %}
+    {#</div>#}
+
+    {% block extraModules %}
+    {% endblock %}
+
+
+    {{ include('v3/blocks/include/footer.html.twig') }}
+
+
+
+
+    {% block javascripts %}
+        <style>
+            .cookie-message {
+                position: fixed;
+                width: 100%;
+                z-index: 1000;
+                bottom: 0;
+                background-color: #fff;
+                box-shadow: rgb(120 250 174) 0px 0px 10px;
+            }
+
+            .cookie-message-inner {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1.5rem 0;
+                line-height: 1.2;
+            }
+
+            .cookie-message-text {
+                flex-grow: 2;
+            }
+
+            .button .js-cookie-message-confirm {
+
+            }
+            .cookie-message-text a {
+                text-decoration: underline;
+                color: #35b96c;
+            }
+            .cookie-message-text a:hover {
+                text-decoration: underline;
+                color: #0e3a30;
+            }
+        </style>
+
+        <div class="cookie-message js-cookie-message" hidden>
+            <div class="container">
+                <div class="cookie-message-inner">
+                    <div class="cookie-message-text">
+                        Продолжая просмотр страниц сайта, вы соглашаетесь с <a href="./texnicheskie-straniczyi/cookies" target="blank" title="Политика использования файлов cookies">политикой использования файлов куки (cookies)</a>.
+                    </div>
+                    <button class="btn js-cookie-message-confirm" style="border: none;">OK</button>
+                </div>
+            </div>
         </div>
 
-        {% block extraModules %}
-
-        {% endblock %}
-
-    </main>
-    {{ include('v2/blocks/include/contacts.html.twig') }}
-    {{ include('v2/blocks/include/footer.html.twig') }}
-    {{ include('elements/popup/popup1.html.twig') }}
-
-</div>
-
-{% block javascripts %}
-
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
-
-
-    <script type="text/javascript" src="{{ asset('js/popup1.js?v=2') }}.{{ '' | date('U') }}"></script>
-
-    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('js/uikit.js') }}"></script>
-    <script src="{{ asset('js/uikit-icons.js') }}"></script>
+        <script>
+    if (!localStorage.getItem('cookieAccept')) {
+        const el = document.querySelector('.js-cookie-message');
+        el.style.display = 'block';
+        el.querySelector('.js-cookie-message-confirm').addEventListener('click', (e) => {
+            localStorage.setItem('cookieAccept', 1);
+            el.style.display = 'none';
+        }, true);
+    }
+</script>
+        <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script -->
+        <script src="/v3/assets/js/jquery-3.7.1.min.js"></script>
+        <script src="/v3/assets/js/slider.js"></script>
+        <script src="/v3/assets/js/jquery.fancybox.min.js"></script>
+        <script src="/v3/assets/js/main.js"></script>
 
 
-    <script type="text/javascript" src="{{ asset('build/vendors~app2.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('build/app2.js') }}"></script>
-    <script src="{{ asset('js/roistat.js') }}"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/custom.js?v=1') }}.{{ '' | date('U') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.magnific-popup.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.cookie.js') }}"></script>
-    
-
-    <script>
-        $(".form__item input[name=phone]").mask("+7(999) 999-99-99");
-        $(".wrap-field input[name=phone]").mask("+7(999) 999-99-99");
-
-
-        //Новый вызов magnific-popup
-        $('.nashiraboty__gallery').magnificPopup({
-            delegate: 'a',
-            type: 'image',
-            closeOnContentClick: false,
-            closeBtnInside: false,
-            mainClass: 'mfp-with-zoom mfp-img-mobile',
-            image: {
-                verticalFit: true,
-
-            },
-            gallery: {
-                enabled: true
-            },
-            zoom: {
-                enabled: true,
-                duration: 300, // don't foget to change the duration also in CSS
-                opener: function(element) {
-                    return element.find('img');
-                }
-            }
-
-        });
-
-        function goToAnchor() {
-            var loc = document.location.toString().split('#')[0];
-            document.location = loc + '#phoneN3';
-            return false;
-        }
+        <script defer src="/v3/assets/js/mascedinput/maskedinput.js"></script>
+        <input  id="phone" type="tel" style="display:none;">
+        <script>
+        $(document).ready(function(){
+            $('input.phone').mask("+7 (___) ___-__-__");
+        }); // end ready
     </script>
-    
-    <script>
-        window.addEventListener('mousemove', function(e) {
-			let y = e.clientY;
-			if(y<=10){
-			    let sp_cookie = getCookie('sp_notice');
-			    if(sp_cookie !== undefined) return false;
-			    let sp_block = document.querySelector('#popup_save_page');
-                if(sp_block !== null){
-                    $("#popup_save_page").show();
-                    document.cookie = "sp_notice=true;max-age=86400";
-                }
-            }
-		})
-        
-        function close_popup(el){
-            var parent = el.closest(".b-popup");
-            $(parent).hide();
-        }
-        function getCookie(name) {
-        	var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
-        	return matches ? decodeURIComponent(matches[1]) : undefined;
-        }
-    </script>
-    
+
+
+        <script defer src="/v3/assets/js/animation/fm.revealator.jquery.min.js"></script>
+
+
+
+
+        <div id="popup_order" class="popup_body" style="display: none;">
+            <div class="popup_body-title">
+                <img src="/v3/img/logo.svg" title="logo" alt="logo" />
+                <br/>Заказать обратный звонок
+            </div>
+            <div class="annotation">Если у вас есть какие-либо вопросы, пожалуйста, позвоните нам <a href="tel:88122374733" title="phone"><strong>8 (812) 237-47-33</strong></a>. Или заполните эту форму, и мы перезвоним вам в течение 10 минут.</div>
+
+            <form action="index.html" method="post" class="ajax_form popup_form">
+                <div class="form_inp-wrapper">
+                    <div class="form_inp-title">Ваше имя <span>*</span></div>
+                    <input type="text" name="name" value="" id="af_name" class="form_inp" placeholder="Введите имя">
+                    <div class="inp_clean">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                    d="M14.7154 4.10736C15.0408 3.78193 15.5685 3.78192 15.8939 4.10736C16.2193 4.43279 16.2193 4.96043 15.8939 5.28587L11.1798 9.99996L15.8939 14.714C16.2193 15.0394 16.2193 15.567 15.8939 15.8925C15.5685 16.2179 15.0408 16.2179 14.7154 15.8925L10.0013 11.1785L5.28734 15.8925C5.28225 15.8975 5.27712 15.9025 5.27194 15.9075C4.94546 16.2178 4.42918 16.2128 4.10883 15.8925C3.86475 15.6484 3.80373 15.2905 3.92577 14.9896C3.96644 14.8893 4.02747 14.7953 4.10883 14.714L8.82284 9.99996L4.10883 5.28591C3.78339 4.96048 3.78339 4.43283 4.10883 4.1074C4.43426 3.78196 4.9619 3.78196 5.28734 4.1074L10.0013 8.82138L14.7154 4.10736Z"
+                                    fill="#9E9994" />
+                        </svg>
+                    </div>
+                    <span class="error_name"></span>
+                </div>
+                <div class="form_inp-wrapper">
+                    <div class="form_inp-title">Ваш телефон <span>*</span></div>
+                    <input type="text" name="phone" class="phone form_inp" placeholder="+7 (___) ___ ____" required="">
+                    <div class="inp_clean">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                    d="M14.7154 4.10736C15.0408 3.78193 15.5685 3.78192 15.8939 4.10736C16.2193 4.43279 16.2193 4.96043 15.8939 5.28587L11.1798 9.99996L15.8939 14.714C16.2193 15.0394 16.2193 15.567 15.8939 15.8925C15.5685 16.2179 15.0408 16.2179 14.7154 15.8925L10.0013 11.1785L5.28734 15.8925C5.28225 15.8975 5.27712 15.9025 5.27194 15.9075C4.94546 16.2178 4.42918 16.2128 4.10883 15.8925C3.86475 15.6484 3.80373 15.2905 3.92577 14.9896C3.96644 14.8893 4.02747 14.7953 4.10883 14.714L8.82284 9.99996L4.10883 5.28591C3.78339 4.96048 3.78339 4.43283 4.10883 4.1074C4.43426 3.78196 4.9619 3.78196 5.28734 4.1074L10.0013 8.82138L14.7154 4.10736Z"
+                                    fill="#9E9994" />
+                        </svg>
+                    </div>
+                    <span class="error_name"></span>
+                </div>
+                <div class="form_inp-wrapper">
+                    <div class="form_inp-title">Комментарий</div>
+                    <input type="text" name="message" class="form_inp" placeholder="Введите ваш вопрос или комментарий">
+                    <div class="inp_clean">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                    d="M14.7154 4.10736C15.0408 3.78193 15.5685 3.78192 15.8939 4.10736C16.2193 4.43279 16.2193 4.96043 15.8939 5.28587L11.1798 9.99996L15.8939 14.714C16.2193 15.0394 16.2193 15.567 15.8939 15.8925C15.5685 16.2179 15.0408 16.2179 14.7154 15.8925L10.0013 11.1785L5.28734 15.8925C5.28225 15.8975 5.27712 15.9025 5.27194 15.9075C4.94546 16.2178 4.42918 16.2128 4.10883 15.8925C3.86475 15.6484 3.80373 15.2905 3.92577 14.9896C3.96644 14.8893 4.02747 14.7953 4.10883 14.714L8.82284 9.99996L4.10883 5.28591C3.78339 4.96048 3.78339 4.43283 4.10883 4.1074C4.43426 3.78196 4.9619 3.78196 5.28734 4.1074L10.0013 8.82138L14.7154 4.10736Z"
+                                    fill="#9E9994" />
+                        </svg>
+                    </div>
+                </div>
+                <input type="hidden" name="pageName" value="./" />
+                <div class="form_captha">
+                    <div class="smart-captcha" data-sitekey="ysc1_V8PFtFBPCDwfBX4eihUxd0Lme43Lok578GRZsuScc43f69e1"></div>
+                </div>
+                <button class="form_btn btn" value="callBack">Отправить</button>
+
+                <label class="form_ok">
+                    <input type="checkbox" name="" id="" checked>
+                    <span></span>
+                    Отправляя форму, вы даете согласие на обработку персональных данных в соответствии с <a href="./texnicheskie-straniczyi/politika" title="политика конфиденциальности и обработки данных" target="blank">политикой конфиденциальности сайта</a>.
+
+                </label>
+
+
+
+                <input type="hidden" name="af_action" value="2f92f0bd57ae7037001bf86a0cda4c34" />
+            </form>
+        </div>
+
+
+        <script src="/v3/assets/components/ajaxform/js/default.js"></script>
+        <script type="text/javascript">AjaxForm.initialize({"assetsUrl":"\/assets\/components\/ajaxform\/","actionUrl":"\/assets\/components\/ajaxform\/action.php","closeMessage":"\u0437\u0430\u043a\u0440\u044b\u0442\u044c \u0432\u0441\u0435","formSelector":"form.ajax_form","pageId":1});</script>
+
 
 {% endblock %}
 </body>

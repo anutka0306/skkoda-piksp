@@ -1,0 +1,65 @@
+<section class="steps">
+    <div class="container">
+        <div class="consult_form">
+            <img src="/v3/img/fbf_form_man.png" title="обратная связь карок" alt="обратная связь карок" />
+            <div class="consult_form-title title">
+                Проблема с автомобилем?
+            </div>
+            <div class="consult_form-title sub_title">
+                Наши специалисты помогут выявить проблему и предложат оптимальное решение!
+                <br/><br/>
+                Позвоните нам по телефону <a href="tel:8 (812) 237-47-33" title="phone">8 (812) 237-47-33</a>. Или заполните эту форму, и мы перезвоним вам в течение 10 минут.
+            </div>
+            <form action="index.html" method="post" class="ajax_form consult_form-wrapper">
+                <div class="form_inps">
+                    <div class="form_inp-wrapper">
+                        <div class="form_inp-title">Ваше имя <span>*</span></div>
+                        <input type="text" name="name" value="" id="af_name" class="form_inp" placeholder="Введите имя">
+                        <div class="inp_clean">
+                            {{ include('components/icons/step_icon.html.twig') }}
+                        </div>
+                        <span class="error_name"></span>
+                    </div>
+                    <div class="form_inp-wrapper">
+                        <div class="form_inp-title">Ваш телефон <span>*</span></div>
+                        <input type="text" name="phone" id="af_phone" class="phone form_inp" placeholder="+7 (___) ___ ____">
+                        <div class="inp_clean">
+                            {{ include('components/icons/step_icon.html.twig') }}
+                        </div>
+                        <span class="error_name"></span>
+                    </div>
+                    <div class="form_inp-wrapper">
+                        <div class="form_inp-title">Комментарий</div>
+                        <textarea name="message" id="af_message" maxlength="200" class="form_area" placeholder="Ваш вопрос или комментарий"></textarea>
+                        <div class="inp_clean">
+                            {{ include('components/icons/step_icon.html.twig') }}
+                        </div>
+                        <!--span class="error_name"></span-->
+                        <div class="form_inp-info">
+                            <div class="form_inp-count"><span>0</span>/200</div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="pageName" value="./" />
+                <div class="form_inner">
+                    <div class="form_captha">
+                        <div class="smart-captcha" data-sitekey="ysc1_V8PFtFBPCDwfBX4eihUxd0Lme43Lok578GRZsuScc43f69e1"></div>
+                    </div>
+                    <button class="form_btn btn">Отправить</button>
+
+                </div>
+
+
+
+                <input type="hidden" name="af_action" value="10259065021cd8a3a74ebe2954f30192" />
+            </form>
+
+            <label class="form_ok">
+                <input type="checkbox" name="" id="" checked>
+                <span></span>
+                Отправляя форму, вы даете согласие на обработку персональных данных в соответствии с <a href="./texnicheskie-straniczyi/politika" title="политика конфиденциальности и обработки данных" target="blank">политикой конфиденциальности сайта</a>.
+
+            </label>
+        </div>
+    </div>
+</section>

@@ -16,6 +16,9 @@ use App\Repository\MenuLeftRepository;
 use App\Repository\NaschirabotyRepository;
 use App\Repository\ConfigRepository;
 use App\Repository\PriceModelRepository;
+use App\Repository\PriceCategoryRepository;
+use App\Service\GalleryService;
+use App\Repository\SpecialOfferRepository;
 
 class HomeController extends AbstractController
 {
@@ -29,17 +32,24 @@ class HomeController extends AbstractController
         MenuLeftRepository $menuLeftRepository,
         NaschirabotyRepository $naschirabotyRepository,
         ConfigRepository $configRepository,
-        PriceModelRepository $priceModelRepository
+        PriceModelRepository $priceModelRepository,
+        PriceCategoryRepository $priceCategoryRepository,
+        GalleryService $galleryService,
+        SpecialOfferRepository $specialOfferRepository
     )
     {
         $page = $repository->findOneBy(['path'=>'/']);
         $brand = $priceBrandRepository->findOneBy(['name' => 'Skoda']);
 
         $models = $priceModelRepository->findAll();
-        $gallery = $this->getGalleryImages();
+        $categories = $priceCategoryRepository->findAll();
+        $gallery = $galleryService->getImages('1');
         $topMenu = $menuTopRepository->findBy([], ['ordering'=>'ASC']);
         $leftMenu = $menuLeftRepository->findBy([], ['ordering'=>'ASC']);
         $work = $naschirabotyRepository->findOneBy([],['id' =>'DESC']);
+
+        $offers = $specialOfferRepository->findBy(['published' => 1]);
+
         $this->phone = $configRepository->findOneBy(['name' =>'phone']);
         $this->phone2 = $configRepository->findOneBy(['name' => 'phone2']);
         $this->address = $configRepository->findOneBy(['name' => 'address']);
@@ -64,6 +74,8 @@ class HomeController extends AbstractController
             'address3' => $this->address3,
             'phone4' => $this->phone4,
             'address4' => $this->address4,
+            'categories' => $categories,
+            'offers' => $offers
         ]);
     }
 

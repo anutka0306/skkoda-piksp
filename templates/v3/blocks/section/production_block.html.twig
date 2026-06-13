@@ -1,0 +1,61 @@
+<section class="ourProduction__block" id="works">
+    <div class="container">
+        <p class="title">Более 280 <strong>видов работ</strong></p>
+        <p class="cycle_text">Оказываем полный спектр услуг по ремонту и обслуживанию SKODA</p>
+        <div class="present">
+            <blockquote>
+                <ul>
+                    <li><strong>Скидка 10%</strong> на любые работы при первом посещении нашего СТО</li>
+                    <li><strong>Бесплатная диагностика</strong> и осмотр вашего авто по 45 параметрам по предварительной записи</li>
+                    <li><strong>Гарантия на все работы</strong> до 2-х лет</li>
+                </ul>
+                <span>в подарок</span>
+            </blockquote>
+        </div>
+        <div class="tabs__block">
+            <p class="cycle_text"><sup>Марка автомобиля:</sup></p>
+            <div class="tab active" data-tab="#tab3">
+                <img src="/v3/assets/images/design_img/car-pic-skoda.svg" title="SKODA" alt="SKODA"/><span>SKODA</span>
+            </div>
+        </div>
+
+        <!--Содержимое табов-->
+        <div id="tab3" class="tab__content active">
+            <div class="category__list">
+                {% for category in categories %}
+                    <div class="about_item">
+                    <a href="/{{ category.slug }}" title="{{ category.name }} SKODA">
+                        <div class="about_item-img">{{ '%02d'|format(loop.index) }}</div>
+                        <div class="about_item-img-2">SKODA</div>
+                        <div class="about_item-title">{{ category.name }}
+                            {{ include('components/icons/service_list_bg.html.twig') }}
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!--Содержимое табов-->
+
+        <section class="warranty" id="warranty">
+            <div class="warranty__items">
+                <div class="warranty__item">
+                    <i class="warranty__icon"><img src="/v3/img/warranty-icon.svg" title="Гарантия на работы до 2-х лет" alt="Гарантия на работы 24 месяца иконка"></i>
+                    <span>Гарантия на работы<br>до 2-х лет</span>
+                </div>
+                <div class="warranty__item">
+                    <i class="warranty__icon"><img src="/v3/img/warranty-icon2.svg" title="Сохранение заводской гарантии" alt="Сохранение заводской гарантии иконка"></i>
+                    <span>Сохранение заводской гарантии</span>
+                </div>
+                <div class="warranty__item">
+                    <i class="warranty__icon"><img src="/v3/img/warranty-icon3.svg" title="Все запчасти в наличии недорого" alt="Все запчасти в наличии иконка"></i>
+                    <span>Все запчасти в наличии<br>недорого</span>
+                </div>
+                <div class="warranty__item">
+                    <i class="warranty__icon"><img src="/v3/img/warranty-icon4.svg" title="Дилерское оборудование" alt="Дилерское оборудование иконка"></i>
+                    <span>Дилерское оборудование<br>и мастера</span>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>

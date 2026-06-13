@@ -1,0 +1,18 @@
+<section class="gallery" id="gallery">
+    <div class="container">
+        <div class="title">Фотогалерея <strong>нашего СТО</strong></div>
+        <div class="gallery_slider">
+            {% for image in gallery %}
+                <a href="{{ image }}"
+                   data-touch="false"
+                   data-fancybox="photosFinishedProductsItem"
+                   class="gallery_slide">
+
+                    <img src="{{ image }}"
+                         alt=""
+                         loading="lazy">
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>

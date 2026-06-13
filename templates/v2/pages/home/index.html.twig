@@ -1,30 +1,32 @@
 {% extends 'v2/base.html.twig' %}
 
 {% block header_line %}
-    {{ include('v2/blocks/include/header_models.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
+    {{ include('v3/blocks/include/header.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
 {% endblock %}
 
 {% block header_banner %}
-
-    {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1 }) }}
+    {{ include('v3/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1 }) }}
 {% endblock %}
 
 {% block breadcrumbs %}{% endblock %}
 
 {% block body %}
-    {{ include('elements/_content.html.twig', {'page':page}) }}
-    {{ getBrandGallery() }}
-    {{ price_list(page) }}
-    {#{{ include('elements/zayavka_raschet_form.html.twig') }}#}
-    {#{{ brands_service_block() }}#}
-    {{ service_list(page) }}
-    {{ include('elements/_advantages.html.twig') }}
-    {{ include('elements/_advantages2.html.twig') }}
-    {{ special_offers(page.brandAndModelName) }}
-    {{ include('elements/_about_company.html.twig') }}
-    {{ include('elements/examples.html.twig', {'pageWork' : pageWork}) }}
-    {{ include('elements/_quote.html.twig') }}
-    {{ include('elements/_team.html.twig') }}
-    {{ include('elements/_save_page.html.twig') }}
+    {{ include('v3/blocks/section/models.html.twig', {models: models}) }}
+    {{ include('v3/blocks/section/advantages.html.twig') }}
+    {{ include('v3/blocks/section/production_block.html.twig', {categories: categories}) }}
+    {{ include('v3/blocks/section/questions.html.twig') }}
+    {{ include('v3/blocks/section/diagnostic.html.twig') }}
+    {{ include('v3/blocks/section/advantages_list.html.twig') }}
+    {{ include('v3/blocks/section/gallery.html.twig') }}
+    {{ include('v3/blocks/section/benefits.html.twig') }}
+    {{ include('v3/blocks/section/opinions.html.twig') }}
+    {{ include('v3/blocks/section/promo.html.twig') }}
+    {{ include('v3/blocks/section/faq.html.twig') }}
+    {{ include('v3/blocks/section/info_block_card.html.twig') }}
+    {{ include('v3/blocks/section/steps.html.twig') }}
+
+
+
+    {#{{ include('elements/_save_page.html.twig') }}#}
 {% endblock %}
 
