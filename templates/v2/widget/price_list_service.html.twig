@@ -1,46 +1,27 @@
-<section class="container price-list__block">
-<div class="services-prices">
-    <h3>{#{ price_list_title }#}
-    {#% for key, value in _context  %}
-      <li>{{ key }}</li>
-    {% endfor %#}
-    {{ page }}
-    </h3>
-    <div class="price-list__ul-wrapper_service">
-
-            <ul data-uk-accordion="collapsible: {% if page.text is empty %}false {% else %}true{% endif %}">
-
-                    {% for section in sections %}
-                        {% if section.priceServices is not empty %}
-                            <li><a class="uk-accordion-title" href="#">{{ section.name }}</a>
-                                <div class="uk-accordion-content">
-                                    <ul class="price-list">
-                                        {% for service in section.priceServices|filter(service => service.published ) %}
-                                            <li>
-                                            <span>
-                                                {% if service.path  and service.published %}
-                                                {% if withoutLinks is defined and withoutLinks %}
-                                                    <span>{{ service.nameInPriceList ?? service.name }}</span>
-                                                        {% else %}
-                                                    <a href="{{ service.path }}">{{ service.nameInPriceList ?? service.name }} {{ page.brandAndModelName }}</a>
-                                                {% endif %}
-                                                {% else %}
-                                                    {{ service.name }} {{ page.brandAndModelName }}
-                                                {% endif %}
-                                                <b>от {{ service.price|number_format(0, '', ' ') }}&nbsp;р.</b>
-                                            </span>
-                                                <span class="border"></span>
-                                                <span><a class="callback js-popup-trigger zayavka-link" data-toggle="modal" data-target="#callback_popup" href="javascript:PopUp2Show()">Оставить заявку</a></span>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
+<section class="ourProduction__block" id="works">
+    <div class="container">
+        <!--Содержимое табов-->
+        <div id="tab3" class="tab__content active">
+            <div class="category__list">
+                {% for section in sections %}
+                    {% if section.priceServices is not empty %}
+                        {% for service in section.priceServices|filter(service => service.published ) %}
+                            {% if service.path  and service.published %}
+                                <div class="about_item">
+                                    <a href="{{ service.path }}" title="{{ service.name }} SKODA">
+                                        <div class="about_item-img">{{ '%02d'|format(loop.index) }}</div>
+                                        <div class="about_item-img-2">SKODA</div>
+                                        <div class="about_item-title">{{ service.name }}
+                                            {{ include('components/icons/service_list_bg.html.twig') }}
+                                        </div>
+                                    </a>
                                 </div>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-
-            </ul>
-
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <!--Содержимое табов-->
     </div>
-</div>
 </section>

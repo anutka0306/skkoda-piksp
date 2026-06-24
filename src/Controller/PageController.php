@@ -407,12 +407,11 @@ class PageController extends AbstractController
 
         $contactTitle = $brand_name;
 
-        $phone['value'] = $this->phone->getValue();
-        $phone['title'] = $this->phone->getTitle();
-        $address = $this->configRepository->findOneBy(['name'=>'address']);
 
-        $map = null;
         $categories = $priceCategoryRepository->findAll();
+
+        $offers = $this->specialOfferRepository->findBy(['published' => 1]);
+        $gallery = $this->galleryService->getImages('1');
 
         $context = [
             'page' => $service,
@@ -423,12 +422,12 @@ class PageController extends AbstractController
             'leftMenu' => $leftMenu,
             'pageWork' => $work,
             'popularServices' => $popular_services,
-            'phone' => $phone,
-            'address' => $address,
             'contactTitle' => $contactTitle,
             'diagnostic' => $diagnostic,
-            'map' => $map,
             'categories' => $categories,
+            'serviceName' => $service->getName(),
+            'offers' => $offers,
+            'gallery' => $gallery,
         ];
 
 

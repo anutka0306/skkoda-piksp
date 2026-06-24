@@ -3,14 +3,6 @@
 {% block title %}{% if page.priceBrand.name is defined and page.priceModel.name is defined%} {{ page.name~' '~page.priceBrand.name~' '~ page.priceModel.name~' в Санкт-Петербурге. Автосервис '~  page.priceBrand.name|upper~' '~ page.priceModel.name|upper~' ПИК' }} {% elseif page.priceBrand.name is defined %}{{ page.name~' '~page.priceBrand.name~' в Санкт-Петербурге. Автосервис '~  page.priceBrand.name|upper~' ПИК' }} {% else %} {{ page.name~' в Санкт-Петербурге. Автосервис ПИК' }}{% endif%} {% endblock %}
 {% block description %} {% if phone is defined %}{% if page.priceBrand.name is defined and page.priceModel.name is defined%}{{page.name~' '~ page.priceBrand.name~' '~ page.priceModel.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ '~page.name~' '~page.priceBrand.nameRus~' '~page.priceModel.nameRus~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис '~page.priceBrand.name|upper~' '~ page.priceModel.name|upper~ ' «ПИК» - ☎ '~phone.value }} {% elseif page.priceBrand.name is defined%} {{page.name~' '~ page.priceBrand.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ '~page.name~' '~page.priceBrand.nameRus~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис '~page.priceBrand.name|upper~ ' «ПИК» - ☎ '~phone.value }} {% else%}{{page.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ '~page.name~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис  «ПИК» - ☎ '~phone.value }} {% endif%} {% else%} {% if page.priceBrand.name is defined and page.priceModel.name is defined%}{{page.name~' '~ page.priceBrand.name~' '~ page.priceModel.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ '~page.name~' '~page.priceBrand.nameRus~' '~page.priceModel.nameRus~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис '~page.priceBrand.name|upper~' '~ page.priceModel.name|upper~ ' «ПИК» - ☎ '}}{% elseif page.priceBrand.name is defined %}{{page.name~' '~ page.priceBrand.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ '~page.name~' '~page.priceBrand.nameRus~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис '~page.priceBrand.name|upper~ ' «ПИК» - ☎ '}}{% else %}{{page.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ '~page.name~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис  «ПИК» - ☎ '}}{% endif %}{% endif %}{% endblock %}
 
-{#
-{% block header_line %}
-    {{ include('v2/blocks/include/header_services.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu, 'popularServices': popularServices}) }}
-{% endblock %}
-{% block header_banner %}
-    {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, 'serviceName':page.name, 'photoBig':page.priceBrand.photoBig }) }}
-{% endblock %}
-#}
 
 {% block header_line %}
     {{ include('v3/blocks/include/header.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
@@ -21,26 +13,22 @@
 {% endblock %}
 
 {% block body %}
+    {{ include('v3/blocks/section/steps.html.twig') }}
+
+
     {{ include('elements/_content.html.twig') }}
-    {{ getBrandGallery(page.priceBrand.name) }}
+
+    {{ include('v3/blocks/section/promo.html.twig') }}
+
     {{ price_list(page) }}
-    {{ include('elements/zayavka_raschet_form.html.twig') }}
-    {% if page.modelId is null %}
-        {{ brand_models_service(page.priceBrand, page.priceBrand.path) }}
-    {% endif %}
-    {{ service_list(page) }}
-    {{ include('elements/_advantages.html.twig', {'utpImg': page.priceBrand.utpImg}) }}
-    {{ include('elements/_advantages2.html.twig') }}
-    {{ special_offers(page.brandAndModelName) }}
-    {{ include('elements/_about_company.html.twig', {'aboutImg': page.priceBrand.aboutImg}) }}
-    {% if pageWork is not empty %}
-        {% if pageWork is iterable %}
-            {{ include('elements/examples.html.twig', {'pageWork' : pageWork[0]}) }}
-        {% else %}
-            {{ include('elements/examples.html.twig', {'pageWork' : pageWork}) }}
-        {% endif %}
-    {% endif %}
-    {{ include('elements/_quote.html.twig') }}
-    {{ include('elements/_team.html.twig') }}
-    {{ include('elements/_save_page.html.twig') }}
+
+    {{ include('v3/blocks/section/opinions.html.twig') }}
+    {{ include('v3/blocks/section/benefits.html.twig') }}
+    {{ include('v3/blocks/section/gallery.html.twig') }}
+    <section class="ourProduction__block" id="works">
+        <div class="container">
+            {{ include('v3/blocks/section/warranty.html.twig') }}
+        </div>
+    </section>
+    {{ include('v3/blocks/section/questions.html.twig') }}
 {% endblock %}
