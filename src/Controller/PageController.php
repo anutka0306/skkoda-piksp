@@ -30,6 +30,8 @@ use App\Repository\NaschirabotyRepository;
 use App\Repository\ConfigRepository;
 use App\Repository\DiagnosticBrandRepository;
 use App\Repository\PriceCategoryRepository;
+use App\Repository\SpecialOfferRepository;
+use App\Service\GalleryService;
 
 
 class PageController extends AbstractController
@@ -121,6 +123,13 @@ class PageController extends AbstractController
     protected $priceCategoryRepository;
 
     /**
+     * @var SpecialOfferRepository
+     */
+    protected $specialOfferRepository;
+
+    protected $galleryService;
+
+    /**
      * PageController constructor.
      * @param ContentRepository $repository
      * @param EntityManagerInterface $em
@@ -143,7 +152,9 @@ class PageController extends AbstractController
                                 NaschirabotyRepository $naschirabotyRepository,
                                 ConfigRepository $configRepository,
                                 DiagnosticBrandRepository $diagnosticBrandRepository,
-                                PriceCategoryRepository $priceCategoryRepository
+                                PriceCategoryRepository $priceCategoryRepository,
+                                SpecialOfferRepository $specialOfferRepository,
+                                GalleryService $galleryService
     )
     {
         $this->page_repository = $repository;
@@ -155,16 +166,10 @@ class PageController extends AbstractController
         $this->menuLeftRepository = $menuLeftRepository;
         $this->naschirabotyRepository = $naschirabotyRepository;
         $this->configRepository = $configRepository;
-        $this->phone = $configRepository->findOneBy(['name' =>'phone']);
-        $this->phone2 = $configRepository->findOneBy(['name' =>'phone2']);
-        $this->phone3 = $configRepository->findOneBy(['name'=> 'phone3']);
-        $this->address = $configRepository->findOneBy(['name' =>'address']);
-        $this->address2 = $configRepository->findOneBy(['name' =>'address2']);
-        $this->address3 = $configRepository->findOneBy(['name' =>'address3']);
-        $this->phone4 = $configRepository->findOneBy(['name'=> 'phone4']);
-        $this->address4 = $configRepository->findOneBy(['name' =>'address4']);
         $this->diagnosticBrandRepository = $diagnosticBrandRepository;
         $this->priceCategoryRepository = $priceCategoryRepository;
+        $this->specialOfferRepository = $specialOfferRepository;
+        $this->galleryService = $galleryService;
 
     }
 
@@ -185,6 +190,7 @@ class PageController extends AbstractController
                           NaschirabotyRepository $naschirabotyRepository,
                           DiagnosticBrandRepository $diagnosticBrandRepository,
                           PriceCategoryRepository $priceCategoryRepository
+
     )
     {
         $topMenu = $menuTopRepository->findBy([], ['ordering'=>'ASC']);
@@ -202,7 +208,8 @@ class PageController extends AbstractController
                 $leftMenu,
                 $naschirabotyRepository,
                 $diagnosticBrandRepository,
-                $priceCategoryRepository
+                $priceCategoryRepository,
+
             );
         }
 
@@ -310,40 +317,10 @@ class PageController extends AbstractController
 
         $contactTitle = $model->getBrandName();
 
-        if (!is_null($model->getPriceBrand()->getPhone()) or !empty($model->getPriceBrand()->getPhone())){
-            $phone['title'] = $model->getPriceBrand()->getPhone();
-            $phone['value'] = str_replace(array('(', ')', '-', ' '), '', $model->getPriceBrand()->getPhone());
-        }else{
-            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar' or $brand_name == 'Volvo'){
-                $phone['value'] = $this->phone2->getValue();
-                $phone['title']  = $this->phone2->getTitle();
-            }
-            elseif($brand_name == 'Porsche'){
-                $phone['value'] = $this->phone3->getValue();
-                $phone['title'] = $this->phone3->getTitle();
-            }else{
-                $phone['value'] = $this->phone->getValue();
-                $phone['title'] = $this->phone->getTitle();
-            }
-        }
 
-        if(!is_null($model->getPriceBrand()->getAddress()) or !empty($model->getPriceBrand()->getAddress())){
-            $address['value'] = $model->getPriceBrand()->getAddress();
-        }else{
-            if($brand_name == 'Land Rover' or $brand_name == 'Jaguar' or $brand_name == 'Volvo'){
-                $address = $this->configRepository->findOneBy(['name'=>'address2']);
-            }elseif($brand_name == 'Porsche'){
-                $address = $this->configRepository->findOneBy(['name'=>'address3']);
-            }else{
-                $address = $this->configRepository->findOneBy(['name'=>'address']);
-            }
-        }
-
-        $map = $model->getPriceBrand()->getMap();
-        if(empty($map)){
-            $map = null;
-        }
         $categories = $priceCategoryRepository->findAll();
+        $offers = $this->specialOfferRepository->findBy(['published' => 1]);
+        $gallery = $this->galleryService->getImages('1');
 
 
         $context = [
@@ -354,12 +331,11 @@ class PageController extends AbstractController
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
             'pageWork' => $work,
-            'phone' => $phone,
-            'address'=> $address,
             'contactTitle'=>$contactTitle,
             'diagnostic' => $diagnostic,
-            'map' => $map,
             'categories' => $categories,
+            'offers' => $offers,
+            'gallery' => $gallery,
 
         ];
 
@@ -478,47 +454,6 @@ class PageController extends AbstractController
                                      PriceCategoryRepository $priceCategoryRepository
         )
         {
-            if (is_null($rootService->getAdvIcon1())) {
-                if ($rootService->getParent() !== null && $rootService->getParent()->getAdvIcon1() !== null) {
-                    $rootService->setAdvIcon1($rootService->getParent()->getAdvIcon1());
-                }
-            }
-            if (is_null($rootService->getAdvIcon2())) {
-                if ($rootService->getParent() !== null && $rootService->getParent()->getAdvIcon2() !== null) {
-                    $rootService->setAdvIcon2($rootService->getParent()->getAdvIcon2());
-                }
-            }
-            if (is_null($rootService->getAdvIcon3())) {
-                if ($rootService->getParent() !== null && $rootService->getParent()->getAdvIcon3() !== null) {
-                    $rootService->setAdvIcon3($rootService->getParent()->getAdvIcon3());
-                }
-            }
-            if (is_null($rootService->getAdvIcon4())) {
-                if ($rootService->getParent() !== null && $rootService->getParent()->getAdvIcon4() !== null) {
-                    $rootService->setAdvIcon4($rootService->getParent()->getAdvIcon4());
-                }
-            }
-            if (is_null($rootService->getAdvText1())) {
-                if ($rootService->getParent() !== null && $rootService->getParent()->getAdvText1() !== null) {
-                    $rootService->setAdvText1($rootService->getParent()->getAdvText1());
-                }
-            }
-            if (is_null($rootService->getAdvText2())) {
-                if ($rootService->getParent() !== null && $rootService->getParent()->getAdvText2() !== null) {
-                    $rootService->setAdvText2($rootService->getParent()->getAdvText2());
-                }
-            }
-            if (is_null($rootService->getAdvText3())) {
-                if ($rootService->getParent() !== null && $rootService->getParent()->getAdvText3() !== null) {
-                    $rootService->setAdvText3($rootService->getParent()->getAdvText3());
-                }
-            }
-            if (is_null($rootService->getAdvText4())) {
-                if ($rootService->getParent() !== null && $rootService->getParent()->getAdvText4() !== null) {
-                    $rootService->setAdvText4($rootService->getParent()->getAdvText4());
-                }
-            }
-
 
             $work = $naschirabotyRepository->findOneBy([], ['id' => 'DESC']);
 
@@ -529,6 +464,9 @@ class PageController extends AbstractController
 
             $categories = $priceCategoryRepository->findAll();
 
+            $offers = $this->specialOfferRepository->findBy(['published' => 1]);
+            $gallery = $this->galleryService->getImages('1');
+
             return $this->render('v2/pages/root-service.html.twig', [
                 'page' => $rootService,
                 'models' => $models,
@@ -536,16 +474,10 @@ class PageController extends AbstractController
                 'topMenu' => $topMenu,
                 'leftMenu' => $leftMenu,
                 'pageWork' => $work,
-                'phone' => $this->phone,
-                'phone2' => $this->phone2,
-                'phone3' => $this->phone3,
-                'address' => $this->address,
-                'address2' => $this->address2,
-                'address3' => $this->address3,
-                'phone4' => $this->phone4,
-                'address4' => $this->address4,
                 'categories' => $categories,
-                'serviceName' => $rootService->getName()
+                'serviceName' => $rootService->getName(),
+                'offers' => $offers,
+                'gallery' => $gallery,
             ]);
         }
 

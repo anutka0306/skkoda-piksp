@@ -1,12 +1,5 @@
 {% extends 'v2/base.html.twig' %}
 
-{#{% block header_line %}
-    {{ include('v2/blocks/include/header_models.html.twig', {models : models ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
-{% endblock %}
-{% block header_banner %}
-    {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, 'customH1': page.h1 }) }}
-{% endblock %}#}
-
 {% block header_line %}
     {{ include('v3/blocks/include/header.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
 {% endblock %}
@@ -16,23 +9,18 @@
 {% endblock %}
 
 {% block body %}
+    {{ include('v3/blocks/section/steps.html.twig') }}
     {{ include('elements/_content.html.twig') }}
-    {{ getBrandGallery() }}
-    {{ price_list(page) }}
-    {{ include('elements/zayavka_raschet_form.html.twig') }}
-    {{ brand_models_service(brand, brand.path) }}
-    {{ include('elements/_advantages.html.twig') }}
-    {{ include('elements/_advantages2.html.twig') }}
-    {{ special_offers(page.brandAndModelName) }}
-    {{ include('elements/_about_company.html.twig') }}
-    {% if pageWork is not empty %}
-        {% if pageWork is iterable %}
-            {{ include('elements/examples.html.twig', {'pageWork' : pageWork[0]}) }}
-        {% else %}
-            {{ include('elements/examples.html.twig', {'pageWork' : pageWork}) }}
-        {% endif %}
-    {% endif %}
-    {{ include('elements/_quote.html.twig') }}
-    {{ include('elements/_team.html.twig') }}
-    {{ include('elements/_save_page.html.twig') }}
+
+    {{ include('v3/blocks/section/promo.html.twig') }}
+    {{ include('v3/blocks/section/opinions.html.twig') }}
+    {{ include('v3/blocks/section/benefits.html.twig') }}
+    {{ include('v3/blocks/section/gallery.html.twig') }}
+    <section class="ourProduction__block" id="works">
+        <div class="container">
+            {{ include('v3/blocks/section/warranty.html.twig') }}
+        </div>
+    </section>
+    {{ include('v3/blocks/section/questions.html.twig') }}
+
 {% endblock %}

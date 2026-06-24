@@ -6500,3 +6500,11 @@ blockquote::before {
         left: 0 !important;
     }
 }
+
+#breadcrumbs {
+    padding: 30px 0;
+}
+
+#breadcrumbs .navigation_item {
+    font-weight: 600;
+}
