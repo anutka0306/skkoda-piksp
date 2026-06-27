@@ -94,9 +94,17 @@
     <meta name="google-site-verification" content="gs3z8Lf5jo6HRVL_CGPym9ZpbXDV5CZGP6-MKOydevs" />
 
 
-    <title>Специализированный сервис SKODA рядом с вами! Ремонт, обслуживание и диагностика!</title>
-    <meta name="description" content="Автосервис по ремонту и диагностике Skoda! Народные цены! Специалисты с опытом от 10 лет! Весь спектр услуг! Гарантия на работы и запчасти!"/>
-    <meta name="keywords" content="skoda сервис, ремонт skoda, автосервис skoda, skoda сервис в спб, сто skoda, ремонт двигателей skoda, замена двигателя skoda, ремонт турбин skoda, замена ступичного подшипника skoda, замена тормозных колодок skoda, плановое ТО SKODA" />
+    <title>{% block title %}{{ page.metaTitle ?? (page.h1~' в Санкт-Петербурге. «КарOk»') }}{% endblock %}</title>
+    <meta name="description" content="{% block description %}{% endblock %}"/>
+    <meta name="keywords" content="{% block keywords %}{% endblock %}"/>
+    <meta http-equiv="Last-Modified" content="{% block last_modified %}{{ page.modifyDate|date('D, d M Y H:i:s') }}{% endblock%} GMT">
+    <link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}"/>
+
+    <meta property="og:title" content="{{ block('title') }}"/>
+    <meta property="og:keywords" content="{{ block('keywords') }}"/>
+    <meta property="og:description" content="{{ block('description') }}"/>
+    <meta property="og:url" content="{% block ogUrl %}{{ app.request.schemeAndHttpHost~page.path }}{% endblock %}"/>
+    <meta property="og:image" content="{{ app.request.schemeAndHttpHost }}/img/og-logo.png"/>
 
 
     <link rel="icon" type="image/png" href="/v3/favicon/apple-touch-icon.png">
@@ -118,18 +126,6 @@
     <link rel="stylesheet" href="/v3/assets/css/slider.css">
     <link rel="stylesheet" href="/v3/assets/css/jquery.fancybox.min.css">
     <link rel="stylesheet" href="/v3/assets/css/style.css">
-
-
-    <meta property="og:title" content="Специализированный сервис SKODA рядом с вами! Ремонт, обслуживание и диагностика!" />
-    <meta property="og:site_name" content="«CAR-OK»" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="./index/" />
-    <meta property="og:description" content="Автосервис по ремонту и диагностике Skoda! Народные цены! Специалисты с опытом от 10 лет! Весь спектр услуг! Гарантия на работы и запчасти!" />
-    <meta property="og:image" content="/v3/assets/images/products/landing_bg.jpg"/>
-
-
-    <link rel="canonical" href=".//" />
-
 
     <link href="/v3/assets/js/animation/fm.revealator.jquery.min.css" rel="stylesheet" type="text/css" defer/>
 

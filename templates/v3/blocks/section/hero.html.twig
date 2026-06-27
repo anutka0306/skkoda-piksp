@@ -16,15 +16,20 @@
                     <h1 class="main_slide-title">
                         {% if customH1 is defined %}
                             {{ customH1 }}
+
                         {% elseif serviceName is defined %}
                             {{ serviceName }} Skoda
-                        {% else %}
-                            Профессиональный ремонт и обслуживание Skoda
-                        {% endif %}
-
                             {% if modelName is defined %}
                                 {{ modelName }}
                             {% endif %}
+
+                        {% elseif modelName is defined %}
+                            Ремонт Skoda {{ modelName }}
+                        {% else %}
+                            Ремонт Шкода в Санкт-Петербурге
+                        {% endif %}
+
+
                     </h1>
                     <div class="main_slide-text">Качество дилера, цены ниже на 40%. Более 280 видов работ</div>
                     <div class="hero-advantages__items container">

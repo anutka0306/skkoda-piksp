@@ -1,11 +1,12 @@
 {% extends 'v2/base.html.twig' %}
 
-{#{% block header_line %}
-    {{ include('v2/blocks/include/header_models.html.twig', {models : models ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
+{% block title %}
+     {{ page.name~' Skoda — честная цена и гарантия | Специализированный сервис «КарOk» в Санкт-Петербурге' }}
 {% endblock %}
-{% block header_banner %}
-    {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1, 'customH1': page.h1 }) }}
-{% endblock %}#}
+
+{% block description %}
+   {{page.name~' Skoda. Профессиональный ремонт и обслуживание Skoda в Санкт-Петербурге✅ Подбор запчастей под модель. Смета до начала работ. ✅ Звоните в «КарOk»!'}}
+{% endblock %}
 
 {% block header_line %}
     {{ include('v3/blocks/include/header.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}

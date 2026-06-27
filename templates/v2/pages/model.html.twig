@@ -1,7 +1,11 @@
 
 {% extends 'v2/base.html.twig' %}
-{% block title %} {{ 'Ремонт '~page.priceBrand.name~' '~ page.priceModel.name~' в Санкт-Петербурге. Автосервис '~  page.priceBrand.name|upper~' '~ page.priceModel.name|upper~' ПИК' }} {% endblock %}
-{% block description %} {% if phone is defined %}{{'Ремонт '~ page.priceBrand.name~' '~ page.priceModel.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ Ремонт '~page.priceBrand.nameRus~' '~ page.priceModel.name~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис '~page.priceBrand.name|upper~' '~ page.priceModel.name|upper~ ' «ПИК» - ☎ '~phone.value }} {% else%} {{'Ремонт '~ page.priceBrand.name~' '~ page.priceModel.name~' в Санкт-Петербурге.✔ Ежедневно 9:00 - 21:00 ✔ Ремонт '~page.priceBrand.nameRus~' '~ page.priceModel.name~' в день обращения ✔ Стоимость и цены. ✔ Гарантия 1 год! Профильный автосервис '~page.priceBrand.name|upper~' '~ page.priceModel.name|upper~ ' «ПИК» - ☎ '}}{% endif %}{% endblock %}
+{% block title %}
+    {{ 'Ремонт '~page.priceBrand.name~' '~ page.priceModel.name~' | Обслуживание Skoda в «КарOk» в Санкт-Петербурге ' }}
+{% endblock %}
+{% block description %}
+    {{'Ремонт '~ page.priceBrand.name~' '~ page.priceModel.name~' — профессиональный ремонт Шкода всех моделей в Санкт-Петербурге ✅  Подбор запчастей, смета до начала работ ✅  Мастера со стажем 10 лет в «КарOk»'}}
+{% endblock %}
 
 
 {% block header_line %}

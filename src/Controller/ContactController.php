@@ -10,6 +10,7 @@ use App\Repository\MenuTopRepository;
 use App\Repository\MenuLeftRepository;
 use App\Repository\PriceBrandRepository;
 use App\Repository\ConfigRepository;
+use App\Repository\PriceCategoryRepository;
 
 class ContactController extends AbstractController
 {
@@ -37,13 +38,25 @@ class ContactController extends AbstractController
      */
     protected $configRepository;
 
-    public function __construct(ContentRepository $repository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, PriceBrandRepository $priceBrandRepository, ConfigRepository $configRepository)
+    /**
+     * @var PriceCategoryRepository
+     */
+    protected $priceCategoryRepository;
+
+    public function __construct(ContentRepository $repository,
+                                MenuTopRepository $menuTopRepository,
+                                MenuLeftRepository $menuLeftRepository,
+                                PriceBrandRepository $priceBrandRepository,
+                                ConfigRepository $configRepository,
+                                PriceCategoryRepository $priceCategoryRepository
+    )
     {
         $this->page_repository = $repository;
         $this->menuTopRepository = $menuTopRepository;
         $this->menuLeftRepository = $menuLeftRepository;
         $this->priceBrandRepository = $priceBrandRepository;
         $this->configRepository = $configRepository;
+        $this->priceCategoryRepository = $priceCategoryRepository;
     }
 
     /**
@@ -56,35 +69,16 @@ class ContactController extends AbstractController
         }
         $topMenu = $this->menuTopRepository->findBy([], ['ordering'=>'ASC']);
         $leftMenu = $this->menuLeftRepository->findBy([], ['ordering'=>'ASC']);
-        $brands = $this->priceBrandRepository->findAll();
+        $categories = $this->priceCategoryRepository->findAll();
 
-        $this->phone = $this->configRepository->findOneBy(['name' =>'phone']);
-        $this->phone2 = $this->configRepository->findOneBy(['name' => 'phone2']);
-        $this->phone3 = $this->configRepository->findOneBy(['name' => 'phone3']);
-        $this->address = $this->configRepository->findOneBy(['name' => 'address']);
-        $this->address2 = $this->configRepository->findOneBy(['name'=> 'address2']);
-        $this->address3 = $this->configRepository->findOneBy(['name'=> 'address3']);
-        $this->phone4 = $this->configRepository->findOneBy(['name' =>'phone4']);
-        $this->address4 = $this->configRepository->findOneBy(['name'=> 'address4']);
 
         return $this->render('v2/pages/contact/index.html.twig', [
             'page' => $page,
-            'brands' => $brands,
-            'markServiceImgs' => [
-                'japan' => ['Toyota','Infiniti','Lexus','Nissan','Mazda','Mitsubishi'],
-                'china' => ['Chery','Geely','Haval'],
-                'vag' => ['Audi','Bentley','Jaguar','Lamborghini','Land Rover','Porsche','Seat','Skoda','Volkswagen']
-            ], // TODO надо из бд подтягивать
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
-            'phone' => $this->phone,
-            'phone2' => $this->phone2,
-            'phone3' => $this->phone3,
-            'address' => $this->address,
-            'address2' => $this->address2,
-            'address3' => $this->address3,
-            'phone4' => $this->phone4,
-            'address4' => $this->address4,
+            'categories' => $categories,
+            'customH1' => 'Контакты'
+
         ]);
     }
 }
