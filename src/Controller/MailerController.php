@@ -149,178 +149,34 @@ class MailerController extends AbstractController
         if (!empty($request->get('b_control'))) {
             throw new BadRequestHttpException('Bot detected.');
         }
-        // Форма "Заказать Звонок", "Записаться на СТО"
+
+        $url = $request->server->get('HTTP_REFERER');
+        $address = 'СПБ4';
+
         /* send to telegram */
         $arr = array(
-            "Заявка" => " с формы ".$request->get('form'),
+            "Имя" => $request->get('name'),
             "Телефон" => $request->get('phone'),
-            "Со страницы " => 'https://piksp.ru'.$request->get('url'),
-            "Марка" => $request->get('mark'),
-            "Адрес" => $request->get('address'),
+            "Сообщение" => $request->get('message'),
+            "Со страницы" => $url,
         );
-        /*$result['arr'] = $arr;
-        $result['post'] = $post;
-        echo json_encode($result, JSON_UNESCAPED_UNICODE);return;*/
-        $this->sendTelegram($arr, $request->get('address'));
 
-        //Begin roistat
-        // $roistatFilePath = "{$_SERVER['DOCUMENT_ROOT']}/roistat/RoistatEvents.php";
-        // if(is_file($roistatFilePath)) {
-        //     require_once $roistatFilePath;
-        //     try {
-        //         $event = new \RoistatEvents($_REQUEST, 'Заявка с формы piksp.ru');
-        //         $event->execute();
-        //     }catch (\Exception $exception) {}
-        // }
-        $this->getRoistat($request->get('phone'), 'https://piksp.ru'.$request->get('url'), '' , '', $request->get('mark'), $request->get('address'));
+        $this->sendTelegram($arr, $address);
+
+
+        $this->getRoistat($request->get('phone'), $url, $request->get('name') , '', '', $address);
         //End roistat
 
-        $to = 'info@piksp.ru';
 
-        $email = (new Email())
-            ->from('info@my-side.ru')
-            ->to((string)$to)
-            ->subject('Новая заявка с сайта Piksp.ru')
-            ->html('<p>Новая заявка с сайта Piksp.ru</p>
-            <p>Телефон отправителя: ' . $request->get('phone') . '</p>'
-            );
-        //$mailer->send($email);
-
-
-        return new JsonResponse(['success'=>'<p>Спасибо! Ваша заявка отправлена.</p>']);
+        return new JsonResponse(
+            [
+                'success' => true,
+                'message' => 'Спасибо! Ваша заявка отправлена.'
+            ]);
     }
 
 
-    /**
-     * @Route("/raschet_form", name="raschet_form")
-     */
-    public function raschet_form(Request $request, MailerInterface $mailer)
-    {
 
-        //        $phone = '', $comment = '', $name = '', $email = ''
-        $this->getRoistat(
-            $request->get('phone'),
-            'Марка = ' . $request->get('mark') .
-            ' Год = ' . $request->get('year') .
-            ' Эвакуатор = ' . $request->get('evakuator') .
-            ' Запчасти = ' . $request->get('zapchasti') .
-            ' Проблема = ' . $request->get('problem') .
-            'URL = https://piksp.ru'.$request->get('url')
-        );
-
-        $token = "1737028189:AAEFd51Z6vSHslgX-CNMtItwWD6Iy5EIP74";
-        $chat_id = "-1001408803296";# Заявки VAG-PIK
-
-        $arr = array(
-            "Заявка с" => " с формы запроса расчета piksp.ru ",
-            "Телефон" => $request->get('phone'),
-            "Марка авто" => $request->get('mark'),
-            "Года авто" => $request->get('year'),
-            "Нужен ли эвакуатор" => $request->get('evakuator'),
-            "Нужны ли запчасти" => $request->get('zapchasti'),
-            "Описание проблемы" => $request->get('problem'),
-            "Со страницы: " => 'https://piksp.ru'.$request->get('url'),
-        );
-        /*Цикл по массиву (собираем сообщение) */
-        $txt = '';
-        foreach($arr as $key => $value) {
-            $txt .= "<b>".$key."</b>: ".htmlspecialchars($value)."\n";
-        }
-        if (!$this->sendToTelegram($token, $chat_id, $txt)) {
-            return new JsonResponse(['error' => '<p>Ошибка при отправке в Telegram</p>']);
-        }
-
-        /*$to = 'info@piksp.ru';
-
-        $email = (new Email())
-            ->from('info@my-side.online')
-            ->to((string)$to)
-            ->subject('Новая заявка с сайта Piksp.ru')
-            ->html('<p>Новая заявка с сайта Piksp.ru</p>
-            <p>Телефон отправителя: ' . $request->get('phone') . '</p>'
-            );
-        $mailer->send($email);*/
-
-
-        return new JsonResponse(['success'=>'<p>Спасибо! Ваша заявка отправлена.</p>']);
-    }
-
-    public function addEmail($email, ValidatorInterface $validator)
-    {
-        $emailConstraint = array(
-            new Assert\Email(),
-            new Assert\NotBlank(),
-        );
-        $errors = $validator->validate(
-            $email,
-            $emailConstraint
-        );
-
-        if(0 === count($errors)){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public function addName($name, ValidatorInterface $validator)
-    {
-        $nameConstraint = array(
-            new Assert\NotBlank(),
-            new Assert\Length(['min' => 2]),
-            new Assert\Regex(['pattern' => '/^[а-яёА-ЯЁ]+$/'])
-        );
-
-        $errors = $validator->validate(
-            $name,
-            $nameConstraint
-        );
-        if(0 === count($errors)){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public function addPhone($phone, ValidatorInterface $validator)
-    {
-        $phoneConstraint = array(
-            new Assert\NotBlank(),
-            new Assert\Regex(['pattern' => '/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/'])
-        );
-        $errors = $validator->validate(
-            $phone,
-            $phoneConstraint
-        );
-        if(0 === count($errors)){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public function getTo($salon)
-    {
-        switch ($salon) {
-            case 'Научный':
-                return 'anya-programmist@qmotors.ru, webmaster@qmotors.ru, service@tokyogarage.ru, direktor@tokyogarage.ru, master@tokyogarage.ru,kostin@qmotors.ru';
-            case 'Лобненская':
-                return 'info@mirakpp.ru, maxima-x@yandex.ru, service@qmotors.ru, direktor@qmotors.ru, webmaster@qmotors.ru, w.ww@mail.ru,kostin@qmotors.ru,kostin@qmotors.ru';
-            case 'Севастопольский':
-                return 'webmaster@qmotors.ru,service@rovercity.ru,master@rovercity.ru,direktor@rovercity.ru,kostin@qmotors.ru';
-            case 'Нижегородка':
-                return 'webmaster@qmotors.ru,5service@qmotors.ru,5direktor@qmotors.ru,5master@qmotors.ru,kostin@qmotors.ru';
-            case 'Удальцова':
-                return '2direktor@qmotors.ru,2service@qmotors.ru,2master@qmotors.ru,webmaster@qmotors.ru,kostin@qmotors.ru';
-            default:
-                return 'anya-programmist@qmotors.ru, Sav@styled.cc';
-        }
-    }
-
-    public function getTo_salonWithout()
-    {
-        return 'anya-programmist@qmotors.ru, Sav@styled.cc';
-    }
     
 
     private function getRoistat($phone = '', $comment = '', $name = '', $email = '' , $mark = '', $addres = '')
@@ -400,8 +256,26 @@ class MailerController extends AbstractController
             $manager = '307';
         }
         $this->megaCall($phone, $manager, $clid);
-		
-        file_get_contents("https://cloud.roistat.com/api/proxy/1.0/leads/add?" . http_build_query($roistatData));
+
+        $url = 'https://cloud.roistat.com/api/proxy/1.0/leads/add';
+
+        $ch = curl_init();
+
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url . '?' . http_build_query($roistatData),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => 2,
+            CURLOPT_TIMEOUT => 3,
+            CURLOPT_SSL_VERIFYPEER => true,
+        ]);
+
+        $result = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            error_log('Roistat error: '.curl_error($ch));
+        }
+
+        curl_close($ch);
     }
 	
     public function megaCall($user, $manager, $clid = '') {
@@ -422,13 +296,7 @@ class MailerController extends AbstractController
 
     /* Telegram */
     public function sendTelegram($arr, $address = '') {
-        // $token = "7357196560:AAHE-smtRk-geJmTKswjLhKglUzNp7ymexE";
-        // $chat_id = "-1001668945809";
-        // $token = "1737028189:AAEFd51Z6vSHslgX-CNMtItwWD6Iy5EIP74";
-        // $chat_id = "-1001493902889"; // Заявки VAG-PIK
-        // $chat_id = "-1001408803296"; // ПИКСПБ Лексус
-        // $token = "2102312578:AAF6iR_1pAUR4GY1Vg8TwgF3CsIBCKWQyBg";
-        // $chat_id = "-1001677654724"; // Заявки VAG-PIK
+
         $token = "7357196560:AAHE-smtRk-geJmTKswjLhKglUzNp7ymexE";
         $chat_id = "-1001668945809"; # MERCEDES-PIK // Если "Другое" не "К20", "В2АЕ", "СПБ4"
         
@@ -436,18 +304,8 @@ class MailerController extends AbstractController
             $token = "7357196560:AAHE-smtRk-geJmTKswjLhKglUzNp7ymexE";
             $chat_id = '-1001707616285'; // Пик СПБ4 Заявки
         } 
-        if ($address == 'К20') {
-            // $token = "1737028189:AAEFd51Z6vSHslgX-CNMtItwWD6Iy5EIP74";
-            // $chat_id = "-1001493902889"; // Заявки VAG-PIK
-        	$token = "7357196560:AAHE-smtRk-geJmTKswjLhKglUzNp7ymexE";
-        	$chat_id = '-1001616535220'; // Пик К20 Vag Заявки
-        }
-        if ($address == 'В2АЕ') {
-            $token = "1737028189:AAEFd51Z6vSHslgX-CNMtItwWD6Iy5EIP74";
-            $chat_id = "-1001408803296"; // ПИКСПБ Лексус
-        }
-        
-        
+
+
         $txt = '';
         foreach($arr as $key => $value) {
             $txt .= "<b>".$key."</b>: ".htmlspecialchars($value)."\n";

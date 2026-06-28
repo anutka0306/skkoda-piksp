@@ -1,141 +1,71 @@
-var AjaxForm = {
+function showToast(message, type = 'success') {
 
-    initialize: function (afConfig) {
-        if (!$.fn.ajaxSubmit) {
-            $.fn.ajaxSubmit = function (options) {
-                var form = this;
-                if (options && typeof options.beforeSubmit === 'function' && options.beforeSubmit([], form) === false) {
-                    return form;
-                }
-                form.find('input,textarea,select,button').attr('disabled', false);
-                if (options && typeof options.success === 'function') {
-                    options.success({
-                        success: false,
-                        message: 'Form is not available in the static site preview.'
-                    }, 'error', null, form);
-                }
-                return form;
-            };
-        }
-        if (!$.jGrowl) {
-            $.jGrowl = function (message) {
-                if (message) {
-                    console.warn(message);
-                }
-            };
-            $.jGrowl.defaults = {};
-        }
+    const toast = document.getElementById('toast');
 
-        $(document).ready(function () {
-            $.jGrowl.defaults.closerTemplate = '<div>[ ' + afConfig['closeMessage'] + ' ]</div>';
-        });
+    toast.textContent = message;
+    toast.className = `${type} show`;
 
-        $(document).off('submit', afConfig['formSelector']).on('submit', afConfig['formSelector'], function (e) {
-            $(this).ajaxSubmit({
-                dataType: 'json',
-                data: {pageId: afConfig['pageId']},
-                url: afConfig['actionUrl'],
-                beforeSerialize: function (form) {
-                    form.find(':submit').each(function () {
-                        if (!form.find('input[type="hidden"][name="' + $(this).attr('name') + '"]').length) {
-                            $(form).append(
-                                $('<input type="hidden">').attr({
-                                    name: $(this).attr('name'),
-                                    value: $(this).attr('value')
-                                })
-                            );
-                        }
-                    })
-                },
-                beforeSubmit: function (fields, form) {
-                    //noinspection JSUnresolvedVariable
-                    if (typeof(afValidated) != 'undefined' && afValidated == false) {
-                        return false;
-                    }
-                    form.find('.error').html('');
-                    form.find('.error').removeClass('error');
-                    form.find('input,textarea,select,button').attr('disabled', true);
-                    return true;
-                },
-                success: function (response, status, xhr, form) {
-                    form.find('input,textarea,select,button').attr('disabled', false);
-                    response.form = form;
-                    $(document).trigger('af_complete', response);
-                    if (!response.success) {
-                        AjaxForm.Message.error(response.message);
-                        if (response.data) {
-                            var key, value, focused;
-                            for (key in response.data) {
-                                if (response.data.hasOwnProperty(key)) {
-                                    if (!focused) {
-                                        form.find('[name="' + key + '"]').focus();
-                                        focused = true;
-                                    }
-                                    value = response.data[key];
-                                    form.find('.error_' + key).html(value).addClass('error');
-                                    form.find('[name="' + key + '"]').addClass('error');
-                                }
-                            }
-                        }
-                    }
-                    else {
-                        AjaxForm.Message.success(response.message);
-                        form.find('.error').removeClass('error');
-                        form[0].reset();
-                        //noinspection JSUnresolvedVariable
-                        if (typeof(grecaptcha) != 'undefined') {
-                            //noinspection JSUnresolvedVariable
-                            grecaptcha.reset();
-                        }
-                    }
-                }
-            });
+    clearTimeout(toast.timer);
+
+    toast.timer = setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3500);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    document.querySelectorAll('form.ajax_form').forEach(form => {
+
+        form.addEventListener('submit', async function (e) {
+
             e.preventDefault();
-            return false;
+
+            const btn = form.querySelector('button[type="submit"], button');
+
+            btn.disabled = true;
+
+            const formData = new FormData(form);
+
+            formData.append('url', window.location.href);
+
+            try {
+
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+
+                    showToast(result.message, 'success');
+
+                    form.reset();
+                    if (window.jQuery && $.fancybox) {
+                        $.fancybox.close();
+                    }
+
+                } else {
+
+                    showToast(result.message, 'success');
+
+                }
+
+            } catch (e) {
+
+                console.error(e);
+
+                showToast('Ошибка отправки формы', 'error');
+
+            } finally {
+
+                btn.disabled = false;
+
+            }
+
         });
 
-        $(document).on('keypress change', '.error', function () {
-            var key = $(this).attr('name');
-            $(this).removeClass('error');
-            $('.error_' + key).html('').removeClass('error');
-        });
+    });
 
-        $(document).on('reset', afConfig['formSelector'], function () {
-            $(this).find('.error').html('');
-            AjaxForm.Message.close();
-        });
-    }
-
-};
-
-
-//noinspection JSUnusedGlobalSymbols
-AjaxForm.Message = {
-    success: function (message, sticky) {
-        if (message) {
-            if (!sticky) {
-                sticky = false;
-            }
-            $.jGrowl(message, {theme: 'af-message-success', sticky: sticky});
-        }
-    },
-    error: function (message, sticky) {
-        if (message) {
-            if (!sticky) {
-                sticky = false;
-            }
-            $.jGrowl(message, {theme: 'af-message-error', sticky: sticky});
-        }
-    },
-    info: function (message, sticky) {
-        if (message) {
-            if (!sticky) {
-                sticky = false;
-            }
-            $.jGrowl(message, {theme: 'af-message-info', sticky: sticky});
-        }
-    },
-    close: function () {
-        $.jGrowl('close');
-    },
-};
+});
