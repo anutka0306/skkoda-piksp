@@ -19,6 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ConfigRepository;
 use App\Service\TranslateService;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\PriceCategoryRepository;
 
 class NaschirabotyController extends AbstractController
 {
@@ -46,13 +47,25 @@ class NaschirabotyController extends AbstractController
      */
     protected $paginator;
 
-    public function __construct(SalonManager $salon_manager, ConfigRepository $configRepository, TranslateService $translateService, NaschirabotyRepository $naschirabotyRepository, PaginatorInterface $paginator)
+    /**
+     * @var PriceCategoryRepository
+     */
+    protected $priceCategoryRepository;
+
+    public function __construct(SalonManager $salon_manager,
+                                ConfigRepository $configRepository,
+                                TranslateService $translateService,
+                                NaschirabotyRepository $naschirabotyRepository,
+                                PaginatorInterface $paginator,
+                                PriceCategoryRepository $priceCategoryRepository
+    )
     {
         $this->salon_manager = $salon_manager;
         $this->configRepository = $configRepository;
         $this->translateService = $translateService;
         $this->naschirabotyRepository = $naschirabotyRepository;
         $this->paginator = $paginator;
+        $this->priceCategoryRepository = $priceCategoryRepository;
     }
 
     /**
@@ -62,30 +75,26 @@ class NaschirabotyController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function index( ContentRepository $content_repository, NaschirabotyRepository $naschiraboty_repository,Request $request, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, PriceBrandRepository $priceBrandRepository, ConfigRepository $configRepository): Response
+    public function index( ContentRepository $content_repository,
+                           NaschirabotyRepository $naschiraboty_repository,
+                           Request $request,
+                           MenuTopRepository $menuTopRepository,
+                           MenuLeftRepository $menuLeftRepository,
+                           PriceBrandRepository $priceBrandRepository,
+                           ConfigRepository $configRepository): Response
     {
         $page = $content_repository->findOneByToken('blog');
         $works = $naschiraboty_repository->findAll();
-        //$works = $naschiraboty_repository->findAll(array('id' => 'DESC'));
         krsort($works);
         
         $topMenu = $menuTopRepository->findBy([], ['ordering'=>'ASC']);
         $leftMenu = $menuLeftRepository->findBy([], ['ordering'=>'ASC']);
         $brands = $priceBrandRepository->findAll();
 
-        $this->phone = $this->configRepository->findOneBy(['name' =>'phone']);
-        $this->phone2 = $this->configRepository->findOneBy(['name' => 'phone2']);
-        $this->address = $this->configRepository->findOneBy(['name' => 'address']);
-        $this->address2 = $this->configRepository->findOneBy(['name'=> 'address2']);
-        $this->phone3 = $this->configRepository->findOneBy(['name' =>'phone3']);
-        $this->address3 = $this->configRepository->findOneBy(['name'=> 'address3']);
-        $this->phone4 = $this->configRepository->findOneBy(['name' =>'phone4']);
-        $this->address4 = $this->configRepository->findOneBy(['name'=> 'address4']);
 
         foreach ($works as $key => $value){
             $images = $value->getAttach();
             $value->images = $images;
-            //$value->alias = $this->translateService->transliterate($value->getName());
         }
 
         $form = $this->createForm(
@@ -102,6 +111,7 @@ class NaschirabotyController extends AbstractController
             $request->query->getInt('page', 1),
             8
         );
+        $categories = $this->priceCategoryRepository->findAll();
         return $this->render('v2/pages/naschiraboty/index.html.twig', [
             'page' => $page,
             'form' => $form->createView(),
@@ -110,21 +120,9 @@ class NaschirabotyController extends AbstractController
             'topMenu' => $topMenu,
             'leftMenu' =>$leftMenu,
             'brands' => $brands,
-            'markServiceImgs' => [
-                'japan' => ['Toyota','Infiniti','Lexus','Nissan','Mazda','Mitsubishi'],
-                'china' => ['Chery','Geely','Haval'],
-                'vag' => ['Audi','Bentley','Jaguar','Lamborghini','Land Rover','Porsche','Seat','Skoda','Volkswagen']
-            ], // TODO надо из бд подтягивать
-            'phone' => $this->phone,
-            'phone2' => $this->phone2,
-            'phone3' => $this->phone3,
-            'address' => $this->address,
-            'address2' => $this->address2,
-            'address3' => $this->address3,
-            'phone4' => $this->phone4,
-            'address4' => $this->address4,
             'pagination' => $pagination,
-            /*'hitspage' => $hitspage,*/
+            'categories' => $categories,
+            'customH1' => 'Наши работы',
         ]);
     }
 
@@ -134,21 +132,21 @@ class NaschirabotyController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function item(Naschiraboty $work, Request $request, PriceBrandRepository $priceBrandRepository, MenuTopRepository $menuTopRepository, MenuLeftRepository $menuLeftRepository, ConfigRepository $configRepository, ManagerRegistry $doctrine): Response
+    public function item(
+        Naschiraboty $work,
+        Request $request,
+        PriceBrandRepository $priceBrandRepository,
+        MenuTopRepository $menuTopRepository,
+        MenuLeftRepository $menuLeftRepository,
+        ConfigRepository $configRepository,
+        ManagerRegistry $doctrine): Response
     {
         $images = $work->getAttach();
         $topMenu = $menuTopRepository->findBy([], ['ordering'=>'ASC']);
         $leftMenu = $menuLeftRepository->findBy([], ['ordering'=>'ASC']);
         $brands = $priceBrandRepository->findAll();
 
-        $this->phone = $this->configRepository->findOneBy(['name' =>'phone']);
-        $this->phone2 = $this->configRepository->findOneBy(['name' => 'phone2']);
-        $this->address = $this->configRepository->findOneBy(['name' => 'address']);
-        $this->address2 = $this->configRepository->findOneBy(['name'=> 'address2']);
-        $this->phone3 = $this->configRepository->findOneBy(['name' =>'phone3']);
-        $this->address3 = $this->configRepository->findOneBy(['name'=> 'address3']);
-        $this->phone4 = $this->configRepository->findOneBy(['name' =>'phone4']);
-        $this->address4 = $this->configRepository->findOneBy(['name'=> 'address4']);
+        $categories = $this->priceCategoryRepository->findAll();
 
         $entityManager = $doctrine->getManager();
         if (isset($_COOKIE[$work->getId() . 'HitsPage'])) {
@@ -177,20 +175,9 @@ class NaschirabotyController extends AbstractController
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,
             'brands' => $brands,
-            'markServiceImgs' => [
-                'japan' => ['Toyota','Infiniti','Lexus','Nissan','Mazda','Mitsubishi'],
-                'china' => ['Chery','Geely','Haval'],
-                'vag' => ['Audi','Bentley','Jaguar','Lamborghini','Land Rover','Porsche','Seat','Skoda','Volkswagen']
-            ], // TODO надо из бд подтягивать
-            'phone' => $this->phone,
-            'phone2' => $this->phone2,
-            'phone3' => $this->phone3,
-            'address' => $this->address,
-            'address2' => $this->address2,
-            'address3' => $this->address3,
-            'phone4' => $this->phone4,
-            'address4' => $this->address4,
             'hitspage' => $hitspage,
+            'categories' => $categories,
+            'customH1' => $work->getName(),
         ]);
     }
 }
