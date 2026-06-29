@@ -40,6 +40,20 @@ class ContentRepository extends ServiceEntityRepository
         }
         return $this->findOneBy(['path'=>$path,'published'=>true]);
     }
+
+    public function findPublishedByModel(int $brandId, int $modelId): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.published = :published')
+            ->andWhere('c.brand_id = :brand')
+            ->andWhere('c.model_id = :model')
+            ->setParameter('published', true)
+            ->setParameter('brand', $brandId)
+            ->setParameter('model', $modelId)
+            ->orderBy('c.sort', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
     
 
     // /**

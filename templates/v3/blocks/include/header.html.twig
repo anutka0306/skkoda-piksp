@@ -81,13 +81,52 @@
                     {% endfor %}
 
                 </ul>
-            </li><li >
+            </li>
+            {#<li>
                 <a class="dropdown-toggle" title="Замена ГРМ SKODA" data-hover="dropdown" data-delay="100" data-close-others="false" href="./zamena-grm/">
                     <img src="/v3/assets/images/design_img/grm-prev.png.webp" title="Замена ГРМ"/>Замена ГРМ
                     {{ include('components/icons/header_grm.html.twig') }}
                 </a>
                 <ul class="dropdown"><li class="first"><a href="./zamena-grm/10-tsi/" >1.0 TSI</a></li><li><a href="./zamena-grm/12-tsi/" >1.2 TSI</a></li><li><a href="./zamena-grm/14-tsi-ea111/" >1.4 TSI</a></li><li><a href="./zamena-grm/14-tsi-ea211/" >1.4 TSI</a></li><li><a href="./zamena-grm/15-tsi/" >1.5 TSI</a></li><li><a href="./zamena-grm/16-mpi-ea-111/" >1.6 MPI</a></li><li><a href="./zamena-grm/16-mpi-ea-113/" >1.6 MPI</a></li><li><a href="./zamena-grm/16-tdi/" >1.6 TDI</a></li><li><a href="./zamena-grm/20-tdi/" >2.0 TDI</a></li><li><a href="./zamena-grm/20-tsi/" >2.0 TSI</a></li><li><a href="./zamena-grm/25-tsi/" >2.5 TSI</a></li><li><a href="./zamena-grm/30-tdi/" >3.0 TDI</a></li><li class="last"><a href="./zamena-grm/30-tfsi/" >3.0 TFSI</a></li></ul>
-            </li><li class="last"><a href="./diagnostika" ><img src="/v3/assets/images/design_img/diagnostika-icon.png.webp" title="Диагностика за 0₽"/>Диагностика за 0₽</a></li></ul>
+            </li>#}
+
+            {% set menu = services_header_menu() %}
+
+            {% for model in menu %}
+
+                <li>
+
+                    <a class="dropdown-toggle"
+                       href="#"
+                       data-hover="dropdown"
+                       data-delay="100"
+                       data-close-others="false">
+
+                        {{ model.title }}
+
+                        {{ include('components/icons/header_grm.html.twig') }}
+
+                    </a>
+
+                    <ul class="dropdown">
+
+                        {% for item in model.items %}
+
+                            <li{% if loop.first %} class="first"{% elseif loop.last %} class="last"{% endif %}>
+                                <a href="{{ item.alias }}">
+                                    {{ item.name }}
+                                </a>
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </li>
+
+            {% endfor %}
+
+            <li class="last"><a href="./diagnostika" ><img src="/v3/assets/images/design_img/diagnostika-icon.png.webp" title="Диагностика за 0₽"/>Диагностика за 0₽</a></li></ul>
 
 
         <div class="mobile_contacts">
