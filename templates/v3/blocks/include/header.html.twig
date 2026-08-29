@@ -4,11 +4,11 @@
         <div class="container">
             <div class="top_menu">
                 <ul>
-                    <li><a href="/#advantages" title="о СТО карок">О нашем СТО</a></li>
-                    <li><a href="/offers" title="акции карок"><img src="/v3/assets/images/design_img/aczii-icon.png.webp" title="акция иконка" />Акции</a></li>
-                    <li><a href="/#opinions" title="отзывы карок">Отзывы</a></li>
-                    <li><a href="/blog" title="наши работы">Наши работы</a></li>
-                    <li><a href="/contacts" title="контакты карок">Контакты</a></li>
+                    <li><a href="/#advantages" title="о СТО Skoda Family">О нашем СТО</a></li>
+                    <li><a href="/offers" title="акции Skoda Family"><img src="/v3/assets/images/design_img/aczii-icon.png.webp" title="акция иконка" />Акции</a></li>
+                    
+                    <li><a href="/blog/" title="наши работы">Наши работы</a></li>
+                    <li><a href="/contacts/" title="контакты Skoda Family">Контакты</a></li>
                 </ul>
             </div>
             {#<div class="language">
@@ -30,33 +30,41 @@
         <div class="header_wrapper">
 
             <div class="header_title">
-                <a href="/" class="header_logo" title="logo" alt="logo">
-                    <img src="/v3/img/logo.svg" title="logo" alt="logo" />
+                <a href="/" class="header_logo" title="Skoda Family">
+                    <img src="/v3/img/logo.svg" title="Skoda Family" alt="Skoda Family" />
                 </a>
-                <span>Автосервис и запчасти SKODA</span>
+                <span>Автосервис и запчасти</span>
             </div>
 
-            <div class="header_adres">
-                {{ include('components/icons/header_address.html.twig') }}
-                Адрес Санкт-Петербрг,Турухтанные Острова, 12<br/><sup><b>У МЕТРО:</b> Автово, Юго-Западная, Кировский завод, Ленинский пр.</sup>
+            {# Значок локации и свой телефон у каждого адреса — замечание заказчика 15.08.2026 #}
+            <div class="header_adres header_adres--multi">
+                {# Сетка: слева адрес с метро, справа телефон этой точки — на одной строке #}
+                <div class="header_adres_list">
+                    <div class="header_adres_item">
+                        {{ include('components/icons/header_address.html.twig') }}
+                        <span class="header_adres_text">Санкт-Петербург, Турухтанные Острова, 12
+                        <sup><b>У МЕТРО:</b> Автово, Юго-Западная, Кировский завод, Ленинский пр.</sup></span>
+                    </div>
+                    <a href="tel:+74993900348" class="header_adres_phone" title="phone">+7 (499) 390-03-48</a>
+
+                    <div class="header_adres_item">
+                        {{ include('components/icons/header_address.html.twig') }}
+                        <span class="header_adres_text">Ворошилова, 2АЕ
+                        <sup><b>У МЕТРО:</b> Ладожская, Проспект Большевиков</sup></span>
+                    </div>
+                    <a href="tel:+74993900294" class="header_adres_phone" title="phone">+7 (499) 390-02-94</a>
+
+                    <div class="header_adres_worktime">Ежедневно с 9:00 до 21:00</div>
+                </div>
             </div>
-            <a href="tel:88122374733" class="header_number" title="phone">
-                {{ include('components/icons/header_phone.html.twig') }}
-                8 (812) 237-47-33
-                <span>Ежедневно с 10:00 до 20:00</span>
-            </a>
             <div class="header_messengers">
-                <a href="https://t.me/CarokSto" class="header_mail"  title="telegram" target="_blank">
+                <a href="https://t.me/pikautobot?start=skoda" class="header_mail"  title="telegram" target="_blank">
                     {{ include('components/icons/header_messengers.html.twig') }}
                     Написать в Telegram
                 </a>
-                <a href="https://max.ru/u/f9LHodD0cOJ2bGnTAuCR_8duN5fVu163kASHGKbHcGCb8rCj0fWOftlcrSM" class="header_mail"  title="max" target="_blank">
-                    {{ include('components/icons/header_max.html.twig') }}
-                    Написать в MAX
-                </a>
                 <span>Ответим за 5 минут!</span>
             </div>
-            <a href="./popup_order" class="popup_btn header_btn btn" title="call back">Обратный звонок</a>
+            <a href="#popup_order" class="popup_btn header_btn btn" title="call back">Обратный звонок</a>
 
             <div class="menu_burger">
                 <span></span>
@@ -66,18 +74,21 @@
     </div>
 
     <div class="header_inner">
-        <a href="/" class="header_inner-logo" title="logo">
-            <img src="/v3/img/logo.svg" title="logo" alt="logo">
+        <a href="/" class="header_inner-logo" title="Skoda Family">
+            <img src="/v3/img/logo.svg" title="Skoda Family" alt="Skoda Family">
         </a>
 
-        <ul class="menu" id="menu"><li class="first active"><a href="/" rel="canonical"><img src="/v3/assets/images/design_img/home-icon.png.webp" title="Главная"/>Главная</a></li><li >
-                <a class="dropdown-toggle" title="Профильный ремонт и сервис SKODA" data-hover="dropdown" data-delay="100" data-close-others="false" href="./skoda/">
+        <ul class="menu" id="menu"><li class="first active"><a href="/"><img src="/v3/assets/images/design_img/home-icon.png.webp" title="Главная"/>Главная</a></li><li >
+                <a class="dropdown-toggle" title="Профильный ремонт и сервис SKODA" data-hover="dropdown" data-delay="100" data-close-others="false" style="cursor: pointer">
                     <img src="/v3/assets/images/design_img/car-pic-skoda.svg" title="SKODA"/>SKODA
                     {{ include('components/icons/header_skoda.html.twig') }}
                 </a>
                 <ul class="dropdown">
+                    {# Детейлинг скрыт по замечанию заказчика 15.08.2026 — такой услуги нет #}
                     {% for category in categories %}
-                        <li class="first"><a href="/{{ category.slug }}" >{{ category.name }}</a></li>
+                        {% if category.slug != 'deteyling' %}
+                        <li class="first"><a href="/{{ category.slug }}/" >{{ category.name }}</a></li>
+                        {% endif %}
                     {% endfor %}
 
                 </ul>
@@ -112,7 +123,7 @@
 
                         {% for item in model.items %}
 
-                            <li{% if loop.first %} class="first"{% elseif loop.last %} class="last"{% endif %}>
+                            <li{% if loop.first %} class="first"{% endif %}>
                                 <a href="{{ item.alias }}">
                                     {{ item.name }}
                                 </a>
@@ -120,51 +131,57 @@
 
                         {% endfor %}
 
+                        {# Последний пункт ведёт на страницу модели с полным прайс-листом (п. 20) #}
+                        <li class="last">
+                            <a href="/{{ model.alias }}/">
+                                Другие работы
+                            </a>
+                        </li>
+
                     </ul>
 
                 </li>
 
             {% endfor %}
 
-            <li class="last"><a href="./diagnostika" ><img src="/v3/assets/images/design_img/diagnostika-icon.png.webp" title="Диагностика за 0₽"/>Диагностика за 0₽</a></li></ul>
+            <li class="last"><a href="/diagnostika/" ><img src="/v3/assets/images/design_img/diagnostika-icon.png.webp" title="Диагностика за 0₽"/>Диагностика за 0₽</a></li></ul>
 
 
         <div class="mobile_contacts">
-            <a href="tel:88122374733" class="mob_number" title="phone">
+            <a href="tel:+74993900348" class="mob_number" title="phone">
                 {{ include('components/icons/header_mob_number.html.twig') }}
-                8 (812) 237-47-33
+                +7 (499) 390-03-48
             </a>
-            <a href="https://t.me/CarokSto" class="mob_mail"  title="telegram" target="_blank">
+            <a href="tel:+74993900294" class="mob_number" title="phone">
+                {{ include('components/icons/header_mob_number.html.twig') }}
+                +7 (499) 390-02-94
+            </a>
+            <a href="https://t.me/pikautobot?start=skoda" class="mob_mail"  title="telegram" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px">
                     <image  x="0px" y="0px" width="24px" height="24px"  xlink:href="data:img/png;base64,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" />
                 </svg>
                 Написать в Telegram
             </a>
-            <a href="https://max.ru/u/f9LHodD0cOJ2bGnTAuCR_8duN5fVu163kASHGKbHcGCb8rCj0fWOftlcrSM" class="mob_mail"  title="max" target="_blank">
-                {{ include('components/icons/header_max_icon.html.twig') }}
-                Написать в MAX
-            </a>
-            <a href="./popup_order" class="popup_btn btn" title="call back">Обратный звонок</a>
+            <a href="#popup_order" class="popup_btn btn" title="call back">Обратный звонок</a>
             <p>
                 {{ include('components/icons/header_callback.html.twig') }}
-                Адрес Санкт-Петербрг,Турухтанные Острова, 12<br/>
+                Санкт-Петербург, Турухтанные Острова, 12 — +7 (499) 390-03-48<br/>
+                Ворошилова, 2АЕ — +7 (499) 390-02-94<br/>
+            </p>
         </div>
 
     </div>
 
     <div class="header_inner_subcontacts">
         <span>Скидка 10% на все работы при первом визите на СТО: </span>
-        <a href="tel:88122374733" class="number" title="phone">
+        <a href="tel:+74993900348" class="number" title="phone">
             {{ include('components/icons/header_line_phone.html.twig') }}
-            8 (812) 237-47-33
+            +7 (499) 390-03-48
         </a>
-        <a href="https://t.me/CarokSto" class="socials" title="telegram" target="_blank">
+        <a href="https://t.me/pikautobot?start=skoda" class="socials" title="telegram" target="_blank">
             {{ include('components/icons/header_line_tg.html.twig') }}
         </a>
-        <a href="https://max.ru/u/f9LHodD0cOJ2bGnTAuCR_8duN5fVu163kASHGKbHcGCb8rCj0fWOftlcrSM" class="socials" title="max" target="_blank">
-            {{ include('components/icons/header_line_max.html.twig') }}
-        </a>
-        <a href="./popup_order" class="callback popup_btn" title="callback">
+        <a href="#popup_order" class="callback popup_btn" title="callback">
             {{ include('components/icons/header_line_callback.html.twig') }}
             Обратный звонок
         </a>

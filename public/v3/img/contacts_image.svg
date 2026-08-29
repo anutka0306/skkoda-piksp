@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 603" width="450" height="603" role="img" aria-label="Контакты Skoda Family">
+  <defs>
+    <linearGradient id="pGrad" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0%" stop-color="#9CFFC8"/>
+      <stop offset="38%" stop-color="#4FD98A"/>
+      <stop offset="72%" stop-color="#229A5E"/>
+      <stop offset="100%" stop-color="#0E3A30"/>
+    </linearGradient>
+    <linearGradient id="pShine" x1="0.1" y1="0.05" x2="0.7" y2="0.75">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.5"/>
+      <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- объёмная подложка -->
+  <path transform="translate(10,12)" fill="#0B2A22" opacity="0.35" fill-rule="evenodd"
+        d="M 225 22
+           C 133 22 58 97 58 189
+           C 58 262 129 383 186 466
+           C 205 494 218 513 225 524
+           C 232 513 245 494 264 466
+           C 321 383 392 262 392 189
+           C 392 97 317 22 225 22 Z
+           M 225 121
+           C 264 121 296 153 296 192
+           C 296 231 264 263 225 263
+           C 186 263 154 231 154 192
+           C 154 153 186 121 225 121 Z"/>
+
+  <!-- основная капля -->
+  <path fill="url(#pGrad)" fill-rule="evenodd"
+        d="M 225 22
+           C 133 22 58 97 58 189
+           C 58 262 129 383 186 466
+           C 205 494 218 513 225 524
+           C 232 513 245 494 264 466
+           C 321 383 392 262 392 189
+           C 392 97 317 22 225 22 Z
+           M 225 121
+           C 264 121 296 153 296 192
+           C 296 231 264 263 225 263
+           C 186 263 154 231 154 192
+           C 154 153 186 121 225 121 Z"/>
+
+  <!-- блик -->
+  <path fill="url(#pShine)" fill-rule="evenodd"
+        d="M 225 46
+           C 148 46 82 108 82 189
+           C 82 226 100 275 126 327
+           C 106 275 96 232 96 199
+           C 96 122 155 62 225 62
+           C 252 62 277 70 297 84
+           C 276 60 252 46 225 46 Z"/>
+</svg>

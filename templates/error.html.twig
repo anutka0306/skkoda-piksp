@@ -45,8 +45,11 @@
 
     {% endblock %}
 </head>
-<body itemscope="itemscope" itemtype="https://schema.org/Product">
+<body>
 {{ include('v2/scripts/_yandex_metrics.html.twig') }}
+
+{# Счётчик Roistat — сквозная аналитика сети (проект 116058) #}
+{{ include('v2/scripts/_roistat.html.twig') }}
 <div class="page-wrapper">
     {% block header_line %}
         {{ include('v2/blocks/include/header_error.html.twig') }}

@@ -1,6 +1,8 @@
 {% extends 'v2/base.html.twig' %}
 
 
+{% block description %}{{ page.metaDescription }}{% endblock %}
+
 {% block header_line %}
     {{ include('v3/blocks/include/header.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
 {% endblock %}

@@ -1,13 +1,20 @@
 <section class="cycle">
     <div class="container">
-        <p class="title">«КарОк» - <strong>сертифицированный SKODA сервис</strong></p>
-        <p class="cycle_text">Проводим ремонт и обслуживание с сохранением гарантии производителя</p>
+        <p class="title">Мы — <strong>сертифицированный автосервис Skoda</strong></p>
+        <p class="cycle_text">Проводим ремонт и обслуживание Skoda с сохранением гарантии производителя</p>
         <div class="cycle_items">
+            {% set models_with_photo = ['octavia', 'fabia', 'superb', 'yeti', 'rapid', 'kodiaq', 'karoq', 'roomster', 'octavia-a5', 'octavia-a7', 'octavia-a8', 'octavia-rs', 'octavia-tour'] %}
+            {# Поколения Octavia скрыты по замечанию заказчика от 15.08.2026: страницы дублируют /octavia/ #}
+            {% set hidden_models = ['octavia-a5', 'octavia-a7', 'octavia-a8', 'octavia-rs', 'octavia-tour'] %}
             {% for model in models %}
+                {% if model.code not in hidden_models %}
                 <div class="cycle_item">
                 <a href="/{{ model.code }}" title="Ремонт и сервис SKODA {{ model.name|upper }}">
                     <div class="cycle_item-img">
-                        <img src="/v3/assets/images/design_img/skoda-main-img.png.webp" alt="Ремонт и сервис SKODA OCTAVIA">
+                        <img src="{{ model.code in models_with_photo
+                            ? '/v3/assets/images/design_img/models/model-' ~ model.code ~ '.webp'
+                            : '/v3/assets/images/design_img/skoda-main-img.png.webp' }}"
+                             alt="Ремонт и сервис SKODA {{ model.name|upper }}" loading="lazy">
                     </div>
                     <div class="cycle_item-inner">
                         <div class="cycle_item-title">
@@ -17,6 +24,7 @@
                     </div>
                 </a>
             </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>

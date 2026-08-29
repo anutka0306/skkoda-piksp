@@ -1,13 +1,13 @@
 
 {% extends 'v2/base.html.twig' %}
 {% block title %}
-    {% if page.priceBrand.name is defined and page.priceModel.name is defined%} {{ page.name~' '~page.priceBrand.name~' '~ page.priceModel.name~' — честная цена и гарантия | Специализированный сервис «КарOk» в Санкт-Петербурге' }} {% elseif page.priceBrand.name is defined %}{{ page.name~' '~page.priceBrand.name~' — честная цена и гарантия | Специализированный сервис «КарOk» в Санкт-Петербурге' }} {% else %} {{ page.name~' — честная цена и гарантия | Специализированный сервис «КарOk» в Санкт-Петербурге' }}{% endif%}
+    {% if page.priceBrand.name is defined and page.priceModel.name is defined%} {{ page.name~' '~page.priceBrand.name~' '~ page.priceModel.name~' — честная цена и гарантия | Сервис Шкода в Санкт-Петербурге' }} {% elseif page.priceBrand.name is defined %}{{ page.name~' '~page.priceBrand.name~' — честная цена и гарантия | Сервис Шкода в Санкт-Петербурге' }} {% else %} {{ page.name~' — честная цена и гарантия | Сервис Шкода в Санкт-Петербурге' }}{% endif%}
 {% endblock %}
 
 {% block description %}
-        {% if page.priceBrand.name is defined and page.priceModel.name is defined%}{{page.name~' '~ page.priceBrand.name~' '~ page.priceModel.name~'. Профессиональный ремонт и обслуживание Skoda в Санкт-Петербурге✅ Подбор запчастей под модель. Смета до начала работ. ✅ Звоните в «КарOk»!'}}
-        {% elseif page.priceBrand.name is defined %}{{page.name~' '~ page.priceBrand.name~'. Профессиональный ремонт и обслуживание Skoda в Санкт-Петербурге✅ Подбор запчастей под модель. Смета до начала работ. ✅ Звоните в «КарOk»!'}}
-        {% else %}{{page.name~'. Профессиональный ремонт и обслуживание Skoda в Санкт-Петербурге✅ Подбор запчастей под модель. Смета до начала работ. ✅ Звоните в «КарOk»!'}}
+        {% if page.priceBrand.name is defined and page.priceModel.name is defined%}{{page.name~' '~ page.priceBrand.name~' '~ page.priceModel.name~'. Профессиональный ремонт и обслуживание Skoda в Санкт-Петербурге✅ Подбор запчастей под модель. Смета до начала работ. ✅ Звоните!'}}
+        {% elseif page.priceBrand.name is defined %}{{page.name~' '~ page.priceBrand.name~'. Профессиональный ремонт и обслуживание Skoda в Санкт-Петербурге✅ Подбор запчастей под модель. Смета до начала работ. ✅ Звоните!'}}
+        {% else %}{{page.name~'. Профессиональный ремонт и обслуживание Skoda в Санкт-Петербурге✅ Подбор запчастей под модель. Смета до начала работ. ✅ Звоните!'}}
         {% endif %}
 {% endblock %}
 
@@ -21,6 +21,10 @@
 {% endblock %}
 
 {% block body %}
+    {# Шаблонный SEO-текст, пункт 5б — выводится только если своего текста нет #}
+    {{ include('v3/blocks/section/seo_lead.html.twig',
+        {'lead_type': modelName is defined and modelName ? 'service_model' : 'service'}) }}
+
     {{ include('v3/blocks/section/steps.html.twig') }}
 
 
@@ -28,9 +32,12 @@
 
     {{ include('v3/blocks/section/promo.html.twig') }}
 
-    {{ price_list(page) }}
+    {# Список других услуг убран по замечанию заказчика 15.08.2026: большая перелинковка
+       размывает плотность ключевых слов на конечной странице услуги.
+       Чтобы вернуть — раскомментировать строку ниже. #}
+    {# {{ price_list(page) }} #}
 
-    {{ include('v3/blocks/section/opinions.html.twig') }}
+    {# отзывы скрыты до проработки — 29.07.2026 #}{# include('v3/blocks/section/opinions.html.twig') #}
     {{ include('v3/blocks/section/benefits.html.twig') }}
     {{ include('v3/blocks/section/gallery.html.twig') }}
     <section class="ourProduction__block" id="works">

@@ -1,12 +1,20 @@
+{% import 'v3/macro/keys.html.twig' as keys %}
 <section class="customers" id="akcii">
     <div class="container">
-        <div class="title">Действующие <strong>акции и скидки</strong></div>
+        <div class="title">Акции на ремонт и сервис {{ keys.brand_ru(modelName|default(null)) }}</div>
         <div class="customers_subtitle">Акции и скидки не суммируются в один визит</div>
         <div class="customers_slider">
+            {# два последних slug добавлены 19.08.2026 — акции по баннерам заказчика #}
+            {% set offers_with_photo = ['bazovoe-technicheskoe-obslugivanie', 'besplatnaya-diagnostika-grm', 'sekonomte-na-zamene-grm',
+                                       '20-procentov-na-zamenu-antifriz', '25-procentov-promivka-toplivnoy-sistemi',
+                                       'chistka-vpusknogo-kollektora', 'zamena-cepey-gen2-gen3'] %}
             {% for offer in offers %}
             <div class="customers_slide">
                 <div class="shares__img">
-                    <img src="/v3/assets/cache_image/design_img/sale_img_0x0_6f7.webp" alt="">
+                    <img src="{{ offer.slug in offers_with_photo
+                        ? '/v3/assets/images/design_img/offers/' ~ offer.slug ~ '.jpg'
+                        : '/v3/assets/cache_image/design_img/sale_img_0x0_6f7.webp' }}"
+                         alt="{{ offer.name }}" loading="lazy">
                 </div>
                 <div class="body">
                     <div class="shares_name">{{ offer.name }}</div>

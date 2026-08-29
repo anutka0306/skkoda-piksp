@@ -1,27 +1,33 @@
+{# Простые информационные страницы (политика, cookies и т.п.) — дизайн v3, только текст #}
 {% extends 'v2/base.html.twig' %}
+{% block description %}{{ page.metaDescription }}{% endblock %}
 
 {% block header_line %}
-    {{ include('v2/blocks/include/header.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
+    {{ include('v3/blocks/include/header.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
 {% endblock %}
 
 {% block header_banner %}
-
-    {{ include('v2/blocks/section/hero.html.twig',{ h1 : block('h1') ?? page.h1 }) }}
+    {{ include('v3/blocks/section/hero.html.twig',{ customH1 : page.h1 }) }}
 {% endblock %}
 
-{% block breadcrumbs %}{% endblock %}
+{% block breadcrumbs %}
+    <section id="breadcrumbs" style="margin-top: 100px;">
+        <div class="container">
+            <span class="navigation_item">
+                <a href="/">Главная</a>
+                <span>&#8646;</span>
+            </span>
+            <span class="navigation_item">
+                <span>{{ page.h1 }}</span>
+            </span>
+        </div>
+    </section>
+{% endblock %}
 
 {% block body %}
-    {{ include('elements/_content.html.twig', {'page':page}) }}
-    {{ getBrandGallery() }}
-    {{ price_list(page) }}
-    {{ brands_service_block() }}
-    {{ service_list(page) }}
-    {{ include('elements/_advantages.html.twig') }}
-    {{ include('elements/_advantages2.html.twig') }}
-    {{ special_offers(page.brandAndModelName) }}
-    {{ include('elements/_about_company.html.twig') }}
-    {{ include('elements/_quote.html.twig') }}
-    {{ include('elements/_team.html.twig') }}
-    {{ include('elements/_save_page.html.twig') }}
+    <div class="container work-page">
+        <div class="work-content">
+            {{ page.text|raw }}
+        </div>
+    </div>
 {% endblock %}

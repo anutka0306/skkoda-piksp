@@ -1,11 +1,11 @@
 {% extends 'v2/base.html.twig' %}
 
 {% block title %}
-     {{ page.name~' Skoda — честная цена и гарантия | Специализированный сервис «КарOk» в Санкт-Петербурге' }}
+     {{ page.name~' Skoda — честная цена и гарантия | Сервис Шкода в Санкт-Петербурге' }}
 {% endblock %}
 
 {% block description %}
-   {{page.name~' Skoda. Профессиональный ремонт и обслуживание Skoda в Санкт-Петербурге✅ Подбор запчастей под модель. Смета до начала работ. ✅ Звоните в «КарOk»!'}}
+   {{page.name~' Skoda. Профессиональный ремонт и обслуживание Skoda в Санкт-Петербурге✅ Подбор запчастей под модель. Смета до начала работ. ✅ Звоните!'}}
 {% endblock %}
 
 {% block header_line %}
@@ -17,11 +17,27 @@
 {% endblock %}
 
 {% block body %}
-    {{ include('v3/blocks/section/steps.html.twig') }}
+    {% set is_category = page.path|trim('/')|split('/')|length == 1 %}
+    {% set price_html = is_category ? price_list(page) : '' %}
+
+    {# Шаблонный SEO-текст, пункт 5б — выводится только если своего текста нет #}
+    {{ include('v3/blocks/section/seo_lead.html.twig',
+        {'lead_type': is_category ? 'category' : 'service'}) }}
+
     {{ include('elements/_content.html.twig') }}
 
+    {# Прайс-лист поднят сразу под текст категории — замечание заказчика 15.08.2026 (п. 9):
+       раньше список услуг стоял в самом низу, после акций, гарантий и формы.
+       На конечной услуге список не выводится: он размывает плотность ключей (п. 6). #}
+    {% if is_category %}
+        {{ price_html|raw }}
+    {% endif %}
+
     {{ include('v3/blocks/section/promo.html.twig') }}
-    {{ include('v3/blocks/section/opinions.html.twig') }}
+
+    {# Форма опущена под акции — просьба Татьяны 19.08.2026 #}
+    {{ include('v3/blocks/section/steps.html.twig') }}
+    {# отзывы скрыты до проработки — 29.07.2026 #}{# include('v3/blocks/section/opinions.html.twig') #}
     {{ include('v3/blocks/section/benefits.html.twig') }}
     {{ include('v3/blocks/section/gallery.html.twig') }}
     <section class="ourProduction__block" id="works">
@@ -32,6 +48,5 @@
     {{ include('v3/blocks/section/questions.html.twig') }}
 
 
-    {{ price_list(page) }}
 
 {% endblock %}

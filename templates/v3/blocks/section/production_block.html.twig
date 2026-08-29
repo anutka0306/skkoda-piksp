@@ -12,22 +12,21 @@
                 <span>в подарок</span>
             </blockquote>
         </div>
-        <div class="tabs__block">
-            <p class="cycle_text"><sup>Марка автомобиля:</sup></p>
-            <div class="tab active" data-tab="#tab3">
-                <img src="/v3/assets/images/design_img/car-pic-skoda.svg" title="SKODA" alt="SKODA"/><span>SKODA</span>
-            </div>
-        </div>
+        {# Блок «Марка автомобиля: SKODA» убран по замечанию заказчика 15.08.2026:
+           переключатель марок не нужен, сайт только по Skoda. #}
 
         <!--Содержимое табов-->
         <div id="tab3" class="tab__content active">
             <div class="category__list">
-                {% for category in categories %}
+                {# Детейлинг скрыт по замечанию заказчика 15.08.2026 — такой услуги нет.
+                   Фильтруем до цикла, иначе собьётся нумерация карточек (loop.index). #}
+                {% for category in categories|filter(c => c.slug != 'deteyling') %}
                     <div class="about_item">
                     <a href="/{{ category.slug }}" title="{{ category.name }} SKODA">
                         <div class="about_item-img">{{ '%02d'|format(loop.index) }}</div>
                         <div class="about_item-img-2">SKODA</div>
-                        <div class="about_item-title">{{ category.name }}
+                        {# Марка в названии карточки — просьба Татьяны 20.08.2026 #}
+                        <div class="about_item-title">{{ category.name }} Шкода
                             {{ include('components/icons/service_list_bg.html.twig') }}
                         </div>
                     </a>

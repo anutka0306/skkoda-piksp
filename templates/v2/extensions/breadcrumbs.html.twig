@@ -1,7 +1,33 @@
 
+{# Названия пунктов крошек (правки 20.08.2026):
+   — у пункта модели убираем скобки: «Skoda Octavia (Шкода Октавия)» → «Skoda Octavia»,
+     кириллическое название из скобок запоминаем;
+   — к последнему пункту (услуге) добавляем модель кириллицей: «Замена масла в двигателе
+     Шкода Октавия», а если модели в пути нет — просто марку: «… Skoda»;
+   — там, где марка уже есть, ничего не дублируем. #}
+{% set model_ru = null %}
+{% for item in items %}
+    {% if '(' in item.name %}
+        {% set model_ru = item.name|split('(')|last|trim(')')|trim %}
+    {% endif %}
+{% endfor %}
+
+{% set crumbs = [] %}
+{% for item in items %}
+    {% set nm = item.name %}
+    {% if '(' in nm %}
+        {% set nm = nm|split('(')|first|trim %}
+    {% elseif loop.last and model_ru %}
+        {% set nm = nm ~ ' ' ~ model_ru %}
+    {% elseif not ('Skoda' in nm or 'SKODA' in nm or 'Шкода' in nm) %}
+        {% set nm = nm ~ ' Skoda' %}
+    {% endif %}
+    {% set crumbs = crumbs|merge([{'name': nm, 'path': item.path}]) %}
+{% endfor %}
+
 <section id="breadcrumbs">
     <div class="container">
-        {% for item in items %}
+        {% for item in crumbs %}
             {% if loop.last %}
                 <span class="navigation_item">
                     <span>{{ item.name }}</span>
@@ -17,3 +43,23 @@
     </div>
     {{ include('v2/blocks/section/rating_schema.html.twig',{ page: page ?? null }) }}
 </section>
+
+{# Разметка хлебных крошек для поисковиков — собирается из тех же items, что и видимые крошки.
+   Готовый сервис SchemaBreadcrumbsService не используем: он достался от другого сайта сети,
+   там зашиты чужой бренд и эмодзи в названиях пунктов. #}
+{% if crumbs|length > 1 %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {% for item in crumbs %}{
+          "@type": "ListItem",
+          "position": {{ loop.index }},
+          "name": {{ item.name|json_encode|raw }},
+          "item": {{ (app.request.schemeAndHttpHost ~ item.path)|json_encode|raw }}
+        }{% if not loop.last %},{% endif %}{% endfor %}
+      ]
+    }
+    </script>
+{% endif %}

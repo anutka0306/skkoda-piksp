@@ -1,10 +1,10 @@
 
 {% extends 'v2/base.html.twig' %}
 {% block title %}
-    {{ 'Ремонт '~page.priceBrand.name~' '~ page.priceModel.name~' | Обслуживание Skoda в «КарOk» в Санкт-Петербурге ' }}
+    {{ 'Ремонт '~page.priceBrand.name~' '~ page.priceModel.name~' | Сервис Шкода в Санкт-Петербурге ' }}
 {% endblock %}
 {% block description %}
-    {{'Ремонт '~ page.priceBrand.name~' '~ page.priceModel.name~' — профессиональный ремонт Шкода всех моделей в Санкт-Петербурге ✅  Подбор запчастей, смета до начала работ ✅  Мастера со стажем 10 лет в «КарOk»'}}
+    {{'Ремонт '~ page.priceBrand.name~' '~ page.priceModel.name~' — профессиональный ремонт Шкода всех моделей в Санкт-Петербурге ✅  Подбор запчастей, смета до начала работ ✅  Мастера со стажем 10 лет'}}
 {% endblock %}
 
 
@@ -17,17 +17,22 @@
 {% endblock %}
 
 {% block body %}
-    {{ include('v3/blocks/section/steps.html.twig') }}
+    {# Порядок блоков задан Татьяной 19.08.2026: текст → прайс → почему выбирают нас → форма и акции #}
 
+    {# Шаблонный SEO-текст, пункт 5б — выводится только если своего текста нет #}
+    {{ include('v3/blocks/section/seo_lead.html.twig', {'lead_type': 'model'}) }}
 
     {{ include('elements/_content.html.twig') }}
 
-    {{ include('v3/blocks/section/promo.html.twig') }}
-
     {{ price_list(page) }}
 
-    {{ include('v3/blocks/section/opinions.html.twig') }}
+    {# отзывы скрыты до проработки — 29.07.2026 #}{# include('v3/blocks/section/opinions.html.twig') #}
     {{ include('v3/blocks/section/benefits.html.twig') }}
+
+    {{ include('v3/blocks/section/steps.html.twig') }}
+
+    {{ include('v3/blocks/section/promo.html.twig') }}
+
     {{ include('v3/blocks/section/gallery.html.twig') }}
 <section class="ourProduction__block" id="works">
     <div class="container">

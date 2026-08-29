@@ -1,14 +1,14 @@
 <section class="steps">
     <div class="container">
         <div class="consult_form">
-            <img src="/v3/img/fbf_form_man.png" title="обратная связь карок" alt="обратная связь карок" />
+            <img src="/v3/img/skoda-service-master.webp" title="Мастер сервиса Skoda" alt="Мастер автосервиса Skoda с планшетом" loading="lazy" />
             <div class="consult_form-title title">
                 Проблема с автомобилем?
             </div>
             <div class="consult_form-title sub_title">
                 Наши специалисты помогут выявить проблему и предложат оптимальное решение!
                 <br/><br/>
-                Позвоните нам по телефону <a href="tel:8 (812) 237-47-33" title="phone">8 (812) 237-47-33</a>. Или заполните эту форму, и мы перезвоним вам в течение 10 минут.
+                Позвоните нам по телефону <a href="tel:+74993900348" title="phone">+7 (499) 390-03-48</a>. Или заполните эту форму, и мы перезвоним вам в течение 10 минут.
             </div>
             <form action="/callback_form" method="post" class="ajax_form consult_form-wrapper">
                 <div class="form_inps">
@@ -29,15 +29,13 @@
                         <span class="error_name"></span>
                     </div>
                     <div class="form_inp-wrapper">
-                        <div class="form_inp-title">Комментарий</div>
-                        <textarea name="message" id="af_message" maxlength="200" class="form_area" placeholder="Ваш вопрос или комментарий"></textarea>
-                        <div class="inp_clean">
-                            {{ include('components/icons/step_icon.html.twig') }}
-                        </div>
-                        <!--span class="error_name"></span-->
-                        <div class="form_inp-info">
-                            <div class="form_inp-count"><span>0</span>/200</div>
-                        </div>
+                        <div class="form_inp-title">Выберите адрес <span>*</span></div>
+                        <select name="address" id="af_address" class="form_inp form_select" required>
+                            <option value="" disabled selected>Выберите адрес</option>
+                            <option value="Санкт-Петербург, Турухтанные Острова, 12">Турухтанные Острова, 12 — м. Автово</option>
+                            <option value="Санкт-Петербург, Ворошилова, 2АЕ">Ворошилова, 2АЕ — м. Ладожская</option>
+                        </select>
+                        <span class="error_name"></span>
                     </div>
                 </div>
                 <input type="hidden" name="pageName" value="./" />
@@ -57,7 +55,7 @@
             <label class="form_ok">
                 <input type="checkbox" name="" id="" checked>
                 <span></span>
-                Отправляя форму, вы даете согласие на обработку персональных данных в соответствии с <a href="./texnicheskie-straniczyi/politika" title="политика конфиденциальности и обработки данных" target="blank">политикой конфиденциальности сайта</a>.
+                Отправляя форму, вы даёте согласие на <a href="/politika/" target="_blank" rel="noopener">обработку персональных данных</a>.
 
             </label>
         </div>

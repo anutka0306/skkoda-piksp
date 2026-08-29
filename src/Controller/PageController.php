@@ -241,7 +241,8 @@ class PageController extends AbstractController
         if ($page instanceof Simple) {
             return $this->simple($page,
                 $topMenu,
-                $leftMenu);
+                $leftMenu,
+                $priceCategoryRepository);
         }
 
 
@@ -250,6 +251,11 @@ class PageController extends AbstractController
         }
 
         if($page instanceof Sitemap){
+            // Карта сайта для людей отключена 17.08.2026 по решению заказчика:
+            // страница собиралась старым шаблоном другого сайта сети (чужой логотип и телефоны).
+            // Чтобы вернуть — убрать строку ниже.
+            throw $this->createNotFoundException('Карта сайта для людей отключена');
+
             $query = $em->createQuery("SELECT a FROM App\Entity\Content as a WHERE a.published = 1 ORDER BY a.id");
             $pagination = $paginator->paginate(
                 $query, /* query NOT result */
@@ -488,10 +494,12 @@ class PageController extends AbstractController
      */
     private function simple(Simple $simple,
                             $topMenu,
-                            $leftMenu
+                            $leftMenu,
+                            PriceCategoryRepository $priceCategoryRepository
     )
     {
         return $this->render('v2/pages/simple.html.twig', [
+            'categories' => $priceCategoryRepository->findAll(),
             'page' => $simple,
             'topMenu' => $topMenu,
             'leftMenu' => $leftMenu,

@@ -1,6 +1,12 @@
 
+{% import 'v3/macro/keys.html.twig' as keys %}
+{# модель берём со страницы: на страницах без модели останется только марка #}
+{% set price_model = page.priceModel.name|default(null) %}
 <section class="ourProduction__block" id="works">
     <div class="container">
+
+        {# Заголовок и цены добавлены 19.08.2026 (пункт 7): раньше блок начинался сразу со списка #}
+        <h2 class="title price-list__title">Цены на ремонт {{ keys.brand(price_model) }}</h2>
 
         <div class="services-accordion">
 
@@ -8,17 +14,19 @@
                 {% set services = section.priceServices|filter(service => service.published and service.path) %}
 
                 {% if services|length > 0 %}
+                    {% set section_prices = services|map(item => item.price)|filter(p => p > 0) %}
                     <div class="service-category">
 
                         <div class="service-category__header {{ loop.first ? 'active' : '' }}">
                             <div class="service-category__title">
-                                <sub>{{ section.name }}</sub>
+                                <sub>{{ section.name }} {{ keys.brand(price_model) }}</sub>
                             </div>
 
                             <div class="service-category__right">
-                                <span class="service-category__count">
-                                    {{ services|length }}
-                                </span>
+                                {% if section_prices is not empty %}
+                                    <span class="service-category__price">от {{ min(section_prices)|number_format(0, ',', ' ') }} руб.</span>
+                                {% endif %}
+                                {# счётчик работ убран 19.08.2026: рядом с ценой две цифры путали #}
                                 <span class="service-category__icon"></span>
                             </div>
                         </div>
@@ -39,9 +47,13 @@
                                             </div>
 
                                             <div class="about_item-title">
-                                                {{ service.name }}
+                                                {{ service.name }} Skoda
                                                 {{ include('components/icons/service_list_bg.html.twig') }}
                                             </div>
+
+                                            {% if service.price > 0 %}
+                                                <div class="about_item-price">от {{ service.price|number_format(0, ',', ' ') }} руб.</div>
+                                            {% endif %}
 
                                         </a>
                                     </div>

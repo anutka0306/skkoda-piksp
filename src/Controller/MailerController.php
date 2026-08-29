@@ -63,14 +63,7 @@ class MailerController extends AbstractController
             $userName = $request->get('user_name_contact');
             $userPhone = $request->get('user_phone_contact');
 
-            //        $phone = '', $comment = '', $name = '', $email = ''
-            $this->getRoistat(
-                $userPhone,
-                $request->get('salon_contact') . ' - ' . $request->get('comment_contact'),
-                $userName,
-                $userEmail
-
-            );
+            $this->callManager($userPhone);
         }
         
         if (0 === count($errors)) {
@@ -142,7 +135,16 @@ class MailerController extends AbstractController
     }
 
     /**
-     * @Route("/callback_form", name="callback_form")
+     * @Route("/callback_form", name="callback_form", methods={"POST"})
+     *
+     * methods={"POST"} добавлен 27.08.2026: без него заявку и звонок с нашей АТС
+     * на произвольный номер можно было инициировать обычной GET-ссылкой.
+     *
+     * Заявка уходит по трём каналам сети (настроено 27.08.2026):
+     *   1. старый чат филиала — прямой sendMessage;
+     *   2. Roistat — сквозная аналитика, проект 116058;
+     *   3. новый чат — бот pikautobot, эндпоинт /site-lead.
+     * Каналы независимы: падение любого не мешает остальным и не ломает форму клиенту.
      */
     public function callback_form(Request $request, MailerInterface $mailer)
     {
@@ -150,22 +152,55 @@ class MailerController extends AbstractController
             throw new BadRequestHttpException('Bot detected.');
         }
 
-        $url = $request->server->get('HTTP_REFERER');
-        $address = 'СПБ4';
+        // Страницу берём из поля url — его добавляет ajaxform/js/default.js;
+        // HTTP_REFERER остаётся запасным вариантом.
+        $url  = $request->get('url') ?: $request->server->get('HTTP_REFERER');
+        $host = $request->getSchemeAndHttpHost();
 
-        /* send to telegram */
+        // Обе формы (v3/blocks/section/steps и v3/popup/popup_order) шлют адрес
+        // человекочитаемой строкой, а чатам, Roistat и боту нужны разные коды филиала.
+        // До 27.08.2026 адрес игнорировался: все заявки уходили в чат СПБ4.
+        $branch = $this->resolveBranch($request->get('address'));
+
+        /* 1. Старый чат филиала */
         $arr = array(
+            "Заявка" => " с формы сайта " . $host . "/",
             "Имя" => $request->get('name'),
             "Телефон" => $request->get('phone'),
+            // В формах вместо поля «Комментарий» теперь выбор адреса сервиса
+            // (замечание заказчика 15.08.2026). Телефон менеджера по-прежнему один.
+            "Адрес сервиса" => $branch['tg'],
             "Сообщение" => $request->get('message'),
             "Со страницы" => $url,
         );
 
-        $this->sendTelegram($arr, $address);
+        $txt = '';
+        foreach ($arr as $key => $value) {
+            $txt .= "<b>" . $key . "</b>: " . htmlspecialchars((string)$value) . "\n";
+        }
 
+        $this->sendTelegram($arr, $branch['ats']);
 
-        $this->getRoistat($request->get('phone'), $url, $request->get('name') , '', '', $address);
-        //End roistat
+        /* 2. Roistat */
+        try {
+            $this->sendRoistat($request, $branch, $host, $url);
+        } catch (\Throwable $e) { /* аналитика не должна ронять форму */ }
+
+        /* 3. Новый чат @pikautobot */
+        try {
+            $this->notifyCallcenter(
+                (string)$request->get('phone'),
+                (string)$request->get('name'),
+                $branch['code'],
+                'skoda',
+                $txt
+            );
+        } catch (\Throwable $e) { /* бот дополнителен, форму клиента не валим */ }
+
+        // Автозвонок клиенту через Мегафон отключён 27.08.2026 по решению Владислава —
+        // тем же решением, что 14.07.2026 сняло автозвонок на 43 файлах остальных
+        // сайтов сети. Клиенту перезванивает менеджер из чата, а не АТС.
+        // $this->callManager($request->get('phone'), 'СПБ4');
 
 
         return new JsonResponse(
@@ -179,60 +214,12 @@ class MailerController extends AbstractController
 
     
 
-    private function getRoistat($phone = '', $comment = '', $name = '', $email = '' , $mark = '', $addres = '')
+    /**
+     * Соединяет клиента с менеджером через АТС по адресу сервиса.
+     * Интеграция с Roistat удалена 07.08.2026 — заказчик подключит свой проект.
+     */
+    private function callManager($phone = '', $addres = '')
     {
-        $callbackPhone = '78129159153';
-        if (array_key_exists('roistat_phone_script_data', $_COOKIE)) {
-            $callbackPhoneJson      = json_decode($_COOKIE['roistat_phone_script_data'], true);
-            $currentCallbackPhone   = current($callbackPhoneJson);
-            
-            $callback = str_replace([' ', '(', ')', '-', '&nbsp;'], '', $currentCallbackPhone['phone']);
-            $callback = trim($callback);
-            
-            //if (isset($_GET['utm_source']) && $_GET['utm_source'] == 'ya-karti-lexus')
-            $callbackPhone = preg_replace('/^\+?(8|7)/', '7', $callback);
-        }
-        
-        $roistatData = array(
-            'roistat' => isset($_COOKIE['roistat_visit']) ? $_COOKIE['roistat_visit'] : 'nocookie',
-            'key'     => 'ODUxOTY2ZGIxZTAzOWRlNGU0M2IwYTBlOTgzNDczYzI6MTE2MDU4', // Ключ для интеграции с CRM, указывается в настройках интеграции с CRM.
-            'title'   => 'Заявка с формы сайта Piksp.ru', // Название сделки
-            'comment' => $comment . ' — +'.$callbackPhone, // Комментарий к сделке
-            'name'    => $name, // Имя клиента
-            'email'   => $email, // Email клиента
-            'phone'   => $phone, // Номер телефона клиента
-			//'order_creation_method' => '', // Способ создания сделки (необязательный параметр). Укажите то значение, которое затем должно отображаться в аналитике в группировке "Способ создания заявки"
-            'is_need_callback' => '1', // Если указано значение '1', на номер клиента будет инициироваться обратный звонок после создания заявки в Roistat (независимо от того, включен ли обратный звонок в Ловце лидов). Если указано значение '0', для данной формы обратный звонок инициироваться не будет (даже если в Ловце лидов включен обратный звонок).
-            'callback_phone' => $callbackPhone, // Переопределяет номер, указанный в настройках обратного звонка.
-            'sync'    => '1', // Было 0 - то есть была отключена
-			//'is_need_check_order_in_processing' => '1', // Включение проверки заявок на дубли
-			//'is_need_check_order_in_processing_append' => '1', // Если создана дублирующая заявка, в нее будет добавлен комментарий об этом
-			//'is_skip_sending' => '1', // Не отправлять заявку в CRM.
-            'fields'  => array(
-                'Адрес'   => $addres,
-                'Марка'   => $mark,
-                'Модель'  => '',
-                'Сайт'    => 'Piksp.ru',
-				//'charset'    => 'Windows-1251' // Сервер преобразует значения полей из указанной кодировки в UTF-8.
-            ),
-        );
-/*
-		//В2АЕ				250				251/252/254
-		//К20 Land Rover	231				231
-		if ($mark == 'Land Rover' || $addres == 'К20') {
-			$manager = '231';
-		} else {
-            if (date("H") % 2 === 0) {
-                $manager = (rand(1, 2) == 1) ? '251' : '254';
-            } else {
-                $manager = (rand(1, 2) == 1) ? '252' : '254';
-            }
-		}
-
-		$this->megaCall($phone, $manager, $callbackPhone);
-		*/
-		
-        /* send to megafon */
         $manager = '212';
         $clid = '78129130538';
         if ($addres == 'К20') {
@@ -256,29 +243,15 @@ class MailerController extends AbstractController
             $manager = '307';
         }
         $this->megaCall($phone, $manager, $clid);
-
-        $url = 'https://cloud.roistat.com/api/proxy/1.0/leads/add';
-
-        $ch = curl_init();
-
-        curl_setopt_array($ch, [
-            CURLOPT_URL => $url . '?' . http_build_query($roistatData),
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CONNECTTIMEOUT => 2,
-            CURLOPT_TIMEOUT => 3,
-            CURLOPT_SSL_VERIFYPEER => true,
-        ]);
-
-        $result = curl_exec($ch);
-
-        if (curl_errno($ch)) {
-            error_log('Roistat error: '.curl_error($ch));
-        }
-
-        curl_close($ch);
     }
-	
+
     public function megaCall($user, $manager, $clid = '') {
+        // Автозвонок отключён по всей сети (14.07.2026), на этом сайте — 27.08.2026.
+        // Заглушка стоит здесь, а не только в местах вызова, чтобы ни один путь
+        // (в т.ч. contact_form) не поднимал звонок с корпоративной АТС.
+        // Включается снятием одной строки.
+        return;
+
         if (strtotime('9:00:00') < time() && strtotime('20:50:00') > time()) {
             $ch = curl_init(); 
             curl_setopt($ch, CURLOPT_URL, 'https://vats332138.megapbx.ru/crmapi/v1/makecall');
@@ -300,6 +273,11 @@ class MailerController extends AbstractController
         $token = "7357196560:AAHE-smtRk-geJmTKswjLhKglUzNp7ymexE";
         $chat_id = "-1001668945809"; # MERCEDES-PIK // Если "Другое" не "К20", "В2АЕ", "СПБ4"
         
+        if ($address == 'В2АЕ') {
+            // Площадка Ворошилова 2АЕ — тот же бот сети, другой чат (как на skoda.piksp.ru).
+            $chat_id = '-1001408803296'; // ПИКСПБ Лексус
+        }
+
         if ($address == 'СПБ4') {
             $token = "7357196560:AAHE-smtRk-geJmTKswjLhKglUzNp7ymexE";
             $chat_id = '-1001707616285'; // Пик СПБ4 Заявки
@@ -348,5 +326,120 @@ class MailerController extends AbstractController
         curl_close($ch);
 
         return isset($response['ok']) && $response['ok'] === true;
+    }
+
+    /**
+     * Приводит адрес из формы к кодам сети ПИК.
+     * code — для бота pikautobot, tg — текст для чата, roistat — поле «Адрес» в аналитике,
+     * ats — код филиала для sendTelegram().
+     */
+    private function resolveBranch($raw)
+    {
+        $s = (string)$raw;
+
+        if ($s !== '' && (mb_stripos($s, 'Турухтанные', 0, 'UTF-8') !== false
+            || mb_stripos($s, 'ТО12', 0, 'UTF-8') !== false
+            || mb_stripos($s, 'СПБ4', 0, 'UTF-8') !== false)) {
+            return array(
+                'code'    => 'to12',
+                'tg'      => 'Дор. на Турухтанные Острова 12',
+                'roistat' => 'СПБ4',
+                'ats'     => 'СПБ4',
+            );
+        }
+
+        if ($s !== '' && (mb_stripos($s, 'Ворошилова', 0, 'UTF-8') !== false
+            || mb_stripos($s, 'В2АЕ', 0, 'UTF-8') !== false)) {
+            return array(
+                'code'    => 'v2ae',
+                'tg'      => 'ул. Ворошилова д. 2АЕ',
+                'roistat' => 'В2АЕ',
+                'ats'     => 'В2АЕ',
+            );
+        }
+
+        // Адрес не выбран или незнакомый — маршрут, который был на сайте до 27.08.2026.
+        return array(
+            'code'    => '',
+            'tg'      => $s !== '' ? $s : 'не выбран',
+            'roistat' => '',
+            'ats'     => 'СПБ4',
+        );
+    }
+
+    /**
+     * Лид в Roistat (проект 116058) — тот же приём, что на остальных сайтах сети.
+     * roistat_visit берётся из куки счётчика; без куки Roistat принимает заявку как 'nocookie'.
+     */
+    private function sendRoistat(Request $request, array $branch, $host, $url)
+    {
+        $roistatData = array(
+            'roistat' => isset($_COOKIE['roistat_visit']) ? $_COOKIE['roistat_visit'] : 'nocookie',
+            'key'     => 'MjcxMzIwOjExNjA1ODo2OWY4YmE5ZmQxMzUwZDY5NmFjYWNlNGJmNTAxNGExYQ==',
+            'title'   => 'Заявка с формы сайта ' . $host . '/',
+            'comment' => (string)$url,
+            'name'    => (string)$request->get('name'),
+            'email'   => '',
+            'phone'   => (string)$request->get('phone'),
+            'order_creation_method' => '',
+            // Автозвонок Roistat выключен — по сети обратный звонок отключён 14.07.2026.
+            'is_need_callback' => '0',
+            'sync'    => '0',
+            'is_need_check_order_in_processing' => '0',
+            'is_need_check_order_in_processing_append' => '0',
+            'is_skip_sending' => '0',
+            'fields'  => array(
+                'Адрес'  => $branch['roistat'],
+                'Марка'  => 'Skoda',
+                'Модель' => '-',
+                'Сайт'   => preg_replace('~^https?://~', '', (string)$host),
+            ),
+        );
+
+        $ch = curl_init();
+        curl_setopt_array($ch, array(
+            CURLOPT_URL            => 'https://cloud.roistat.com/api/proxy/1.0/leads/add?' . http_build_query($roistatData),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => 3,
+            CURLOPT_TIMEOUT        => 7,
+        ));
+        curl_exec($ch);
+        curl_close($ch);
+    }
+
+    /**
+     * «Новые» чаты сети: заявка уходит боту pikautobot, он заводит тему на площадке.
+     * Собака перед именем бота в докблоках запрещена: Doctrine читает любой @токен
+     * как аннотацию и роняет весь роутинг (проверено на боевом 27.08.2026).
+     * Врезка стандартная для сайтов сети, перенесена с боевого skoda.piksp.ru
+     * (Режим A: бот дополняет старый чат, а не заменяет его).
+     */
+    private function notifyCallcenter($phone, $name, $addrCode, $brand, $comment) {
+        try {
+            if (!function_exists('curl_init')) { return; }
+            $secret = getenv('SITE_LEAD_SECRET') ?: '64f240680d8ec71670ff408779e6370945d8f6362353e5ad';
+            $payload = http_build_query(array(
+                'phone'         => (string)$phone,
+                'name'          => (string)$name,
+                'address'       => (string)$addrCode,
+                'brand'         => (string)$brand,
+                'city'          => 'spb',
+                'comment'       => (string)$comment,
+                'roistat_visit' => isset($_COOKIE['roistat_visit']) ? $_COOKIE['roistat_visit'] : '',
+            ));
+            $ch = curl_init();
+            curl_setopt_array($ch, array(
+                CURLOPT_URL               => 'https://hook.pikms.ru/site-lead',
+                CURLOPT_POST              => true,
+                CURLOPT_RETURNTRANSFER    => true,
+                CURLOPT_HTTPHEADER        => array('X-Site-Secret: ' . $secret),
+                CURLOPT_POSTFIELDS        => $payload,
+                CURLOPT_NOSIGNAL          => true,
+                CURLOPT_CONNECTTIMEOUT_MS => 1000,
+                CURLOPT_TIMEOUT_MS        => 2500,
+            ));
+            curl_exec($ch);
+            curl_close($ch);
+        } catch (\Throwable $e) { /* Режим A: бот дополнителен, форму клиента не валим */ }
     }
 }

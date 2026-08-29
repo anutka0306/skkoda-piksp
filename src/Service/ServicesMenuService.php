@@ -65,10 +65,9 @@ public function get(Content $page): array
 
 private function contains(string $pageTitle, string $menuTitle): bool
 {
-    return str_contains(
-        $this->normalize($pageTitle),
-        $this->normalize($menuTitle)
-    );
+    // Сравнение точное, а не по вхождению: иначе пункт «Замена масла в АКПП»
+    // подхватывал первую попавшуюся страницу вроде «Частичная замена масла в АКПП».
+    return $this->normalize($pageTitle) === $this->normalize($menuTitle);
 }
 
 private function normalize(string $text): string

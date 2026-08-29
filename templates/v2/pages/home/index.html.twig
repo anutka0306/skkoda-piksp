@@ -1,7 +1,8 @@
 {% extends 'v2/base.html.twig' %}
 
-{% block title %} Ремонт Skoda в СПб | «КарOk» в Санкт-Петербурге {% endblock %}
-{% block description %} Ремонт автомобилей Шкода по честной цене с гарантией в Санкт-Петербурге. Специализированный сервис Skoda с постагарантийным обслуживанием авто. Ремонт любой сложности.{% endblock %}
+{% block title %} Ремонт Skoda в СПб | Сервис Шкода в Санкт-Петербурге {% endblock %}
+{% block description %}Ремонт автомобилей Шкода по честной цене с гарантией в Санкт-Петербурге. Специализированный автосервис Skoda с постагарантийным обслуживанием авто. Ремонт любой сложности.{% endblock %}
+
 
 {% block header_line %}
     {{ include('v3/blocks/include/header.html.twig', {brands : brands ?? null, 'topMenu': topMenu, 'leftMenu': leftMenu}) }}
@@ -22,7 +23,7 @@
     {{ include('v3/blocks/section/advantages_list.html.twig') }}
     {{ include('v3/blocks/section/gallery.html.twig') }}
     {{ include('v3/blocks/section/benefits.html.twig') }}
-    {{ include('v3/blocks/section/opinions.html.twig') }}
+    {# отзывы скрыты до проработки — 29.07.2026 #}{# include('v3/blocks/section/opinions.html.twig') #}
     {{ include('v3/blocks/section/promo.html.twig') }}
     {{ include('v3/blocks/section/faq.html.twig') }}
     {{ include('v3/blocks/section/info_block_card.html.twig') }}

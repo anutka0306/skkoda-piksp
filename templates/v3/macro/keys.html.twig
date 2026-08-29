@@ -1,0 +1,19 @@
+{# Марка и модель для заголовков — один источник на все блоки (19.08.2026, пункт по ключам в заголовках).
+
+   Использование:
+       {% import 'v3/macro/keys.html.twig' as keys %}
+       {{ keys.brand(modelName|default(null)) }}      → «Skoda Octavia» или «Skoda»
+       {{ keys.brand_ru(modelName|default(null)) }}   → «Шкода Октавия» или «Шкода»
+
+   modelName приходит из контроллера (латиницей: Octavia, Fabia…). На страницах без модели
+   переменной нет — тогда выводится только марка.
+#}
+{% macro brand(modelName) %}Skoda{% if modelName %} {{ modelName }}{% endif %}{% endmacro %}
+
+{% macro brand_ru(modelName) %}
+{%- set models_ru = {
+    'Octavia': 'Октавия', 'Fabia': 'Фабия', 'Superb': 'Суперб', 'Yeti': 'Йети',
+    'Rapid': 'Рапид', 'Kodiaq': 'Кодиак', 'Karoq': 'Карок', 'Roomster': 'Румстер'
+} -%}
+Шкода{% if modelName %} {{ models_ru[modelName]|default(modelName) }}{% endif %}
+{%- endmacro %}

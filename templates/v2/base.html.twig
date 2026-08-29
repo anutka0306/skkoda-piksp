@@ -90,11 +90,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
 
-    <meta name="yandex-verification" content="c385e9ee71f7b681" />
-    <meta name="google-site-verification" content="gs3z8Lf5jo6HRVL_CGPym9ZpbXDV5CZGP6-MKOydevs" />
+    {# Права на сайт подтверждаются HTML-файлами в корне:
+       /yandex_725fd54d3e0c90f7.html (Яндекс.Вебмастер), /google08a74a36166fdbd6.html (Google Search Console).
+       Прежние мета-теги верификации вели на чужие аккаунты и удалены 31.07.2026. #}
 
 
-    <title>{% block title %}{{ page.metaTitle ?? (page.h1~' в Санкт-Петербурге. «КарOk»') }}{% endblock %}</title>
+    <title>{% block title %}{{ page.metaTitle ?? (page.h1~' в Санкт-Петербурге. Сервис Шкода') }}{% endblock %}</title>
     <meta name="description" content="{% block description %}{% endblock %}"/>
     <meta name="keywords" content="{% block keywords %}{% endblock %}"/>
     <meta http-equiv="Last-Modified" content="{% block last_modified %}{{ page.modifyDate|date('D, d M Y H:i:s') }}{% endblock%} GMT">
@@ -105,20 +106,16 @@
     <meta property="og:description" content="{{ block('description') }}"/>
     <meta property="og:url" content="{% block ogUrl %}{{ app.request.schemeAndHttpHost~page.path }}{% endblock %}"/>
     <meta property="og:image" content="{{ app.request.schemeAndHttpHost }}/img/og-logo.png"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Skoda Family"/>
 
 
-    <link rel="icon" type="image/png" href="/v3/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/v3/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="180x180"  href="/v3/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/v3/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/v3/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/v3/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/v3/favicon/android-icon-192x192.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/v3/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="144x144"  href="/v3/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="120x120"  href="/v3/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/v3/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/v3/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/x-icon" href="/v3/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/svg+xml" href="/v3/favicon/apple-touch-icon.png" />
-    <link rel="shortcut icon" type="image/x-icon" href="/v3/favicon/apple-touch-icon.png" />
-    <link rel="mask-icon" href="/v3/favicon/apple-touch-icon.png" >
     <link rel="manifest" href="/v3/favicon/manifest.json">
 
 
@@ -133,15 +130,97 @@
 
     <link rel="stylesheet" href="/v3/assets/components/gallery/css/web.css" type="text/css" />
     <link rel="stylesheet" href="/v3/assets/components/ajaxform/css/default.css" type="text/css" />
+    {# Разметка организации — сквозная, на всех страницах: url и @id жёстко указывают
+       на главную, поэтому дублей организации не возникает. Перенесена из шаблона главной
+       18.08.2026, чтобы разметка была не на одной странице, а на всём сайте.
+       С 27.08.2026 у каждой точки свой номер коллтрекинга (499-е), поэтому общий
+       телефон в разметке больше не нужен — прежняя оговорка про аффилиат снята. #}
+    {% block structured_data %}
+{% set host = app.request.schemeAndHttpHost %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AutoRepair",
+      "@id": "{{ host }}/#turuhtannye",
+      "name": "Skoda Family — Турухтанные Острова",
+      "description": "Специализированный сервис по ремонту и обслуживанию автомобилей Skoda в Санкт-Петербурге.",
+      "url": "{{ host }}/",
+      "image": "{{ host }}/img/og-logo.png",
+      "logo": "{{ host }}/img/og-logo.png",
+      "telephone": "+7 (499) 390-03-48",
+      "priceRange": "₽₽",
+      "currenciesAccepted": "RUB",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "RU",
+        "addressLocality": "Санкт-Петербург",
+        "streetAddress": "Турухтанные Острова, 12"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 59.8674673,
+        "longitude": 30.2472857
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "opens": "09:00",
+        "closes": "21:00"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Санкт-Петербург"
+      }
+    },
+    {
+      "@type": "AutoRepair",
+      "@id": "{{ host }}/#voroshilova",
+      "name": "Skoda Family — Ворошилова",
+      "description": "Специализированный сервис по ремонту и обслуживанию автомобилей Skoda в Санкт-Петербурге.",
+      "url": "{{ host }}/",
+      "image": "{{ host }}/img/og-logo.png",
+      "logo": "{{ host }}/img/og-logo.png",
+      "telephone": "+7 (499) 390-02-94",
+      "priceRange": "₽₽",
+      "currenciesAccepted": "RUB",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "RU",
+        "addressLocality": "Санкт-Петербург",
+        "streetAddress": "Ворошилова, 2АЕ"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 59.9233798,
+        "longitude": 30.4445263
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "opens": "09:00",
+        "closes": "21:00"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Санкт-Петербург"
+      }
+    }
+  ]
+}
+</script>
+    {% endblock %}
 </head>
 
-<body itemscope="itemscope" itemtype="https://schema.org/Product">
+<body>
 
 
-{# Roistat #}
-{{ include('v2/scripts/roistat.html.twig') }}
 {# Yandex Метрика #}
 {{ include('v2/scripts/_yandex_metrics.html.twig') }}
+
+{# Счётчик Roistat — сквозная аналитика сети (проект 116058) #}
+{{ include('v2/scripts/_roistat.html.twig') }}
 
 
     {% block header_line %}
@@ -207,7 +286,7 @@
             <div class="container">
                 <div class="cookie-message-inner">
                     <div class="cookie-message-text">
-                        Продолжая просмотр страниц сайта, вы соглашаетесь с <a href="./texnicheskie-straniczyi/cookies" target="blank" title="Политика использования файлов cookies">политикой использования файлов куки (cookies)</a>.
+                        Продолжая просмотр страниц сайта, вы соглашаетесь с использованием файлов куки (cookies).
                     </div>
                     <button class="btn js-cookie-message-confirm" style="border: none;">OK</button>
                 </div>

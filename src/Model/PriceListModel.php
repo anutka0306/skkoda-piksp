@@ -21,6 +21,9 @@ use App\Service\ConfigService;
 class PriceListModel
 {
     public const BASE_PRICE_HOUR = 1600;
+
+    /** Категории, скрытые из прайс-листа (услуг нет) — замечание заказчика 15.08.2026 */
+    public const HIDDEN_CATEGORY_SLUGS = ['deteyling'];
     
     /**
      * @var PriceServiceRepository
@@ -94,6 +97,10 @@ class PriceListModel
             $sections_ids = array();
             $default_category = $this->price_category_repository->findAll();
             foreach ($default_category as $item){
+                // Детейлинг скрыт по замечанию заказчика 15.08.2026 — такой услуги нет
+                if (in_array($item->getSlug(), self::HIDDEN_CATEGORY_SLUGS, true)) {
+                    continue;
+                }
                 $sections_ids[] = $item->getId();
             }
 

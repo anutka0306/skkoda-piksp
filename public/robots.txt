@@ -1,4 +1,10 @@
 User-agent: *
 Disallow: /admin
-Host: piksp.ru
-Sitemap: https://piksp.ru/sitemap.xml
+Disallow: /_profiler
+Disallow: /popup_order
+Disallow: /old_main
+Disallow: /*index.php$
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content
+Clean-param: yclid&gclid&_openstat&from
+
+Sitemap: https://skoda-spb.ru/sitemap.xml

@@ -1,4 +1,5 @@
 {% extends 'v2/base.html.twig' %}
+{% block description %}{{ page.metaDescription }}{% endblock %}
 {% block canonical %}{{ app.request.schemeAndHttpHost~'/blog/'~page.id~'/' }}{% endblock %}
 
 
@@ -36,7 +37,7 @@
     <div class="container work-page">
 
         <div class="page-header">
-            <h1>{{ page.name }}</h1>
+            <span class="work-title">{{ page.name }}</span>
         </div>
 
         {% if page.blogImg %}
